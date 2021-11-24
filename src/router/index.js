@@ -1,13 +1,24 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+// import Vue from 'vue'
+// import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
+// Vue.use(VueRouter)
 
-const routes = [
-]
+// const routes = [
+//   {
+//     path: '/',
+//     component: ()=> import('../about/about.vue'),
+//     children: [
+//       {
+//         path: '/about',
+//         name: 'about',
+//         component: ()=> import('../about/about.vue')
+//       }
+//     ]
+//   }
+// ]
 
-const router = new VueRouter({
-  routes
-})
+// const router = new VueRouter({
+//   routes
+// })
 
-export default router
+// export default router

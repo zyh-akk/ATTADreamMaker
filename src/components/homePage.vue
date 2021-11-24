@@ -58,7 +58,9 @@ export default {
           this.loading = false;
         });
 
-      console.log("The color is green.");
+      console.log("跳转",this.$route);
+
+      this.$router.push('/about');
     }
   }
 }

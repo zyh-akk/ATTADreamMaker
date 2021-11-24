@@ -3,8 +3,8 @@ module.exports = {
   pages: {
     pages: {
       template: 'public/browser-extension.html',
-      entry: './src/pages/main.js',
-      title: 'Pages'
+      entry: './src/main.js',
+      title: 'ATTA-Dream-Maker'
     }
   },
   pluginOptions: {
