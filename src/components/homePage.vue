@@ -59,8 +59,6 @@ export default {
         });
 
       console.log("跳转",this.$route);
-
-      this.$router.push('/about');
     }
   }
 }
