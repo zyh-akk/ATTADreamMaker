@@ -6,6 +6,7 @@
     <div v-else>
       <p class="joke">{{ joke }}</p>
     </div>
+    <el-input placeholder="请输入内容"></el-input>
     <button @click="againTest()">againTest</button>
   </div>
 </template>
