@@ -23,8 +23,9 @@ export default {
   },
   mounted() {
     axios.get(
-      "https://icanhazdadjoke.com/",
-      { 'headers': { 'Accept': 'application/json' } }
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line quotes
+      "https://icanhazdadjoke.com/", { headers: { Accept: 'application/json' } }
     )
       .then(res => {
         this.joke = res.data.joke
@@ -33,9 +34,7 @@ export default {
   },
   methods:{
     againTest(){
-
       let color = "#3aa757";
-
     //  chrome.runtime.onInstalled.addListener(function() {
         chrome.storage.sync.set({color: '#3aa757'}, function() {
           console.log("The color is green.");
@@ -45,9 +44,6 @@ export default {
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     console.log('color', color);
     chrome.tabs.executeScript(
-
-
-
         tabs[0].id,
         {code: 'document.body.style.backgroundColor = "' + color + '";'});
   });
@@ -55,20 +51,20 @@ export default {
 
       axios.get(
       "https://icanhazdadjoke.com/",
-      { 'headers': { 'Accept': 'application/json' } }
+      { headers: { Accept: 'application/json' } }
     )
       .then(res => {
         this.joke = res.data.joke
-        this.loading = false;
-      });
+          this.loading = false;
+        });
 
-          console.log("The color is green.");
+      console.log("The color is green.");
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 p {
   font-size: 20px;
 }
