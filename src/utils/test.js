@@ -1,3 +1,9 @@
 (function (){
-  console.log('测试数据是否正常展示')
+  // const self = this
+  const timer = setInterval(() => {
+    if (document.readyState === 'complete') {
+      console.log('dom over')
+      window.clearInterval(timer)
+    }
+  }, 500)
 })()
