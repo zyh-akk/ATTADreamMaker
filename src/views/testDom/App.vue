@@ -1,38 +1,49 @@
 <template>
   <div class="ATTADreamMaker-dom">
     <div class="MaskNetworkbox">
-      <div class="MaskNetwork" @click="open()">
+      <div class="MaskNetwork" @click="ATTAMakerVisible = true">
         <span>图标</span>
         <p>Mask Network</p>
       </div>
       <el-dialog
-        :visible.sync="dialogVisible"
-        width="10%"
+        :visible.sync="ATTAMakerVisible"
+        width="20%"
         :modal="false"
         :show-close="false"
         custom-class="MaskNetwork-dialogbox"
       >
-        <el-button @click="dialogVisible = false">按钮1</el-button>
-        <el-button @click="dialogVisible = false">按钮2</el-button>
-        <el-button @click="dialogVisible = false">按钮3</el-button>
-        <el-button @click="dialogVisible = false">按钮4</el-button>
+        <el-button @click="ATTAMakerVisible = false">按钮1</el-button>
+        <el-button @click="ATTAMakerVisible = false">按钮2</el-button>
+        <el-button @click="ATTAMakerVisible = false">按钮3</el-button>
+        <el-button @click="ATTAMakerVisible = false">按钮4</el-button>
       </el-dialog>
     </div>
     <div class="ConnectWalletbox">
-      <div class="ConnectWallet" @click="alert(123)">
+      <div class="ConnectWallet" @click="ConnectWalletVisible = true">
         <span>图标</span>
         <p>Connect Wallet</p>
       </div>
+      <el-dialog
+        :visible.sync="ConnectWalletVisible"
+        width="50%"
+        :modal="false"
+        custom-class="MaskNetwork-dialogbox"
+      >
+        <img src="" alt="">
+        <el-button @click="ConnectWalletVisible = false">按钮4</el-button>
+        <img src="" alt="">
+        <el-button @click="ConnectWalletVisible = false">按钮5</el-button>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { MessageBox } from "element-ui";
 export default {
   data() {
     return {
-      dialogVisible: false,
+      ATTAMakerVisible: false,
+      ConnectWalletVisible: false,
     };
   },
   mounted() {
@@ -42,7 +53,10 @@ export default {
     leftdom.appendChild(crdom);
   },
   methods: {
-    open() {
+    openATTADreamMaker() {
+      this.dialogVisible = true;
+    },
+    openATTADreamMaker() {
       this.dialogVisible = true;
     },
   },
@@ -53,7 +67,7 @@ export default {
 .MaskNetworkbox{
   position: relative;
   .MaskNetwork-dialogbox{
-    position: absolute;
+    // position: absolute;
   }
 }
 </style>
