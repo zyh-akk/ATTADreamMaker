@@ -10,13 +10,16 @@
     "storage",
     "activeTab",
     "contextMenus",
-    "tabs"
+    "tabs",
+    "webRequest",
+    "webRequestBlocing"
   ],
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",
     "128": "icons/128.png"
   },
+  "web_accessible_resources":["injected.js"],
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
