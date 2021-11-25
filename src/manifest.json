@@ -19,7 +19,7 @@
     "48": "icons/48.png",
     "128": "icons/128.png"
   },
-  "web_accessible_resources":["injected.js"],
+  "web_accessible_resources":["js/injected/*"],
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
