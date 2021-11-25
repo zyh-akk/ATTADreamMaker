@@ -15,7 +15,7 @@ module.exports = {
         },
         contentScripts: {
           entries: {
-            content1:"src/utils/test.js"
+            content1:'src/utils/test.js'
           }
         }
       }

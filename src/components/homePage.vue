@@ -16,10 +16,10 @@ export default {
   data () {
     return {
       loading: true,
-      joke: "",
+      joke: ''
     }
   },
-  mounted() {
+  mounted () {
     axios.get(
       // eslint-disable-next-line quote-props
       // eslint-disable-next-line quotes
@@ -31,32 +31,31 @@ export default {
       });
   },
   methods:{
-    againTest(){
-      let color = "#3aa757";
-    //  chrome.runtime.onInstalled.addListener(function() {
-        chrome.storage.sync.set({color: '#3aa757'}, function() {
-          console.log("The color is green.");
-        });
+    againTest (){
+      const color = '#3aa757';
+      //  chrome.runtime.onInstalled.addListener(function() {
+      chrome.storage.sync.set({ color: '#3aa757' }, function () {
+        console.log('The color is green.');
+      });
       // });
 
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    console.log('color', color);
-    chrome.tabs.executeScript(
-        tabs[0].id,
-        {code: 'document.body.style.backgroundColor = "' + color + '";'});
-  });
-
+        console.log('color', color);
+        chrome.tabs.executeScript(
+          tabs[0].id,
+          { code: 'document.body.style.backgroundColor = "' + color + '";' });
+      });
 
       axios.get(
-      "https://icanhazdadjoke.com/",
-      { headers: { Accept: 'application/json' } }
-    )
-      .then(res => {
-        this.joke = res.data.joke
+        'https://icanhazdadjoke.com/',
+        { headers: { Accept: 'application/json' } }
+      )
+        .then(res => {
+          this.joke = res.data.joke
           this.loading = false;
         });
 
-      console.log("跳转",this.$route);
+      console.log('跳转', this.$route);
     }
   }
 }
