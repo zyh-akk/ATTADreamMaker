@@ -10,19 +10,23 @@
     "storage",
     "activeTab",
     "contextMenus",
-    "downloads",
-    "webNavigation"
+    "tabs"
   ],
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",
     "128": "icons/128.png"
   },
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["./js/content1.js"]
+    }
+  ],
   "background": {
     "scripts": [
-      "js/background.js"
-    ],
-    "persistent": false
+      "./js/background.js"
+    ]
   },
   "browser_action": {
     "default_popup": "pages.html",
