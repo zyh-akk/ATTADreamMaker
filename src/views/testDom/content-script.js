@@ -1,17 +1,16 @@
-// import Vue from 'vue';
-// import App from './App';
-// import store from '../store';
+(function(){
+  web3()
+})()
 
-// import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css';
-// global.browser = require('webextension-polyfill');
-
-// Vue.prototype.$browser = global.browser;
-// Vue.use(ElementUI);
-
-// /* eslint-disable no-new */
-// new Vue({
-//   el: '#review-bookmark',
-//   store,
-//   render: h => h(App)
-// });
+function web3() {
+  var web3Array = [
+    'js/web3/web3.min.js','js/web3/web3-provider.min.js','js/web3/contractABI.js','js/web3/chainSetting.js','js/web3/chainProvider.js',
+  ]
+  web3Array.forEach(element => {
+    var jsPath = chrome.extension.getURL(element);
+    var temp = document.createElement('script');
+    temp.type = 'text/javascript';
+    temp.src = jsPath;
+    document.documentElement.appendChild(temp);
+  });
+}

@@ -12,6 +12,7 @@
         </svg>
         <p>Mask Network</p>
       </div>
+      <img src="http://47.118.74.48:8800/imgs/logo.png" alt="">
       <el-dialog
         :visible.sync="ATTAMakerVisible"
         width="20%"
