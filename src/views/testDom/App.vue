@@ -53,12 +53,6 @@ export default {
     leftdom.appendChild(crdom);
   },
   methods: {
-    openATTADreamMaker() {
-      this.dialogVisible = true;
-    },
-    openATTADreamMaker() {
-      this.dialogVisible = true;
-    },
   },
 };
 </script>
