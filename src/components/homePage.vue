@@ -20,6 +20,8 @@ export default {
     }
   },
   mounted () {
+    localStorage.setItem("lastname01", "扩展的页面");
+    console.log(window.CHAIN,'测试数据');
     axios.get(
       // eslint-disable-next-line quote-props
       // eslint-disable-next-line quotes

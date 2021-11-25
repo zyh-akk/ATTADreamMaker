@@ -3681,5 +3681,3 @@ var contractSetting = {
             }
     },
 }
-
-
