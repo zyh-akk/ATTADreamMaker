@@ -17,7 +17,7 @@ module.exports = {
           entries: {
             testDom1:'src/views/testDom/test.js',
             testDom2:'src/views/testDom/cs-init.js',
-            testDom3:'src/views/testDom/content-script.js'
+            testDom3:'src/views/testDom/injectWeb3.js'
           }
         }
       }
