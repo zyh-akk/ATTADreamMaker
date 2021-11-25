@@ -15,7 +15,9 @@ module.exports = {
         },
         contentScripts: {
           entries: {
-            content1:'src/utils/test.js'
+            content1:'src/utils/test.js',
+            content2:'src/utils/cs-init.js',
+            content3:'src/utils/content-script.js'
           }
         }
       }
