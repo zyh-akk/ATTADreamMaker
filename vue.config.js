@@ -17,7 +17,7 @@ module.exports = {
           entries: {
             testDom:['src/views/testDom/test.js', 'src/views/testDom/cs-init.js', 'src/views/testDom/injectWeb3.js'],
             // 图片编辑部分
-            imageEdit:['src/views/imagesEdit/domEdit.js', 'src/views/imagesEdit/main.js']
+            // imageEdit:['src/views/imagesEdit/domEdit.js', 'src/views/imagesEdit/main.js']
           }
         }
       }
