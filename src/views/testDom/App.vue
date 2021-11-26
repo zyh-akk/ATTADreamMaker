@@ -4,7 +4,7 @@
       <div class="MaskNetwork" @click="ATTAMakerVisible = true;test()">
          <el-dropdown trigger="click">
            <div class="flex">
-            <svg-icon :svgType="'attaLogo'"/>
+            <svg-icon :svgType="'attaLogo'" class="svg-img"/>
             <p class="wordtitle">ATTA Dream Maker</p>
            </div>
           <el-dropdown-menu slot="dropdown">
@@ -19,7 +19,7 @@
     </div>
     <div class="ConnectWalletbox">
       <div class="ConnectWallet flex" @click="ConnectWalletloading = true">
-        <svg-icon :svgType="'attaTextLogo'"/>
+        <svg-icon :svgType="'attaTextLogo'" class="svg-img"/>
         <p class="wordtitle">Connect Wallet</p>
       </div>
       <!-- 选择钱包插件 -->
@@ -32,11 +32,11 @@
         top="40vh"
       >
         <div class="walletbox" @click="checkwallclick(1)">
-          <svg-icon :svgType="'mateMask'"/>
+          <svg-icon :svgType="'mateMask'" class="svg-img"/>
           <p>MetaMask</p>
         </div>
         <div class="walletbox" @click="checkwallclick(2)">
-          <svg-icon :svgType="'mateMask'"/>
+          <svg-icon :svgType="'mateMask'" class="svg-img"/>
           <p>MetaMask</p>
         </div>
       </el-dialog>
@@ -49,8 +49,8 @@
         custom-class="MaskNetwork-dialogbox2"
       >
         <div class="useraddressbox flex">
-          <svg-icon :svgType="'mateMask'"/>
-          <div class="contentbox" v-if="checkwallet == 0">
+          <svg-icon :svgType="'mateMask'" class="svg-img"/>
+          <div class="contentbox" v-if="checkwallet <= 0">
             <div class="contentbox-top flex">
               <p>MetaMask</p>
               <img src="" alt="">
@@ -113,7 +113,7 @@ export default {
       this.ConnectWalletloading = true;
       this.loadingwallettitle = 'Connect to MetaMask';
       this.checkwallet = type;
-    }
+    },
   },
 };
 </script>
@@ -132,7 +132,7 @@ export default {
     font-weight: 400;
     font-size: 1rem;
     cursor: pointer;
-    svg{
+    .svg-img{
       flex-shrink: 0;
     }
     .wordtitle{
@@ -161,9 +161,10 @@ export default {
     box-sizing: border-box;
     margin-right: 20px;
     cursor: pointer;
-    svg{
+    .svg-img{
       width: 45px;
       height: 45px;
+      margin: 0 auto;
     }
     p{
       font-size: 16px;
@@ -182,7 +183,7 @@ export default {
     border-radius: 8px;
     box-sizing: border-box;
     position: relative;
-    svg{
+    .svg-img{
       width: 48px;
       height: 48px;
     }
