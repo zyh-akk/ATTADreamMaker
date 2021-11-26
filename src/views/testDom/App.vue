@@ -31,11 +31,11 @@
         custom-class="MaskNetwork-dialogbox"
         top="40vh"
       >
-        <div class="walletbox" @click="checkwallet()">
+        <div class="walletbox" @click="checkwallclick(1)">
           <svg-icon :svgType="'mateMask'"/>
           <p>MetaMask</p>
         </div>
-        <div class="walletbox" @click="checkwallet()">
+        <div class="walletbox" @click="checkwallclick(2)">
           <svg-icon :svgType="'mateMask'"/>
           <p>MetaMask</p>
         </div>
@@ -50,7 +50,7 @@
       >
         <div class="useraddressbox flex">
           <svg-icon :svgType="'mateMask'"/>
-          <div class="contentbox">
+          <div class="contentbox" v-if="checkwallet == 0">
             <div class="contentbox-top flex">
               <p>MetaMask</p>
               <img src="" alt="">
@@ -61,7 +61,14 @@
               <img src="" alt="">
             </div>
           </div>
-          <el-button class="editbtn" @click="userwalletdialog()">更改</el-button>
+          <div class="content-loading" v-else>
+            <p class="loading-p">{{loadingwallettitle}}</p>
+            <div class="loading-div">
+              Initializing…
+            </div>
+          </div>
+          <el-button v-if="checkwallet == 0" class="editbtn" @click="userwalletdialog()">更改</el-button>
+          <el-button v-else class="editbtn" @click="userwalletdialog()">Retry</el-button>
         </div>
       </el-dialog>
     </div>
@@ -81,6 +88,7 @@ export default {
       ConnectWalletVisible: false,//选择钱包插件弹框控制
       ConnectWalletloading: false, // 钱包账户弹框控制
       loadingwallettitle : '账户',//钱包账户标题/选中钱包插件loading标题
+      checkwallet : 0,//选择的钱包插件
     };
   },
   mounted() {
@@ -100,10 +108,11 @@ export default {
       this.ConnectWalletVisible = true;
     },
     // 选中钱包插件
-    checkwallet(){
+    checkwallclick(type){
       this.ConnectWalletVisible = false;
       this.ConnectWalletloading = true;
       this.loadingwallettitle = 'Connect to MetaMask';
+      this.checkwallet = type;
     }
   },
 };
@@ -141,7 +150,6 @@ export default {
 }
 .MaskNetwork-dialogbox{
   padding: 32px 36px 16px;
-  // border-top: 1px solid #919ca3;
   .walletbox{
     text-align: center;
     height: 151px;
@@ -178,7 +186,7 @@ export default {
       width: 48px;
       height: 48px;
     }
-    .contentbox{
+    .contentbox,.content-loading{
       font-size: 16px;
       margin-left: 8px;
       .contentbox-top,.contentbox-bottom{
@@ -192,6 +200,11 @@ export default {
           height: 16px;
           border: 1px solid black;
         }
+      }
+      .loading-p,.loading-div{
+        margin: 0;
+        margin-right: 6px;
+        font-weight: 400;
       }
     }
     .editbtn{
@@ -209,4 +222,9 @@ export default {
     }
   }
 }
+</style>
+<style lang="css">
+  .MaskNetwork-dialogbox .el-dialog__header,.MaskNetwork-dialogbox2 .el-dialog__header{
+    border-bottom: 1px solid #919ca3;
+  }
 </style>
