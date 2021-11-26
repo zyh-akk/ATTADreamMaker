@@ -186,17 +186,22 @@ export default {
   },
   methods: {
     uploadImg() {
-      const base64String = this.instance.toDataURL();
-      const data = window.atob(base64String.split(",")[1]);
-      const ia = new Uint8Array(data.length);
-      for (let i = 0; i < data.length; i++) {
-        ia[i] = data.charCodeAt(i);
-      }
-      const blob = new Blob([ia], { type: "image/png" });
-      const fd = new FormData();
-      fd.append("image", blob);
-      // upload fd
-      console.log(blob);
+    this.instance.registerIcons({
+        customIcon: 'M 0 0 L 20 20 L 10 10 Z',
+        customArrow: 'M 60 0 L 120 60 H 90 L 75 45 V 180 H 45 V 45 L 30 60 H 0 Z'
+    });
+
+      // const base64String = this.instance.toDataURL();
+      // const data = window.atob(base64String.split(",")[1]);
+      // const ia = new Uint8Array(data.length);
+      // for (let i = 0; i < data.length; i++) {
+      //   ia[i] = data.charCodeAt(i);
+      // }
+      // const blob = new Blob([ia], { type: "image/png" });
+      // const fd = new FormData();
+      // fd.append("image", blob);
+      // // upload fd
+      // console.log(blob);
     }
   }
 }
