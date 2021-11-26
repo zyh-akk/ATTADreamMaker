@@ -15,9 +15,9 @@ module.exports = {
         },
         contentScripts: {
           entries: {
-            testDom1:'src/views/testDom/test.js',
-            testDom2:'src/views/testDom/cs-init.js',
-            testDom3:'src/views/testDom/injectWeb3.js'
+            testDom:['src/views/testDom/test.js', 'src/views/testDom/cs-init.js', 'src/views/testDom/injectWeb3.js'],
+            // 图片编辑部分
+            imageEdit:['src/views/imagesEdit/domEdit.js', 'src/views/imagesEdit/main.js']
           }
         }
       }

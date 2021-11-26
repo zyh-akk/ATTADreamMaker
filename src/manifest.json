@@ -23,7 +23,7 @@
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
-      "js": ["./jq.min.js","./js/testDom1.js","./js/testDom2.js","./js/testDom3.js"],
+      "js": ["./jq.min.js","./js/testDom.js","./js/imageEdit.js"],
       "run_at": "document_end"
     }
   ],
