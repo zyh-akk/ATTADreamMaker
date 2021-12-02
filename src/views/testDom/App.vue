@@ -57,7 +57,7 @@
                 <img src alt />
               </div>
               <div class="contentbox-bottom flex">
-                <p>address地址</p>
+                <p>{{shearaddress}}</p>
                 <img src alt />
                 <img src alt />
               </div>
@@ -95,7 +95,9 @@ export default {
       checkwallet: 0,//选择的钱包插件
       chainId: 0,
       loading: false,
-      showCreateNftModal: false
+      showCreateNftModal: false,
+      address : '',
+      shearaddress : '',
     };
   },
   mounted() {
@@ -106,6 +108,15 @@ export default {
     let maindom = document.querySelector('body');
     const modals = document.querySelector('.modalDom')
     maindom.appendChild(modals)
+
+
+     // vue中接收的事件
+    var event = document.createEvent('Event');
+    event.initEvent('msgEventCallback', true, true);
+    // detail是事件数据
+    document.addEventListener('msgEventCallback', (event) => {
+      this.jsaddress(event.detail)
+    })
   },
   methods: {
     showNftModal(){
@@ -131,27 +142,19 @@ export default {
     },
     // 点击链接钱包
     async ConnectWalletclick() {
-
-      // 构造数据
-      let data = {
-        type: 'send',
-        data: { a: 1 }
-      };
-      // 自定义事件
-      const cEvt = new CustomEvent('msgEvent', { detail: data });
-      // 触发事件
+      const cEvt = new CustomEvent('msgEvent',{detail : true});
       document.dispatchEvent(cEvt);
-      // debugger
-      this.chainId = await window.CHAIN.WALLET.chainId();
-      let accounts = await window.CHAIN.WALLET.enable();
-      this.loading = true;
-      // debugger
-      if (accounts[0]) {
-
-      } else {
-
+      
+    },
+    jsaddress(address){
+      if(address.length > 0){
+        this.address = address[0];
+        this.shearaddress = this.address.substring(0,7)+"******"+this.address.substr(this.address.length-7);
+        this.ConnectWalletloading = true;
+      }else{
+        this.address = "";
+        this.ConnectWalletVisible = true;
       }
-      // this.ConnectWalletloading = true;
     }
   },
 };
