@@ -9,7 +9,7 @@
               <p class="wordtitle">ATTA Dream Maker</p>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click="showNftModal">Create NFT</el-dropdown-item>
+              <el-dropdown-item><span @click="showNftModal">Create NFT</span></el-dropdown-item>
               <el-dropdown-item>Create poster NFT</el-dropdown-item>
               <el-dropdown-item>Create Co-NFT</el-dropdown-item>
               <el-dropdown-item>NFT Hall</el-dropdown-item>
@@ -103,7 +103,7 @@ export default {
     let leftdom = document.querySelector('[aria-label][role="navigation"]');
     let crdom = document.querySelector(".ATTADreamMaker-dom");
     leftdom.appendChild(crdom);
-    let maindom = document.querySelector('[aria-label][role="main"]');
+    let maindom = document.querySelector('body');
     const modals = document.querySelector('.modalDom')
     maindom.appendChild(modals)
   },
@@ -112,6 +112,7 @@ export default {
       this.showCreateNftModal = true
     },
     closeNftModal() {
+      console.log('---');
       this.showCreateNftModal = false
     },
     test() {

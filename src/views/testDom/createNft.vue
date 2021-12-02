@@ -1,11 +1,11 @@
 <template>
   <div class="create-nft-wrap">
-    <i class="el-icon-close" @click="closeModal"></i>
     <el-dialog
         title="loadingwallettitle"
         width="30%"
         :visible="true"
         :modal="false"
+        @close="closeModal"
         custom-class="MaskNetwork-dialogbox2"
       >
         <el-upload
@@ -39,7 +39,7 @@ export default {
 
   methods: {
     closeModal(){
-      this.$emit('closeNftModal')
+      this.$emit('closeNftModal',true)
     },
     handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
