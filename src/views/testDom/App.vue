@@ -131,11 +131,21 @@ export default {
     },
     // 点击链接钱包
     async ConnectWalletclick() {
-      debugger
+
+      // 构造数据
+      let data = {
+        type: 'send',
+        data: { a: 1 }
+      };
+      // 自定义事件
+      const cEvt = new CustomEvent('msgEvent', { detail: data });
+      // 触发事件
+      document.dispatchEvent(cEvt);
+      // debugger
       this.chainId = await window.CHAIN.WALLET.chainId();
       let accounts = await window.CHAIN.WALLET.enable();
       this.loading = true;
-      debugger
+      // debugger
       if (accounts[0]) {
 
       } else {
