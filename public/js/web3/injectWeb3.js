@@ -13,6 +13,15 @@ document.addEventListener('msgEvent', function(event){
 		}
 	})
 });
+document.addEventListener('switchaddress', function(event){
+	window.CHAIN.WALLET.connect('MetaMask')
+	.then((address)=>{
+		if (address) {
+		    var newEvent = new CustomEvent('switchaddressCallback', { bubbles:true,cancelable:true,composed:true ,detail : address});
+		    document.dispatchEvent(newEvent);
+		}
+	})
+});
 function loginweb3(susses = null,errorcatch = null){
 	// this.chainId = await window.CHAIN.WALLET.chainId();
 	window.CHAIN.WALLET.enable()

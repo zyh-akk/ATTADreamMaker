@@ -2,14 +2,22 @@
   <div v-loading="loading">
     <div class="ATTADreamMaker-dom">
       <div class="MaskNetworkbox">
-        <div class="MaskNetwork" @click="ATTAMakerVisible = true; test()">
+        <div
+          class="MaskNetwork"
+          @click="
+            ATTAMakerVisible = true;
+            test();
+          "
+        >
           <el-dropdown trigger="click">
             <div class="flex">
               <svg-icon :svgType="'attaLogo'" class="svg-img" />
               <p class="wordtitle">ATTA Dream Maker</p>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item><span @click="showNftModal">Create NFT</span></el-dropdown-item>
+              <el-dropdown-item
+                ><span @click="showNftModal">Create NFT</span></el-dropdown-item
+              >
               <el-dropdown-item>Create poster NFT</el-dropdown-item>
               <el-dropdown-item>Create Co-NFT</el-dropdown-item>
               <el-dropdown-item>NFT Hall</el-dropdown-item>
@@ -57,77 +65,100 @@
                 <img src alt />
               </div>
               <div class="contentbox-bottom flex">
-                <p>{{shearaddress}}</p>
+                <p>{{ shearaddress }}</p>
                 <img src alt />
                 <img src alt />
               </div>
             </div>
             <div class="content-loading" v-else>
               <p class="loading-p">{{ loadingwallettitle }}</p>
-              <div class="loading-div">Initializing…</div>
+              <div class="loading-div">
+                <svg-icon class="svg-class" :svgType="'loading'" />
+              </div>
             </div>
-            <el-button v-if="checkwallet == 0" class="editbtn" @click="userwalletdialog()">更改</el-button>
-            <el-button v-else class="editbtn" @click="userwalletdialog()">Retry</el-button>
+            <el-button
+              v-if="checkwallet == 0"
+              class="editbtn"
+              @click="userwalletdialog()"
+              >更改</el-button
+            >
+            <el-button v-else class="editbtn" @click="userwalletdialog()"
+              >Retry</el-button
+            >
           </div>
         </el-dialog>
       </div>
     </div>
     <div class="modalDom">
-      <create-nft v-if="showCreateNftModal" @closeNftModal="closeNftModal"></create-nft>
+      <create-nft
+        v-if="showCreateNftModal"
+        @closeNftModal="closeNftModal"
+      ></create-nft>
     </div>
   </div>
 </template>
 <script>
-import '../../../public/js/web3/web3.min.js'
-import '../../../public/js/web3/web3-provider.min.js'
-import '../../../public/js/web3/chainSetting.js'
-import '../../../public/js/web3/chainProvider.js'
-import SvgIcon from '@/components/svgIcon.vue'
-import CreateNft from './createNft.vue'
+import "../../../public/js/web3/web3.min.js";
+import "../../../public/js/web3/web3-provider.min.js";
+import "../../../public/js/web3/chainSetting.js";
+import "../../../public/js/web3/chainProvider.js";
+import SvgIcon from "@/components/svgIcon.vue";
+import CreateNft from "./createNft.vue";
 export default {
   components: { SvgIcon, CreateNft },
   data() {
     return {
-      ATTAMakerVisible: false,//ATTA Dream Maker弹框控制
-      ConnectWalletVisible: false,//选择钱包插件弹框控制
+      ATTAMakerVisible: false, //ATTA Dream Maker弹框控制
+      ConnectWalletVisible: false, //选择钱包插件弹框控制
       ConnectWalletloading: false, // 钱包账户弹框控制
-      loadingwallettitle: '账户',//钱包账户标题/选中钱包插件loading标题
-      checkwallet: 0,//选择的钱包插件
+      loadingwallettitle: "账户", //钱包账户标题/选中钱包插件loading标题
+      checkwallet: 0, //选择的钱包插件
       chainId: 0,
       loading: false,
       showCreateNftModal: false,
-      address : '',
-      shearaddress : '',
+      address: "",
+      shearaddress: "",
     };
   },
   mounted() {
-    console.log(localStorage.getItem("_grecaptcha"), '测试缓存');
+    console.log(localStorage.getItem("_grecaptcha"), "测试缓存");
     let leftdom = document.querySelector('[aria-label][role="navigation"]');
     let crdom = document.querySelector(".ATTADreamMaker-dom");
     leftdom.appendChild(crdom);
-    let maindom = document.querySelector('body');
-    const modals = document.querySelector('.modalDom')
-    maindom.appendChild(modals)
+    let maindom = document.querySelector("body");
+    const modals = document.querySelector(".modalDom");
+    maindom.appendChild(modals);
 
-
-     // vue中接收的事件
-    var event = document.createEvent('Event');
-    event.initEvent('msgEventCallback', true, true);
-    // detail是事件数据
-    document.addEventListener('msgEventCallback', (event) => {
-      this.jsaddress(event.detail)
-    })
+    // vue中接收的事件
+    var event = document.createEvent("Event");
+    event.initEvent("msgEventCallback", true, true);
+    event.initEvent("switchaddressCallback", true, true); // detail是事件数据
+    document.addEventListener("msgEventCallback", (event) => {
+      this.jsaddress(event.detail);
+    });
+    document.addEventListener("switchaddressCallback", (event) => {
+      if (event.detail.length > 0) {
+        if (event.detail.length > 0) {
+          this.address = event.detail[0];
+          this.shearaddress =this.address.substring(0, 7) +"******" +this.address.substr(this.address.length - 7);
+        }
+        this.ConnectWalletVisible = false;
+        this.ConnectWalletloading = true;
+        this.loadingwallettitle = "账户";
+        this.checkwallet = "0";
+      }
+    });
   },
   methods: {
-    showNftModal(){
-      this.showCreateNftModal = true
+    showNftModal() {
+      this.showCreateNftModal = true;
     },
     closeNftModal() {
-      console.log('---');
-      this.showCreateNftModal = false
+      console.log("---");
+      this.showCreateNftModal = false;
     },
     test() {
-      console.log(window.CHAIN, '测试数据');
+      console.log(window.CHAIN, "测试数据");
     },
     userwalletdialog() {
       this.ConnectWalletloading = false;
@@ -137,25 +168,29 @@ export default {
     checkwallclick(type) {
       this.ConnectWalletVisible = false;
       this.ConnectWalletloading = true;
-      this.loadingwallettitle = 'Connect to MetaMask';
+      this.loadingwallettitle = "Connect to MetaMask";
       this.checkwallet = type;
+      const cEvt = new CustomEvent("switchaddress", { detail: true });
+      document.dispatchEvent(cEvt);
     },
     // 点击链接钱包
     async ConnectWalletclick() {
-      const cEvt = new CustomEvent('msgEvent',{detail : true});
+      const cEvt = new CustomEvent("msgEvent", { detail: true });
       document.dispatchEvent(cEvt);
-      
     },
-    jsaddress(address){
-      if(address.length > 0){
+    jsaddress(address) {
+      if (address.length > 0) {
         this.address = address[0];
-        this.shearaddress = this.address.substring(0,7)+"******"+this.address.substr(this.address.length-7);
+        this.shearaddress =
+          this.address.substring(0, 7) +
+          "******" +
+          this.address.substr(this.address.length - 7);
         this.ConnectWalletloading = true;
-      }else{
+      } else {
         this.address = "";
         this.ConnectWalletVisible = true;
       }
-    }
+    },
   },
 };
 </script>
