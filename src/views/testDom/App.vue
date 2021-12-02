@@ -9,7 +9,7 @@
               <p class="wordtitle">ATTA Dream Maker</p>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>Create NFT</el-dropdown-item>
+              <el-dropdown-item @click="showNftModal">Create NFT</el-dropdown-item>
               <el-dropdown-item>Create poster NFT</el-dropdown-item>
               <el-dropdown-item>Create Co-NFT</el-dropdown-item>
               <el-dropdown-item>NFT Hall</el-dropdown-item>
@@ -73,7 +73,7 @@
       </div>
     </div>
     <div class="modalDom">
-      <create-nft></create-nft>
+      <create-nft v-if="showCreateNftModal" @closeNftModal="closeNftModal"></create-nft>
     </div>
   </div>
 </template>
@@ -93,8 +93,9 @@ export default {
       ConnectWalletloading: false, // 钱包账户弹框控制
       loadingwallettitle: '账户',//钱包账户标题/选中钱包插件loading标题
       checkwallet: 0,//选择的钱包插件
-      chainId : 0,
-      loading : false,
+      chainId: 0,
+      loading: false,
+      showCreateNftModal: false
     };
   },
   mounted() {
@@ -107,8 +108,13 @@ export default {
     maindom.appendChild(modals)
   },
   methods: {
+    showNftModal(){
+      this.showCreateNftModal = true
+    },
+    closeNftModal() {
+      this.showCreateNftModal = false
+    },
     test() {
-
       console.log(window.CHAIN, '测试数据');
     },
     userwalletdialog() {
@@ -123,7 +129,7 @@ export default {
       this.checkwallet = type;
     },
     // 点击链接钱包
-    async ConnectWalletclick(){
+    async ConnectWalletclick() {
       debugger
       this.chainId = await window.CHAIN.WALLET.chainId();
       let accounts = await window.CHAIN.WALLET.enable();

@@ -1,6 +1,6 @@
 <template>
-  <div class="create-nft-wrap" v-show="showUploadModal">
-    <i class="el-icon-close" @click="showUploadModal=false"></i>
+  <div class="create-nft-wrap">
+    <i class="el-icon-close" @click="closeModal"></i>
     <el-dialog
         title="loadingwallettitle"
         width="30%"
@@ -30,8 +30,7 @@ export default {
   components: { SvgIcon },
   data() {
     return {
-      imageUrl: '',
-      showUploadModal: true
+      imageUrl: ''
     };
   },
   mounted(){
@@ -39,6 +38,9 @@ export default {
   },
 
   methods: {
+    closeModal(){
+      this.$emit('closeNftModal')
+    },
     handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
       },
