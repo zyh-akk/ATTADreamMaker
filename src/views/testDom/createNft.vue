@@ -1,11 +1,11 @@
 <template>
-  <div class="create-nft-wrap">
+  <div class="create-nft-wrap" v-show="showUploadModal">
+    <i class="el-icon-close" @click="showUploadModal=false"></i>
     <el-dialog
         title="loadingwallettitle"
         width="30%"
         :visible="true"
         :modal="false"
-        top="40vh"
         custom-class="MaskNetwork-dialogbox2"
       >
         <el-upload
@@ -30,7 +30,8 @@ export default {
   components: { SvgIcon },
   data() {
     return {
-      imageUrl: ''
+      imageUrl: '',
+      showUploadModal: true
     };
   },
   mounted(){
@@ -62,11 +63,11 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 500px;
+  width: 700px;
   height: 300px;
   z-index: 9999;
   background: rgba($color: #000000, $alpha: 0.8);
-  transform: translate(-40%,-50%);
+  transform: translate(-50%,-50%);
 }
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
@@ -92,9 +93,4 @@ export default {
     display: block;
   }
 
-</style>
-<style lang="css">
-  .MaskNetwork-dialogbox .el-dialog__header,.MaskNetwork-dialogbox2 .el-dialog__header{
-    border-bottom: 1px solid #919ca3;
-  }
 </style>

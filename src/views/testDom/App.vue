@@ -93,6 +93,7 @@ export default {
       ConnectWalletloading: false, // 钱包账户弹框控制
       loadingwallettitle: '账户',//钱包账户标题/选中钱包插件loading标题
       checkwallet: 0,//选择的钱包插件
+      showUploadModal: true
     };
   },
   mounted() {
