@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <div class="ATTADreamMaker-dom">
       <div class="MaskNetworkbox">
         <div class="MaskNetwork" @click="ATTAMakerVisible = true; test()">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="ConnectWalletbox">
-        <div class="ConnectWallet flex" @click="ConnectWalletloading = true">
+        <div class="ConnectWallet flex" @click="ConnectWalletclick()">
           <svg-icon :svgType="'attaTextLogo'" class="svg-img" />
           <p class="wordtitle">Connect Wallet</p>
         </div>
@@ -93,6 +93,8 @@ export default {
       ConnectWalletloading: false, // 钱包账户弹框控制
       loadingwallettitle: '账户',//钱包账户标题/选中钱包插件loading标题
       checkwallet: 0,//选择的钱包插件
+      chainId : 0,
+      loading : false,
     };
   },
   mounted() {
@@ -120,6 +122,20 @@ export default {
       this.loadingwallettitle = 'Connect to MetaMask';
       this.checkwallet = type;
     },
+    // 点击链接钱包
+    async ConnectWalletclick(){
+      debugger
+      this.chainId = await window.CHAIN.WALLET.chainId();
+      let accounts = await window.CHAIN.WALLET.enable();
+      this.loading = true;
+      debugger
+      if (accounts[0]) {
+        
+      } else {
+        
+      }
+      // this.ConnectWalletloading = true;
+    }
   },
 };
 </script>
