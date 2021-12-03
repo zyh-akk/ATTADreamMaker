@@ -21,10 +21,6 @@
   </div>
 </template>
 <script>
-import '../../../public/js/web3/web3.min.js'
-import '../../../public/js/web3/web3-provider.min.js'
-import '../../../public/js/web3/chainSetting.js'
-import '../../../public/js/web3/chainProvider.js'
 import SvgIcon from '@/components/svgIcon.vue'
 export default {
   components: { SvgIcon },

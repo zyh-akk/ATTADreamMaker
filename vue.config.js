@@ -15,7 +15,7 @@ module.exports = {
         },
         contentScripts: {
           entries: {
-            testDom:['src/views/testDom/test.js', 'src/views/testDom/cs-init.js', 'src/views/testDom/injectWeb3.js'],
+            testDom:['src/views/twitter/contentScript.js', 'src/views/twitter/init.js', 'src/views/twitter/injectWeb3.js'],
             // 图片编辑部分
             imageEdit:['src/views/imagesEdit/domEdit.js', 'src/views/imagesEdit/main.js']
           }
