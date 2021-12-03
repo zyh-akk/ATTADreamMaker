@@ -8,9 +8,7 @@ global.browser = require('webextension-polyfill');
 
 const timer = setInterval(() => {
   if (document.readyState === 'complete') {
-    console.log('dom over')
     window.clearInterval(timer);
-
     Vue.prototype.$browser = global.browser;
     Vue.use(ElementUI);
 

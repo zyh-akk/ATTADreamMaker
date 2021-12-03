@@ -112,13 +112,13 @@
         <p>6. Once your friend finished the minting process, you and your friend</p>
       </div>
     </el-dialog>
-    <dream-maker></dream-maker>
+    <dream-maker v-if="nftsDom"></dream-maker>
   </div>
 </template>
 <script>
 import SvgIcon from "@/components/svgIcon.vue";
 import CreateNft from "./createNft.vue";
-import DreamMaker from "./dreamMaker.vue";
+import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 export default {
   components: { SvgIcon, CreateNft,DreamMaker },
   data() {
@@ -134,6 +134,7 @@ export default {
       address: "",
       shearaddress: "",
       isshowCreateCoNFT : false,//Create Co-NFT 弹框 显示隐藏控制
+      nftsDom:false
     };
   },
   mounted() {
@@ -145,10 +146,6 @@ export default {
     // const modals = document.querySelector(".modalDom");
     // maindom.appendChild(modals);
 
-
-    $(document).on('click','[aria-label="Profile timelines"]',function(){
-      console.log('点击了');
-    });
 
     // vue中接收的事件
     var event = document.createEvent("Event");
@@ -170,6 +167,8 @@ export default {
         this.checkwallet = "0";
       }
     });
+
+    this.appendDom();
   },
   methods: {
     showNftModal() {
@@ -234,6 +233,27 @@ export default {
           break;
       }
     },
+
+    // 添加dom操作节点
+    appendDom(){
+      let infoDom = document.querySelector('[aria-label="Profile timelines"]');
+      if(infoDom){
+        this.nftsDom = true;
+      }else{
+        this.nftsDom = false;
+      }
+      let self = this;
+      $(document).on('click','[aria-label="Profile timelines"]',function(e){
+      let crdom = document.querySelector(".dream-maker");
+        console.log(crdom);
+        if(!crdom){
+          self.nftsDom = false;
+          setTimeout(()=>{
+            self.nftsDom = true;
+          },500)
+        }
+      })
+    }
   },
 };
 </script>
