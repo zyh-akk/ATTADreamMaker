@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dream-maker">
-      <p class="dream-maker-title">Dream
+      <p class="dream-maker-title" :class="nftsBol?'check-dream-maker-title':''">Dream
         <i class="check-dream" v-show="nftsBol"></i>
       </p>
     </div>
