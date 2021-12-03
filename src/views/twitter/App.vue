@@ -95,13 +95,15 @@
         @closeNftModal="closeNftModal"
       ></create-nft>
     </div>
+    <dream-maker></dream-maker>
   </div>
 </template>
 <script>
 import SvgIcon from "@/components/svgIcon.vue";
 import CreateNft from "./createNft.vue";
+import DreamMaker from "./dreamMaker.vue";
 export default {
-  components: { SvgIcon, CreateNft },
+  components: { SvgIcon, CreateNft,DreamMaker },
   data() {
     return {
       ATTAMakerVisible: false, //ATTA Dream Maker弹框控制
@@ -124,6 +126,11 @@ export default {
     let maindom = document.querySelector("body");
     const modals = document.querySelector(".modalDom");
     maindom.appendChild(modals);
+
+
+    $(document).on('click','[aria-label="Profile timelines"]',function(){
+      console.log('点击了');
+    });
 
     // vue中接收的事件
     var event = document.createEvent("Event");
