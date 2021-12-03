@@ -138,10 +138,8 @@ export default {
     });
     document.addEventListener("switchaddressCallback", (event) => {
       if (event.detail.length > 0) {
-        if (event.detail.length > 0) {
-          this.address = event.detail[0];
-          this.shearaddress =this.address.substring(0, 7) +"******" +this.address.substr(this.address.length - 7);
-        }
+        this.address = event.detail[0];
+        this.shearaddress =this.address.substring(0, 7) +"******" +this.address.substr(this.address.length - 7);
         this.ConnectWalletVisible = false;
         this.ConnectWalletloading = true;
         this.loadingwallettitle = "账户";
@@ -154,7 +152,6 @@ export default {
       this.showCreateNftModal = true;
     },
     closeNftModal() {
-      console.log("---");
       this.showCreateNftModal = false;
     },
     test() {
