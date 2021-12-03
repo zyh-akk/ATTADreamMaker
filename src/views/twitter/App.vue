@@ -9,19 +9,17 @@
             test();
           "
         >
-          <el-dropdown trigger="click">
+          <el-dropdown trigger="click" @command="selectclick">
             <div class="flex">
               <svg-icon :svgType="'attaLogo'" class="svg-img" />
               <p class="wordtitle">ATTA Dream Maker</p>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                ><span @click="showNftModal">Create NFT</span></el-dropdown-item
-              >
-              <el-dropdown-item>Create poster NFT</el-dropdown-item>
-              <el-dropdown-item>Create Co-NFT</el-dropdown-item>
-              <el-dropdown-item>NFT Hall</el-dropdown-item>
-              <el-dropdown-item>My NFTs</el-dropdown-item>
+              <el-dropdown-item command="1">Create NFT</el-dropdown-item>
+              <el-dropdown-item command="2">Create poster NFT</el-dropdown-item>
+              <el-dropdown-item command="3">Create Co-NFT</el-dropdown-item>
+              <el-dropdown-item command="4">NFT Hall</el-dropdown-item>
+              <el-dropdown-item command="5">My NFTs</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -89,12 +87,31 @@
         </el-dialog>
       </div>
     </div>
+    <!-- Create NFT 弹框 -->
     <div class="modalDom">
       <create-nft
         v-if="showCreateNftModal"
         @closeNftModal="closeNftModal"
       ></create-nft>
     </div>
+    <!-- Create Co-NFT 弹框 （已完成）-->
+    <el-dialog
+      title="Co-NFT instruction"
+      :visible.sync="isshowCreateCoNFT"
+      width="40%"
+      :modal="false"
+      top="40vh"
+      custom-class="CreateCoNFT_css"
+    >
+      <div class="rule">
+        <p>1. Go to the your friend's profile page</p>
+        <p>2. Click the NFT module</p>
+        <p>3. Click the button "Create a Co-NFT for him/her</p>
+        <p>4. Then follow the steps to upload the basic info</p>
+        <p>5. Tell him/her to accept the Co-NFT request</p>
+        <p>6. Once your friend finished the minting process, you and your friend</p>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -114,6 +131,7 @@ export default {
       showCreateNftModal: false,
       address: "",
       shearaddress: "",
+      isshowCreateCoNFT : false,//Create Co-NFT 弹框 显示隐藏控制
     };
   },
   mounted() {
@@ -121,9 +139,9 @@ export default {
     let leftdom = document.querySelector('[aria-label][role="navigation"]');
     let crdom = document.querySelector(".ATTADreamMaker-dom");
     leftdom.appendChild(crdom);
-    let maindom = document.querySelector("body");
-    const modals = document.querySelector(".modalDom");
-    maindom.appendChild(modals);
+    // let maindom = document.querySelector("body");
+    // const modals = document.querySelector(".modalDom");
+    // maindom.appendChild(modals);
 
     // vue中接收的事件
     var event = document.createEvent("Event");
@@ -135,7 +153,10 @@ export default {
     document.addEventListener("switchaddressCallback", (event) => {
       if (event.detail.length > 0) {
         this.address = event.detail[0];
-        this.shearaddress =this.address.substring(0, 7) +"******" +this.address.substr(this.address.length - 7);
+        this.shearaddress =
+          this.address.substring(0, 7) +
+          "******" +
+          this.address.substr(this.address.length - 7);
         this.ConnectWalletVisible = false;
         this.ConnectWalletloading = true;
         this.loadingwallettitle = "账户";
@@ -182,6 +203,28 @@ export default {
       } else {
         this.address = "";
         this.ConnectWalletVisible = true;
+      }
+    },
+    // 点击下拉框
+    selectclick(type) {
+      switch (type) {
+        case '1':
+          this.showNftModal();
+          break;
+        case '2':
+          this.showNftModal();
+          break;
+        case '3':
+          this.isshowCreateCoNFT = true;
+          break;
+        case '4':
+          this.showNftModal();
+          break;
+        case '5':
+          this.showNftModal();
+          break;
+        default:
+          break;
       }
     },
   },
@@ -302,7 +345,8 @@ export default {
 </style>
 <style lang="css">
 .MaskNetwork-dialogbox .el-dialog__header,
-.MaskNetwork-dialogbox2 .el-dialog__header {
+.MaskNetwork-dialogbox2 .el-dialog__header ,
+.CreateCoNFT_css .el-dialog__header{
   border-bottom: 1px solid #919ca3;
 }
 </style>
