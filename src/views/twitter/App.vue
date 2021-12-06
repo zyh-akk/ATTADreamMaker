@@ -238,10 +238,10 @@ export default {
     // 添加dom操作节点
     appendDom(){
       let self = this;
-      let infoDom = document.querySelector('[aria-label="Profile timelines"]');
+      let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]');
       if(infoDom){
         this.nftsDom = true;
-        $(document).on('click','[aria-label="Profile timelines"]',function(e){
+        $(document).on('click','nav.r-qklmqi[aria-label][role="navigation"]',function(e){
           let crdom = document.querySelector(".dream-maker");
           if(!crdom){
             self.nftsDom = false;
@@ -257,9 +257,9 @@ export default {
     // 左侧列表添加点击事件，判断是否需要开启nft列表
     addClick(){
       let self = this;
-      let navdom = document.querySelector('[aria-label][role="navigation"]').getElementsByTagName('a');
+      let navdom = document.querySelector('nav.r-1habvwh[aria-label][role="navigation"]').getElementsByTagName('a');
       $(navdom).on('click',function(event){
-        if(event.currentTarget && event.currentTarget.ariaLabel == 'Profile'){
+        if(event.currentTarget && (event.currentTarget.ariaLabel == 'Profile' || event.currentTarget.ariaLabel == '个人资料')){
           $(document).ready(function(){
             console.log(event.currentTarget.ariaLabel);
             //此时需要加载nft
