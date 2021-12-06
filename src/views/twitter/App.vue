@@ -111,6 +111,24 @@
         <p>6. Once your friend finished the minting process, you and your friend</p>
       </div>
     </el-dialog>
+    <!-- Your NFT info 弹框-->
+    <el-dialog
+      title="Co-NFT instruction"
+      :visible.sync="infoshow_dialog"
+      width="40%"
+      :modal="false"
+      top="35vh"
+      custom-class="infoshow_dialog_css"
+    >
+      <img src="" alt="">
+      <p>Name:{{123}}</p> 
+      <p>Description:{{123}}</p> 
+      <p>Wallet:{{address}}</p> 
+      <div class="btns">
+        <el-button type="primary">Previous</el-button>
+        <el-button type="primary">Next</el-button>
+      </div>
+    </el-dialog>
     <dream-maker v-if="nftsDom"></dream-maker>
   </div>
 </template>
@@ -133,7 +151,9 @@ export default {
       address: "",
       shearaddress: "",
       isshowCreateCoNFT : false,//Create Co-NFT 弹框 显示隐藏控制
-      nftsDom:false
+      nftsDom:false,
+      Returnfromsubassembly:false, //从子组件过来，引用选择钱包弹框
+      infoshow_dialog : false,//你的nft信息展示弹框
     };
   },
   mounted() {
@@ -149,11 +169,12 @@ export default {
     // vue中接收的事件
     var event = document.createEvent("Event");
     event.initEvent("msgEventCallback", true, true);
-    event.initEvent("switchaddressCallback", true, true); // detail是事件数据
+    event.initEvent("switchaddressCallback1", true, true); // detail是事件数据
+    event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
     document.addEventListener("msgEventCallback", (event) => {
       this.jsaddress(event.detail);
     });
-    document.addEventListener("switchaddressCallback", (event) => {
+    document.addEventListener("switchaddressCallback1", (event) => {
       if (event.detail.length > 0) {
         this.address = event.detail[0];
         this.shearaddress =this.address.substring(0, 7) + "******" +this.address.substr(this.address.length - 7);
@@ -162,6 +183,14 @@ export default {
       this.ConnectWalletloading = true;
       this.loadingwallettitle = "账户";
       this.checkwallet = "0";
+    });
+    document.addEventListener("switchaddressCallback2", (event) => {
+      this.ConnectWalletVisible = false;
+      if (event.detail.length > 0) {
+        this.address = event.detail[0];
+        this.shearaddress =this.address.substring(0, 7) + "******" +this.address.substr(this.address.length - 7);
+      }
+      this.infoshow_dialog = true;
     });
 
     this.appendDom();
@@ -177,6 +206,7 @@ export default {
     // 调用选择钱包弹框
     SelectWalletfun(){
       this.ConnectWalletVisible = true;
+      this.Returnfromsubassembly = true;
     },
     test() {
       console.log(window.CHAIN, "测试数据");
@@ -187,12 +217,15 @@ export default {
     },
     // 选中钱包插件
     checkwallclick(type) {
-      this.ConnectWalletVisible = false;
-      this.ConnectWalletloading = true;
-      this.loadingwallettitle = "Connect to MetaMask";
-      this.checkwallet = type;
-      const cEvt = new CustomEvent("switchaddress", { detail: true });
+      if (!this.Returnfromsubassembly) {
+        this.ConnectWalletVisible = false;
+        this.ConnectWalletloading = true;
+        this.loadingwallettitle = "Connect to MetaMask";
+        this.checkwallet = type;
+      }
+      const cEvt = new CustomEvent("switchaddress", { detail: {Callbackname : this.Returnfromsubassembly ? 'switchaddressCallback2' : 'switchaddressCallback1'}  });
       document.dispatchEvent(cEvt);
+      this.Returnfromsubassembly = false;
     },
     // 点击链接钱包
     async ConnectWalletclick() {
@@ -385,11 +418,20 @@ export default {
     }
   }
 }
+.infoshow_dialog_css{
+  p{
+    padding-left: 20px;
+  }
+  .btns{
+    text-align: center;
+  }
+}
 </style>
 <style lang="css">
 .MaskNetwork-dialogbox .el-dialog__header,
 .MaskNetwork-dialogbox2 .el-dialog__header ,
-.CreateCoNFT_css .el-dialog__header{
+.CreateCoNFT_css .el-dialog__header,
+.infoshow_dialog_css .el-dialog__header{
   border-bottom: 1px solid #919ca3;
 }
 </style>
