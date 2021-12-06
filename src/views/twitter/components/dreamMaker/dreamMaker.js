@@ -6,7 +6,8 @@ export default {
     return {
       imageUrl: '',
       nftsBol:false,
-      appendDomIndex:0
+      appendDomIndex:0,
+      nftType:''
     };
   },
   mounted(){
@@ -33,9 +34,12 @@ export default {
   },
 
   methods: {
+    OperationNft(type){
+      this.nftType = type;
+    },
     appendDom(){
       let self = this;
-      // 避免死循环
+      // 获取10次，页面还没有加载该dom就不在创建了，避免死循环
       if(this.appendDomIndex > 10) return;
       this.appendDomIndex = this.appendDomIndex + 1;
       $(document).ready(function(){
