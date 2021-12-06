@@ -237,7 +237,7 @@ export default {
       let infoDom = document.querySelector('[aria-label="Profile timelines"]');
       if(infoDom){
         this.nftsDom = true;
-        $(infoDom).on('click',function(e){
+        $(document).on('click','[aria-label="Profile timelines"]',function(e){
           let crdom = document.querySelector(".dream-maker");
           if(!crdom){
             self.nftsDom = false;
