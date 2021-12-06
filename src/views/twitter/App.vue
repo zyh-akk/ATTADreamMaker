@@ -6,9 +6,7 @@
           class="MaskNetwork"
           @click="
             ATTAMakerVisible = true;
-            test();
-          "
-        >
+            test();">
           <el-dropdown trigger="click" @command="selectclick">
             <div class="flex">
               <svg-icon :svgType="'attaLogo'" class="svg-img"/>
@@ -166,6 +164,7 @@ export default {
     });
 
     this.appendDom();
+    this.addClick();
   },
   methods: {
     showNftModal() {
@@ -233,21 +232,36 @@ export default {
 
     // 添加dom操作节点
     appendDom(){
+      let self = this;
       let infoDom = document.querySelector('[aria-label="Profile timelines"]');
       if(infoDom){
         this.nftsDom = true;
+        $(document).on('click','[aria-label="Profile timelines"]',function(e){
+          let crdom = document.querySelector(".dream-maker");
+          if(!crdom){
+            self.nftsDom = false;
+            setTimeout(()=>{
+              self.nftsDom = true;
+            },500)
+          }
+        })
       }else{
         this.nftsDom = false;
       }
+    },
+    // 左侧列表添加点击事件，判断是否需要开启nft列表
+    addClick(){
       let self = this;
-      $(document).on('click','[aria-label="Profile timelines"]',function(e){
-      let crdom = document.querySelector(".dream-maker");
-        console.log(crdom);
-        if(!crdom){
-          self.nftsDom = false;
-          setTimeout(()=>{
+      let navdom = document.querySelector('[aria-label="Primary"][role="navigation"]').getElementsByTagName('a');
+      $(navdom).on('click',function(event){
+        if(event.currentTarget && event.currentTarget.ariaLabel == 'Profile'){
+          $(document).ready(function(){
+            console.log(event.currentTarget.ariaLabel);
+            //此时需要加载nft
             self.nftsDom = true;
-          },500)
+          })
+        }else{
+          self.nftsDom = false;
         }
       })
     }
