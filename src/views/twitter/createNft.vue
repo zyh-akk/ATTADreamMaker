@@ -10,7 +10,7 @@
     >
       <el-upload
         class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action=uploadUrl
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
@@ -30,9 +30,12 @@ export default {
   data() {
     return {
       imageUrl: "",
+      uploadUrl: ''
     };
   },
-  mounted() {},
+  mounted() {
+    this.uploadUrl = process.env.VUE_APP_BASEURL + '/v2/twitter/nft/upload'
+  },
 
   methods: {
     closeModal() {

@@ -138,7 +138,6 @@ export default {
     };
   },
   mounted() {
-    console.log(process.env)
     console.log(localStorage.getItem("_grecaptcha"), "测试缓存");
     let leftdom = document.querySelector('[aria-label][role="navigation"]');
     let crdom = document.querySelector(".ATTADreamMaker-dom");
