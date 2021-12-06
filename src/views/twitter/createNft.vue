@@ -15,9 +15,7 @@
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
       >
-        <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" /> -->
         <svg-icon class="svg-class" :svgType="'add'" :svgW='48' :svgH='48'/>
-        <!-- <i class="el-icon-plus avatar-uploader-icon"></i> -->
       </el-upload>
       <el-button type="primary">Next</el-button>
     </el-dialog>
@@ -42,7 +40,6 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      debugger;
       // const isJPG = file.type === 'image/jpeg';
       // const isLt2M = file.size / 1024 / 1024 < 2;
 
