@@ -7,10 +7,11 @@ export default {
       imageUrl: '',
       nftsBol:false,
       appendDomIndex:0,
-      nftType:''
+      nftType:'',
     };
   },
   mounted(){
+    this.search();
     let self = this;
     $(document).ready(function(){
       self.appendDom();
@@ -82,6 +83,15 @@ export default {
           $(childDom).attr('style','display:inline-block');
         }
       });
+    },
+    // 获取nft
+    search(){
+      let mintUser = '' ;//用户id
+      let type = this.nftType=='nft'?0:this.nftType=='posterNft'?1:this.nftType=='jointNft'?2:'';//nft类型type类型    0:NFT/1:POSTER/2:Co-NFT
+      let getNfts = process.env.VUE_APP_BASEURL + `/v2/twitter/nft/list?mintUser=${mintUser}&type=${type}`;
+      fetch('http://example.com/movies.json')
+      .then(response => response.json())
+      .then(data => console.log(data));
     }
   }
 };

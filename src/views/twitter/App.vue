@@ -121,9 +121,9 @@
       custom-class="infoshow_dialog_css"
     >
       <img src="" alt="">
-      <p>Name:{{123}}</p> 
-      <p>Description:{{123}}</p> 
-      <p>Wallet:{{address}}</p> 
+      <p>Name:{{123}}</p>
+      <p>Description:{{123}}</p>
+      <p>Wallet:{{address}}</p>
       <div class="btns">
         <el-button type="primary">Previous</el-button>
         <el-button type="primary">Next</el-button>
@@ -154,6 +154,7 @@ export default {
       nftsDom:false,
       Returnfromsubassembly:false, //从子组件过来，引用选择钱包弹框
       infoshow_dialog : false,//你的nft信息展示弹框
+      userInfo:{},//推特保存的用户信息
     };
   },
   mounted() {
@@ -192,6 +193,14 @@ export default {
       }
       this.infoshow_dialog = true;
     });
+
+    // 获取用户信息，顺序不能改
+    document.addEventListener("userEventCallback", (e) => {
+      this.userInfo = e.detail;//identity_id：用户id
+    });
+    // 定义全局事件
+    let newEvent = new CustomEvent('userInfoEvent', {});
+    document.dispatchEvent(newEvent);
 
     this.appendDom();
     this.addClick();

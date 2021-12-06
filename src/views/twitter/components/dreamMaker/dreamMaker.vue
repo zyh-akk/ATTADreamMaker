@@ -8,11 +8,11 @@
     <div class="dream-maker-model" v-show="nftsBol">
       <div class="nft-btn">
         <p :class="nftType=='nft'?'check-nft':''" @click="OperationNft('nft')">NFT</p>
-        <P :class="nftType=='posterNft'?'check-nft':''" @click="OperationNft('posterNft')">海报</P>
-        <p :class="nftType=='jointNft'?'check-nft':''" @click="OperationNft('jointNft')">联合NFT</p>
+        <P :class="nftType=='posterNft'?'check-nft':''" @click="OperationNft('posterNft')">POSTER</P>
+        <p :class="nftType=='jointNft'?'check-nft':''" @click="OperationNft('jointNft')">Co-NFT</p>
       </div>
       <div class="nft-btn">
-        <p :class="nftType=='createNft'?'check-nft':''" @click="OperationNft('createNft')">创建海报NFT</p>
+        <p :class="nftType=='createNft'?'check-nft':''" @click="OperationNft('createNft')">Create a personal NFT</p>
       </div>
 
       <div class="nft-list">

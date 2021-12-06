@@ -1,6 +1,4 @@
-
-// console.log(window.CHAIN);
-// // 注册一个自定事件
+// 注册一个自定事件
 var event = document.createEvent('Event');
 event.initEvent('msgEvent', true, true);
 // detail是事件数据
