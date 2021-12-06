@@ -4,22 +4,20 @@
 var event = document.createEvent('Event');
 event.initEvent('msgEvent', true, true);
 // detail是事件数据
+// 获取钱包地址
 document.addEventListener('msgEvent', function(event){
 	window.CHAIN.WALLET.enable()
 	.then((address)=>{
-		if (event.detail) {
-		    var newEvent = new CustomEvent('msgEventCallback', { bubbles:true,cancelable:true,composed:true ,detail : address});
-		    document.dispatchEvent(newEvent);
-		}
+	    var newEvent = new CustomEvent('msgEventCallback', { bubbles:true,cancelable:true,composed:true ,detail : address});
+	    document.dispatchEvent(newEvent);
 	})
 });
+// 更改钱包地址-强制唤起
 document.addEventListener('switchaddress', function(event){
 	window.CHAIN.WALLET.connect('MetaMask')
 	.then((address)=>{
-		if (address) {
-		    var newEvent = new CustomEvent('switchaddressCallback', { bubbles:true,cancelable:true,composed:true ,detail : address});
-		    document.dispatchEvent(newEvent);
-		}
+	    var newEvent = new CustomEvent('switchaddressCallback', { bubbles:true,cancelable:true,composed:true ,detail : address ? address : []});
+	    document.dispatchEvent(newEvent);
 	})
 });
 function loginweb3(susses = null,errorcatch = null){

@@ -11,7 +11,7 @@
         >
           <el-dropdown trigger="click" @command="selectclick">
             <div class="flex">
-              <svg-icon :svgType="'attaLogo'" class="svg-img" />
+              <svg-icon :svgType="'attaLogo'" class="svg-img" svgW='100' svgH='100'/>
               <p class="wordtitle">ATTA Dream Maker</p>
             </div>
             <el-dropdown-menu slot="dropdown">
@@ -26,7 +26,7 @@
       </div>
       <div class="ConnectWalletbox">
         <div class="ConnectWallet flex" @click="ConnectWalletclick()">
-          <svg-icon :svgType="'attaTextLogo'" class="svg-img" />
+          <svg-icon :svgType="'attaLogo'" class="svg-img" svgW='100' svgH='100'/>
           <p class="wordtitle">Connect Wallet</p>
         </div>
         <!-- 选择钱包插件 -->
@@ -39,11 +39,11 @@
           top="40vh"
         >
           <div class="walletbox" @click="checkwallclick(1)">
-            <svg-icon :svgType="'mateMask'" class="svg-img" />
+            <svg-icon :svgType="'mateMask'" class="svg-img" svgW='200' svgH='200'/>
             <p>MetaMask</p>
           </div>
           <div class="walletbox" @click="checkwallclick(2)">
-            <svg-icon :svgType="'mateMask'" class="svg-img" />
+            <svg-icon :svgType="'mateMask'" class="svg-img" svgW='200' svgH='200'/>
             <p>MetaMask</p>
           </div>
         </el-dialog>
@@ -56,7 +56,7 @@
           custom-class="MaskNetwork-dialogbox2"
         >
           <div class="useraddressbox flex">
-            <svg-icon :svgType="'mateMask'" class="svg-img" />
+            <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
             <div class="contentbox" v-if="checkwallet <= 0">
               <div class="contentbox-top flex">
                 <p>MetaMask</p>
@@ -71,7 +71,7 @@
             <div class="content-loading" v-else>
               <p class="loading-p">{{ loadingwallettitle }}</p>
               <div class="loading-div">
-                <svg-icon class="svg-class" :svgType="'loading'" />
+                <svg-icon class="svg-class" :svgType="'loading'" svgW='100' svgH='100'/>
               </div>
             </div>
             <el-button
@@ -157,15 +157,12 @@ export default {
     document.addEventListener("switchaddressCallback", (event) => {
       if (event.detail.length > 0) {
         this.address = event.detail[0];
-        this.shearaddress =
-          this.address.substring(0, 7) +
-          "******" +
-          this.address.substr(this.address.length - 7);
-        this.ConnectWalletVisible = false;
-        this.ConnectWalletloading = true;
-        this.loadingwallettitle = "账户";
-        this.checkwallet = "0";
+        this.shearaddress =this.address.substring(0, 7) + "******" +this.address.substr(this.address.length - 7);
       }
+      this.ConnectWalletVisible = false;
+      this.ConnectWalletloading = true;
+      this.loadingwallettitle = "账户";
+      this.checkwallet = "0";
     });
 
     this.appendDom();
