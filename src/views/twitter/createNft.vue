@@ -6,7 +6,7 @@
       :visible="true"
       :modal="false"
       @close="closeModal"
-      custom-class="MaskNetwork-dialogbox2"
+      custom-class="CreateNFTbox-css"
     >
       <el-upload
         class="avatar-uploader"
@@ -15,8 +15,9 @@
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
       >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" /> -->
+        <svg-icon class="svg-class" :svgType="'add'" :svgW='48' :svgH='48'/>
+        <!-- <i class="el-icon-plus avatar-uploader-icon"></i> -->
       </el-upload>
       <el-button type="primary">Next</el-button>
     </el-dialog>
@@ -58,9 +59,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.create-nft-wrap {
-  text-align: center;
-}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -83,5 +81,31 @@ export default {
   width: 178px;
   height: 178px;
   display: block;
+}
+.avatar-uploader{
+  border: 1px dashed #c0ccda;
+  border-radius: 6px;
+  width: 175px;
+  height: 175px;
+  margin: 30px auto;
+  position: relative;
+  .svg-class{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 48px;
+    height: 48px;
+  }
+}
+</style>
+<style lang="css">
+.CreateNFTbox-css .el-dialog__header{
+  border-bottom: 1px solid #919ca3;
+}
+.CreateNFTbox-css .el-dialog__body{
+  text-align: center;
 }
 </style>

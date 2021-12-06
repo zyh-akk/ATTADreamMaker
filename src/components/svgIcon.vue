@@ -25,7 +25,9 @@
         </path>
     </svg>
     <!-- 加号 -->
-    <svg @click="mouseOver('add')" v-if="svgType=='add'||svgType=='all'" :width="svgW?svgW:26.5" :height="svgH?svgH:26.5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M24.0607 10L24.024 38" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 24L38 24" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg @click="mouseOver('add')" v-if="svgType=='add'||svgType=='all'" :width="svgW?svgW:26.5" :height="svgH?svgH:26.5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M24.0607 10L24.024 38" stroke="#c0ccda" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 24L38 24" stroke="#c0ccda" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
     <p v-if="svgType=='all'">当前type属性：(自定义宽度：svgW='100'  自定义高度：svgH='100')</p>
     <p style="font-size: 12px;" v-if="svgType=='all' && svgTypeText">{{svgS}}{{svgTypeText}}{{svgE}}</p>
   </div>
