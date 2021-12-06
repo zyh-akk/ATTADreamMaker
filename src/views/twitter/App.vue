@@ -11,7 +11,7 @@
         >
           <el-dropdown trigger="click" @command="selectclick">
             <div class="flex">
-              <svg-icon :svgType="'attaLogo'" class="svg-img" svgW='100' svgH='100'/>
+              <svg-icon :svgType="'attaLogo'" class="svg-img"/>
               <p class="wordtitle">ATTA Dream Maker</p>
             </div>
             <el-dropdown-menu slot="dropdown">
@@ -26,7 +26,7 @@
       </div>
       <div class="ConnectWalletbox">
         <div class="ConnectWallet flex" @click="ConnectWalletclick()">
-          <svg-icon :svgType="'attaLogo'" class="svg-img" svgW='100' svgH='100'/>
+          <svg-icon :svgType="'attaLogo'" class="svg-img"/>
           <p class="wordtitle">Connect Wallet</p>
         </div>
         <!-- 选择钱包插件 -->
@@ -39,11 +39,11 @@
           top="40vh"
         >
           <div class="walletbox" @click="checkwallclick(1)">
-            <svg-icon :svgType="'mateMask'" class="svg-img" svgW='200' svgH='200'/>
+            <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
             <p>MetaMask</p>
           </div>
           <div class="walletbox" @click="checkwallclick(2)">
-            <svg-icon :svgType="'mateMask'" class="svg-img" svgW='200' svgH='200'/>
+            <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
             <p>MetaMask</p>
           </div>
         </el-dialog>
@@ -71,7 +71,7 @@
             <div class="content-loading" v-else>
               <p class="loading-p">{{ loadingwallettitle }}</p>
               <div class="loading-div">
-                <svg-icon class="svg-class" :svgType="'loading'" svgW='100' svgH='100'/>
+                <svg-icon class="svg-class" :svgType="'loading'"/>
               </div>
             </div>
             <el-button
