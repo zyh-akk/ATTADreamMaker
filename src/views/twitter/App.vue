@@ -252,7 +252,7 @@ export default {
     // 左侧列表添加点击事件，判断是否需要开启nft列表
     addClick(){
       let self = this;
-      let navdom = document.querySelector('[aria-label="Primary"][role="navigation"]').getElementsByTagName('a');
+      let navdom = document.querySelector('[aria-label][role="navigation"]').getElementsByTagName('a');
       $(navdom).on('click',function(event){
         if(event.currentTarget && event.currentTarget.ariaLabel == 'Profile'){
           $(document).ready(function(){
