@@ -11,10 +11,10 @@
     >
       <el-upload
         class="avatar-uploader"
-        action=uploadUrl
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload"
+        action=''
+        :auto-upload='false'
+        :on-success='handleAvatarSuccess'
+        :http-request='beforeAvatarUpload'
       >
         <svg-icon class="svg-class" :svgType="'add'" :svgW="48" :svgH="48" />
       </el-upload>
@@ -68,9 +68,10 @@ export default {
       this.$emit("closeNftModal", true);
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(res,file);
     },
-    beforeAvatarUpload(file) {
+    beforeAvatarUpload(file,fileList) {
+      console.log(file, fileList);
       // const isJPG = file.type === 'image/jpeg';
       // const isLt2M = file.size / 1024 / 1024 < 2;
       // if (!isJPG) {
