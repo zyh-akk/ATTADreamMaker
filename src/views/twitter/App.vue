@@ -36,7 +36,7 @@
           width="30%"
           :modal="false"
           custom-class="MaskNetwork-dialogbox"
-          top="40vh"
+          top="35vh"
         >
           <div class="walletbox" @click="checkwallclick(1)">
             <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
@@ -52,7 +52,7 @@
           :visible.sync="ConnectWalletloading"
           width="30%"
           :modal="false"
-          top="40vh"
+          top="35vh"
           custom-class="MaskNetwork-dialogbox2"
         >
           <div class="useraddressbox flex">
@@ -92,6 +92,7 @@
       <create-nft
         v-if="showCreateNftModal"
         @closeNftModal="closeNftModal"
+        @SelectWalletfun="SelectWalletfun"
       ></create-nft>
     </div>
     <!-- Create Co-NFT 弹框 （已完成）-->
@@ -100,7 +101,7 @@
       :visible.sync="isshowCreateCoNFT"
       width="40%"
       :modal="false"
-      top="40vh"
+      top="35vh"
       custom-class="CreateCoNFT_css"
     >
       <div class="rule">
@@ -174,6 +175,10 @@ export default {
     },
     closeNftModal() {
       this.showCreateNftModal = false;
+    },
+    // 调用选择钱包弹框
+    SelectWalletfun(){
+      this.ConnectWalletVisible = true;
     },
     test() {
       console.log(window.CHAIN, "测试数据");

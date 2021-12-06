@@ -1,12 +1,13 @@
 <template>
   <div class="create-nft-wrap">
+    <!-- 上传文件弹框 -->
     <el-dialog
       title="Upload your file"
       width="30%"
-      :visible="true"
+      :visible.sync="upload_dialog"
       :modal="false"
-      @close="closeModal"
       custom-class="CreateNFTbox-css"
+      top="35vh"
     >
       <el-upload
         class="avatar-uploader"
@@ -15,9 +16,31 @@
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
       >
-        <svg-icon class="svg-class" :svgType="'add'" :svgW='48' :svgH='48'/>
+        <svg-icon class="svg-class" :svgType="'add'" :svgW="48" :svgH="48" />
       </el-upload>
-      <el-button type="primary">Next</el-button>
+      <el-button type="primary" @click="uploaddialogclick()">Next</el-button>
+    </el-dialog>
+    <!-- 填写信息弹框 -->
+    <el-dialog
+      title="Fill the NFT info"
+      width="30%"
+      :visible.sync="info_dialog"
+      :modal="false"
+      custom-class="CreateNFT-info-css"
+      top="35vh"
+    >
+      <div class="demo-input-suffix">
+        <span>Name :</span>
+        <el-input placeholder="" v-model="input1_info"> </el-input>
+      </div>
+      <div class="demo-input-suffix">
+        <span>Description :</span>
+        <el-input type="textarea" :rows="3" placeholder="" v-model="input2_info"> </el-input>
+      </div>
+      <div class="btns">
+        <el-button type="primary">Previous</el-button>
+        <el-button type="primary" @click="SelectWalletclick">Next</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -28,6 +51,10 @@ export default {
   data() {
     return {
       imageUrl: "",
+      upload_dialog: true,
+      info_dialog: false,
+      input1_info : "",
+      input2_info : "",
     };
   },
   mounted() {},
@@ -42,7 +69,6 @@ export default {
     beforeAvatarUpload(file) {
       // const isJPG = file.type === 'image/jpeg';
       // const isLt2M = file.size / 1024 / 1024 < 2;
-
       // if (!isJPG) {
       //   this.$message.error('上传头像图片只能是 JPG 格式!');
       // }
@@ -51,6 +77,16 @@ export default {
       // }
       // return isJPG && isLt2M;
     },
+    // 调用选择钱包弹框
+    SelectWalletclick(){
+      this.info_dialog = false;
+      this.$emit("SelectWalletfun", true);
+    },
+    // 上传弹框 下一步
+    uploaddialogclick(){
+      this.info_dialog = true;
+      this.upload_dialog = false;
+    }
   },
 };
 </script>
@@ -79,14 +115,14 @@ export default {
   height: 178px;
   display: block;
 }
-.avatar-uploader{
+.avatar-uploader {
   border: 1px dashed #c0ccda;
   border-radius: 6px;
   width: 175px;
   height: 175px;
   margin: 30px auto;
   position: relative;
-  .svg-class{
+  .svg-class {
     position: absolute;
     top: 0;
     left: 0;
@@ -97,12 +133,20 @@ export default {
     height: 48px;
   }
 }
+.CreateNFT-info-css{
+  .demo-input-suffix{
+    margin: 20px;
+  }
+  .btns{
+    text-align: center;
+  }
+}
 </style>
 <style lang="css">
-.CreateNFTbox-css .el-dialog__header{
+.CreateNFTbox-css .el-dialog__header ,.CreateNFT-info-css .el-dialog__header{
   border-bottom: 1px solid #919ca3;
 }
-.CreateNFTbox-css .el-dialog__body{
+.CreateNFTbox-css .el-dialog__body {
   text-align: center;
 }
 </style>
