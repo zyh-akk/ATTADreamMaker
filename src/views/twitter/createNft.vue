@@ -33,6 +33,7 @@ export default {
   },
   mounted() {
     this.uploadUrl = process.env.VUE_APP_BASEURL + '/v2/twitter/nft/upload'
+    console.log(this.uploadUrl);
   },
 
   methods: {
