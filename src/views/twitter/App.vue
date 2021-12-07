@@ -90,7 +90,6 @@
       <create-nft
         v-if="showCreateNftModal"
         @closeNftModal="closeNftModal"
-        @SelectWalletfun="SelectWalletfun"
       ></create-nft>
     </div>
     <!-- Create Co-NFT 弹框 （已完成）-->
