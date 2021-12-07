@@ -11,14 +11,19 @@
     >
       <el-upload
         class="avatar-uploader"
-        action=''
-        :auto-upload='false'
-        :on-success='handleAvatarSuccess'
-        :http-request='beforeAvatarUpload'
+        ref="upload"
+        :action="uploadUrl"
+        :show-file-list="false"
+        :before-upload="beforeUpload"
+        :on-success="handleChange"
+        :on-change="onChange"
+        :auto-upload="false"
+        :data="addlist"
       >
-        <svg-icon class="svg-class" :svgType="'add'" :svgW="48" :svgH="48" />
+        <img v-if="imageUrl" :src="imageUrl" class="avatar" alt />
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
-      <el-button type="primary" @click="uploaddialogclick()">Next</el-button>
+      <el-button type="primary" @click="uploaddialogclick">Next</el-button>
     </el-dialog>
     <!-- 填写信息弹框 -->
     <el-dialog
@@ -31,11 +36,11 @@
     >
       <div class="demo-input-suffix">
         <span>Name :</span>
-        <el-input placeholder="" v-model="input1_info"> </el-input>
+        <el-input placeholder v-model="input1_info"></el-input>
       </div>
       <div class="demo-input-suffix">
         <span>Description :</span>
-        <el-input type="textarea" :rows="3" placeholder="" v-model="input2_info"> </el-input>
+        <el-input type="textarea" :rows="3" placeholder v-model="input2_info"></el-input>
       </div>
       <div class="btns">
         <el-button type="primary">Previous</el-button>
@@ -50,47 +55,67 @@ export default {
   components: { SvgIcon },
   data() {
     return {
+      addlist: null,
       imageUrl: "",
       upload_dialog: true,
       info_dialog: false,
-      input1_info : "",
-      input2_info : "",
+      input1_info: "",
+      input2_info: "",
       uploadUrl: ''
     };
   },
   mounted() {
     this.uploadUrl = process.env.VUE_APP_BASEURL + '/v2/twitter/nft/upload'
-    console.log(this.uploadUrl);
   },
 
   methods: {
     closeModal() {
       this.$emit("closeNftModal", true);
     },
-    handleAvatarSuccess(res, file) {
-      console.log(res,file);
+    beforeUpload() {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
     },
-    beforeAvatarUpload(file,fileList) {
-      console.log(file, fileList);
-      // const isJPG = file.type === 'image/jpeg';
-      // const isLt2M = file.size / 1024 / 1024 < 2;
-      // if (!isJPG) {
-      //   this.$message.error('上传头像图片只能是 JPG 格式!');
-      // }
-      // if (!isLt2M) {
-      //   this.$message.error('上传头像图片大小不能超过 2MB!');
-      // }
-      // return isJPG && isLt2M;
+    onChange(file, fileList) {
+      var _this = this;
+      var event = event || window.event;
+      var file = event.target.files[0];
+      var reader = new FileReader();
+      //转base64
+      reader.onload = function (e) {
+        _this.imageUrl = e.target.result //将图片路径赋值给src
+      }
+      reader.readAsDataURL(file);
+    },
+    handleChange(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
     },
     // 调用选择钱包弹框
-    SelectWalletclick(){
+    SelectWalletclick() {
       this.info_dialog = false;
       this.$emit("SelectWalletfun", true);
     },
     // 上传弹框 下一步
-    uploaddialogclick(){
-      this.info_dialog = true;
-      this.upload_dialog = false;
+    uploaddialogclick() {
+      console.log(this.imageUrl);
+      fetch(this.uploadUrl, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify({file:this.imageUrl}),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }).then(res=>{
+        console.log(res);
+      })
+      // this.info_dialog = true;
+      // this.upload_dialog = false;
     }
   },
 };
@@ -138,17 +163,18 @@ export default {
     height: 48px;
   }
 }
-.CreateNFT-info-css{
-  .demo-input-suffix{
+.CreateNFT-info-css {
+  .demo-input-suffix {
     margin: 20px;
   }
-  .btns{
+  .btns {
     text-align: center;
   }
 }
 </style>
 <style lang="css">
-.CreateNFTbox-css .el-dialog__header ,.CreateNFT-info-css .el-dialog__header{
+.CreateNFTbox-css .el-dialog__header,
+.CreateNFT-info-css .el-dialog__header {
   border-bottom: 1px solid #919ca3;
 }
 .CreateNFTbox-css .el-dialog__body {
