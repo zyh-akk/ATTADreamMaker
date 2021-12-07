@@ -14,9 +14,9 @@
         <el-upload
           class="avatar-uploader"
           ref="upload"
+          accept="image/video"
           :action="uploadUrl"
           :show-file-list="false"
-          :before-upload="beforeUpload"
           :on-success="handleSuccessFile"
           :on-change="onChange"
           :auto-upload="false"
@@ -85,10 +85,11 @@ export default {
       }
       reader.readAsDataURL(file);
     },
-    handleSuccessFile(response, file, fileList){
-      console.log(response, file, fileList,'-----');
+    handleSuccessFile(res, file, fileList){
+      console.log(res, file, fileList,'-----');
       this.info_dialog = true;
       this.upload_dialog = false;
+      this.nowStep = 2;
     },
 
     // 调用选择钱包弹框
@@ -99,7 +100,6 @@ export default {
     // 上传弹框 下一步
     uploaddialogclick() {
       this.$refs.upload.submit();
-      this.nowStep = 2;
     }
   },
 };
