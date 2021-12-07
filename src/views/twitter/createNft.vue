@@ -59,11 +59,12 @@ export default {
       input1_info: "",
       input2_info: "",
       uploadUrl: '',
-      nowStep:1
+      file: {},
+      nowStep : 1,
     };
   },
   mounted() {
-    this.uploadUrl = process.env.VUE_APP_BASEURL + '/v2/twitter/nft/upload'
+    this.uploadUrl = process.env.VUE_APP_BASEURL + 'v2/twitter/nft/upload'
   },
 
   methods: {
@@ -86,15 +87,15 @@ export default {
       var event = event || window.event;
       var file = event.target.files[0];
       var reader = new FileReader();
+      this.file = file
+      console.log(file);
       //转base64
       reader.onload = function (e) {
         _this.imageUrl = e.target.result //将图片路径赋值给src
       }
       reader.readAsDataURL(file);
     },
-    handleChange(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
+
     // 调用选择钱包弹框
     SelectWalletclick() {
       this.upload_dialog = false;
@@ -102,15 +103,19 @@ export default {
     },
     // 上传弹框 下一步
     uploaddialogclick() {
-      console.log(this.imageUrl);
+      const formData = new FormData()
+      formData.append('file',this.file)
+      console.log(this.file);
       fetch(this.uploadUrl, {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify({file:this.imageUrl}),
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
+        method: 'POST',
+        headers:{
+          'Content-Type': 'multipart/form-data'
+        },
+        body: formData
       }).then(res=>{
-        console.log(res);
+        console.log(res,'-----');
+      }).catch(err=>{
+        console.log(err);
       })
       this.nowStep = 2;
     }
