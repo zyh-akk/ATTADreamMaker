@@ -158,7 +158,7 @@ export default {
       }
       if (this.previewImgUrl) {
         this.nowStep = 2;
-        retren
+        return
       }
       this.loading=true
       this.$refs.upload.submit();
