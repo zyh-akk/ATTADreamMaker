@@ -49,11 +49,12 @@
       </div>
       <!-- 选择钱包弹框 -->
       <div v-if="nowStep == 3">
-        <div class="walletbox" @click="checkwallclick(1)">
+        <div :class="ischeckwallet == '1' ? 'checkwalletcss walletbox' : 'walletbox'" @click="checkwallet(1)">
+        <!-- <div class="walletbox" @click="checkwallclick(1)"> -->
           <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
           <p>MetaMask</p>
         </div>
-        <div class="walletbox" @click="checkwallclick(2)">
+        <div :class="ischeckwallet == '2' ? 'checkwalletcss walletbox' : 'walletbox'" @click="checkwallet(2)">
           <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
           <p>MetaMask</p>
         </div>
@@ -79,7 +80,8 @@ export default {
       uploadUrl: '',
       file: {},
       nowStep: 1,
-      loading:false
+      loading:false,
+      ischeckwallet : 0,
     };
   },
   mounted() {
@@ -125,6 +127,10 @@ export default {
       }
       this.loading=true
       this.$refs.upload.submit();
+    },
+    // 点击选中钱包
+    checkwallet(type){
+      this.ischeckwallet = type;
     }
   },
 };
@@ -203,7 +209,10 @@ export default {
       white-space: nowrap;
       margin-bottom: 8px;
     }
-  }
+}
+.checkwalletcss{
+  background-color: rgba(70, 171, 238, 0.2);
+}
 </style>
 <style lang="css">
 .CreateNFTbox-css .el-dialog__header {
