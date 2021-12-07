@@ -111,14 +111,16 @@
       </div>
     </el-dialog>
     <dream-maker v-if="nftsDom" :userInfo="userInfo"></dream-maker>
+    <image-edit v-if="showImageEditModal" @closeImageEdit="closeImageEdit"></image-edit>
   </div>
 </template>
 <script>
 import SvgIcon from "@/components/svgIcon.vue";
 import CreateNft from "./createNft.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
+import ImageEdit from "./components/imageEdit/imageEdit.vue";
 export default {
-  components: { SvgIcon, CreateNft,DreamMaker },
+  components: { SvgIcon, CreateNft,DreamMaker,ImageEdit },
   data() {
     return {
       ATTAMakerVisible: false, //ATTA Dream Maker弹框控制
@@ -136,6 +138,7 @@ export default {
       Returnfromsubassembly:false, //从子组件过来，引用选择钱包弹框
       infoshow_dialog : false,//你的nft信息展示弹框
       userInfo:{},//推特保存的用户信息
+      showImageEditModal:false,//图片编辑
     };
   },
   mounted() {
@@ -179,8 +182,14 @@ export default {
     this.addClick();
   },
   methods: {
+    closeImageEdit() {
+      this.showImageEditModal = false;
+    },
     showNftModal() {
       this.showCreateNftModal = true;
+    },
+    showImageModal(){
+      this.showImageEditModal = true;
     },
     closeNftModal() {
       this.showCreateNftModal = false;
@@ -226,7 +235,7 @@ export default {
           this.showNftModal();
           break;
         case '2':
-          this.showNftModal();
+          this.showImageModal();
           break;
         case '3':
           this.isshowCreateCoNFT = true;
