@@ -54,7 +54,6 @@ export default {
       addlist: null,
       imageUrl: "",
       upload_dialog: true,
-      info_dialog: false,
       input1_info: "",
       input2_info: "",
       uploadUrl: '',
@@ -86,8 +85,6 @@ export default {
     },
     handleSuccessFile(res, file, fileList) {
       console.log(res, file, fileList, '-----');
-      this.info_dialog = true;
-      this.upload_dialog = false;
       this.nowStep = 2;
     },
 
