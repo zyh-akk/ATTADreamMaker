@@ -111,24 +111,6 @@
         <p>6. Once your friend finished the minting process, you and your friend</p>
       </div>
     </el-dialog>
-    <!-- Your NFT info 弹框-->
-    <el-dialog
-      title="Co-NFT instruction"
-      :visible.sync="infoshow_dialog"
-      width="40%"
-      :modal="false"
-      top="35vh"
-      custom-class="infoshow_dialog_css"
-    >
-      <img src="" alt="">
-      <p>Name:{{123}}</p>
-      <p>Description:{{123}}</p>
-      <p>Wallet:{{address}}</p>
-      <div class="btns">
-        <el-button type="primary">Previous</el-button>
-        <el-button type="primary">Next</el-button>
-      </div>
-    </el-dialog>
     <dream-maker v-if="nftsDom" :userInfo="userInfo"></dream-maker>
   </div>
 </template>
@@ -171,7 +153,6 @@ export default {
     var event = document.createEvent("Event");
     event.initEvent("msgEventCallback", true, true);
     event.initEvent("switchaddressCallback1", true, true); // detail是事件数据
-    event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
     document.addEventListener("msgEventCallback", (event) => {
       this.jsaddress(event.detail);
     });
@@ -184,14 +165,6 @@ export default {
       this.ConnectWalletloading = true;
       this.loadingwallettitle = "账户";
       this.checkwallet = "0";
-    });
-    document.addEventListener("switchaddressCallback2", (event) => {
-      this.ConnectWalletVisible = false;
-      if (event.detail.length > 0) {
-        this.address = event.detail[0];
-        this.shearaddress =this.address.substring(0, 7) + "******" +this.address.substr(this.address.length - 7);
-      }
-      this.infoshow_dialog = true;
     });
 
     // 获取用户信息，顺序不能改
@@ -213,11 +186,6 @@ export default {
     closeNftModal() {
       this.showCreateNftModal = false;
     },
-    // 调用选择钱包弹框
-    SelectWalletfun(){
-      this.ConnectWalletVisible = true;
-      this.Returnfromsubassembly = true;
-    },
     test() {
       console.log(window.CHAIN, "测试数据");
     },
@@ -227,15 +195,12 @@ export default {
     },
     // 选中钱包插件
     checkwallclick(type) {
-      if (!this.Returnfromsubassembly) {
-        this.ConnectWalletVisible = false;
-        this.ConnectWalletloading = true;
-        this.loadingwallettitle = "Connect to MetaMask";
-        this.checkwallet = type;
-      }
-      const cEvt = new CustomEvent("switchaddress", { detail: {Callbackname : this.Returnfromsubassembly ? 'switchaddressCallback2' : 'switchaddressCallback1'}  });
+      this.ConnectWalletVisible = false;
+      this.ConnectWalletloading = true;
+      this.loadingwallettitle = "Connect to MetaMask";
+      this.checkwallet = type;
+      const cEvt = new CustomEvent("switchaddress", { detail: {Callbackname : 'switchaddressCallback1'}  });
       document.dispatchEvent(cEvt);
-      this.Returnfromsubassembly = false;
     },
     // 点击链接钱包
     async ConnectWalletclick() {

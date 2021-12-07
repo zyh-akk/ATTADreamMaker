@@ -44,7 +44,6 @@
         <div class="btns">
           <el-button type="primary" @click="nowStep=1">Previous</el-button>
           <el-button type="primary" @click="nowStep=3">Next</el-button>
-          <!-- <el-button type="primary" @click="SelectWalletclick">Next</el-button> -->
         </div>
       </div>
       <!-- 选择钱包弹框 -->
@@ -63,6 +62,17 @@
           <el-button type="primary" @click="SelectWalletclick">Next</el-button>
         </div>
       </div>
+      <!-- Your NFT info 弹框-->
+      <div v-if="nowStep == 4">
+        <img src="" alt="">
+        <p>Name:{{123}}</p>
+        <p>Description:{{123}}</p>
+        <p>Wallet:{{addressinfo}}</p>
+        <div class="btns">
+          <el-button type="primary" @click="nowStep=3">Previous</el-button>
+          <el-button type="primary" >Next</el-button>
+        </div>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -70,6 +80,7 @@
 import SvgIcon from "@/components/svgIcon.vue";
 export default {
   components: { SvgIcon },
+  props:['address'],
   data() {
     return {
       addlist: null,
@@ -82,10 +93,20 @@ export default {
       nowStep: 1,
       loading:false,
       ischeckwallet : 0,
+      addressinfo : '',
     };
   },
   mounted() {
-    this.uploadUrl = process.env.VUE_APP_BASEURL + 'v2/twitter/nft/upload'
+    this.uploadUrl = process.env.VUE_APP_BASEURL + 'v2/twitter/nft/upload';
+    // vue中接收的事件
+    var event = document.createEvent("Event");
+    event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
+    document.addEventListener("switchaddressCallback2", (event) => {
+      if (event.detail.length > 0) {
+        this.addressinfo = event.detail[0];
+        this.nowStep = 4;
+      }
+    });
   },
 
   methods: {
@@ -116,8 +137,8 @@ export default {
 
     // 调用选择钱包弹框
     SelectWalletclick() {
-      this.upload_dialog = false;
-      this.$emit("SelectWalletfun", true);
+      const cEvt = new CustomEvent("switchaddress", { detail: {Callbackname : 'switchaddressCallback2'}  });
+      document.dispatchEvent(cEvt);
     },
     // 上传弹框 下一步
     uploaddialogclick() {
