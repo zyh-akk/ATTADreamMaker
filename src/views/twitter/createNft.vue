@@ -9,42 +9,37 @@
       custom-class="CreateNFTbox-css"
       top="35vh"
     >
-      <el-upload
-        class="avatar-uploader"
-        ref="upload"
-        :action="uploadUrl"
-        :show-file-list="false"
-        :before-upload="beforeUpload"
-        :on-success="handleChange"
-        :on-change="onChange"
-        :auto-upload="false"
-        :data="addlist"
-      >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" alt />
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-      <el-button type="primary" @click="uploaddialogclick">Next</el-button>
-    </el-dialog>
-    <!-- 填写信息弹框 -->
-    <el-dialog
-      title="Fill the NFT info"
-      width="30%"
-      :visible.sync="info_dialog"
-      :modal="false"
-      custom-class="CreateNFT-info-css"
-      top="35vh"
-    >
-      <div class="demo-input-suffix">
-        <span>Name :</span>
-        <el-input placeholder v-model="input1_info"></el-input>
+      <div v-if="nowStep == 1">
+        <el-upload
+          class="avatar-uploader"
+          ref="upload"
+          :action="uploadUrl"
+          :show-file-list="false"
+          :before-upload="beforeUpload"
+          :on-success="handleChange"
+          :on-change="onChange"
+          :auto-upload="false"
+          :data="addlist"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" alt />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <el-button type="primary" @click="uploaddialogclick">Next</el-button>
       </div>
-      <div class="demo-input-suffix">
-        <span>Description :</span>
-        <el-input type="textarea" :rows="3" placeholder v-model="input2_info"></el-input>
-      </div>
-      <div class="btns">
-        <el-button type="primary">Previous</el-button>
-        <el-button type="primary" @click="SelectWalletclick">Next</el-button>
+      <div  v-if="nowStep == 2">
+        <div class="demo-input-suffix">
+          <span>Name :</span>
+          <el-input placeholder v-model="input1_info"></el-input>
+        </div>
+        <div class="demo-input-suffix">
+          <span>Description :</span>
+          <el-input type="textarea" :rows="3" placeholder v-model="input2_info"></el-input>
+        </div>
+        <div class="btns">
+          <el-button type="primary">Previous</el-button>
+          <el-button type="primary" @click="SelectWalletclick">Next</el-button>
+        </div>
+
       </div>
     </el-dialog>
   </div>
@@ -61,7 +56,8 @@ export default {
       info_dialog: false,
       input1_info: "",
       input2_info: "",
-      uploadUrl: ''
+      uploadUrl: '',
+      nowStep:1
     };
   },
   mounted() {
@@ -99,7 +95,7 @@ export default {
     },
     // 调用选择钱包弹框
     SelectWalletclick() {
-      this.info_dialog = false;
+      this.upload_dialog = false;
       this.$emit("SelectWalletfun", true);
     },
     // 上传弹框 下一步
@@ -114,6 +110,7 @@ export default {
       }).then(res=>{
         console.log(res);
       })
+      this.nowStep = 2;
       // this.info_dialog = true;
       // this.upload_dialog = false;
     }
