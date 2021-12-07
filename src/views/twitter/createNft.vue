@@ -14,7 +14,7 @@
         <el-upload
           class="avatar-uploader"
           ref="upload"
-          accept="image/video"
+          accept="image/*, video/*"
           :action="uploadUrl"
           :show-file-list="false"
           :on-success="handleSuccessFile"
@@ -28,7 +28,7 @@
         <el-button type="primary" @click="uploaddialogclick">Next</el-button>
       </div>
       <!-- 上传文件弹框 -->
-      <div  v-if="nowStep == 2">
+      <div v-if="nowStep == 2">
         <div class="demo-input-suffix">
           <span>Name :</span>
           <el-input placeholder v-model="input1_info"></el-input>
@@ -41,7 +41,6 @@
           <el-button type="primary">Previous</el-button>
           <el-button type="primary" @click="SelectWalletclick">Next</el-button>
         </div>
-
       </div>
     </el-dialog>
   </div>
@@ -60,7 +59,7 @@ export default {
       input2_info: "",
       uploadUrl: '',
       file: {},
-      nowStep : 1,
+      nowStep: 1,
     };
   },
   mounted() {
@@ -85,8 +84,8 @@ export default {
       }
       reader.readAsDataURL(file);
     },
-    handleSuccessFile(res, file, fileList){
-      console.log(res, file, fileList,'-----');
+    handleSuccessFile(res, file, fileList) {
+      console.log(res, file, fileList, '-----');
       this.info_dialog = true;
       this.upload_dialog = false;
       this.nowStep = 2;
