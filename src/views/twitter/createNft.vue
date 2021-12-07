@@ -21,11 +21,15 @@
           :on-change="onChange"
           :auto-upload="false"
           :data="addlist"
+          v-loading="loading"
+          element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading"
+          element-loading-background="rgba(0, 0, 0, 0.8)"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" alt />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <el-button type="primary" @click="uploaddialogclick">Next</el-button>
+        <el-button type="primary" :disabled='loading' @click="uploaddialogclick">Next</el-button>
       </div>
       <!-- 上传文件弹框 -->
       <div v-if="nowStep == 2">
@@ -38,7 +42,7 @@
           <el-input type="textarea" :rows="3" placeholder v-model="input2_info"></el-input>
         </div>
         <div class="btns">
-          <el-button type="primary">Previous</el-button>
+          <el-button type="primary" @click="nowStep=1">Previous</el-button>
           <el-button type="primary" @click="SelectWalletclick">Next</el-button>
         </div>
       </div>
@@ -59,6 +63,7 @@ export default {
       uploadUrl: '',
       file: {},
       nowStep: 1,
+      loading:false
     };
   },
   mounted() {
@@ -84,7 +89,7 @@ export default {
       reader.readAsDataURL(file);
     },
     handleSuccessFile(res, file, fileList) {
-      console.log(res, file, fileList, '-----');
+      this.loading=false
       this.nowStep = 2;
     },
 
@@ -95,6 +100,7 @@ export default {
     },
     // 上传弹框 下一步
     uploaddialogclick() {
+      this.loading=true
       this.$refs.upload.submit();
     }
   },
