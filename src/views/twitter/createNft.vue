@@ -14,10 +14,10 @@
         ref="upload"
         :action="uploadUrl"
         :show-file-list="false"
-        :before-upload="beforeUpload"
         :on-change="onChange"
         :auto-upload="false"
         :data="addlist"
+        :on-success="handleSuccessFile"
       >
         <img v-if="imageUrl" :src="imageUrl" class="avatar" alt />
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -79,17 +79,7 @@ export default {
     closeModal() {
       this.$emit("closeNftModal", true);
     },
-    beforeUpload() {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
-    },
+
     onChange(file, fileList) {
       var _this = this;
       var event = event || window.event;
@@ -103,6 +93,11 @@ export default {
       }
       reader.readAsDataURL(file);
     },
+    handleSuccessFile(response, file, fileList){
+      console.log(response, file, fileList,'-----');
+      this.info_dialog = true;
+      this.upload_dialog = false;
+    },
 
     // 调用选择钱包弹框
     SelectWalletclick() {
@@ -111,23 +106,8 @@ export default {
     },
     // 上传弹框 下一步
     uploaddialogclick() {
-      const formData = new FormData()
-      formData.append('file',this.file)
-      console.log(this.file);
-      fetch(this.uploadUrl, {
-        method: 'POST',
-        headers:{
-          'Content-Type': 'multipart/form-data'
-        },
-        body: formData
-      }).then(res=>{
-        console.log(res,'-----');
-      }).catch(err=>{
-        console.log(err);
-      })
+      this.$refs.upload.submit();
       this.nowStep = 2;
-      // this.info_dialog = true;
-      // this.upload_dialog = false;
     }
   },
 };
