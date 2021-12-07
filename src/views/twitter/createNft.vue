@@ -1,6 +1,5 @@
 <template>
   <div class="create-nft-wrap">
-    <!-- 上传文件弹框 -->
     <el-dialog
       title="Upload your file"
       width="30%"
@@ -8,35 +7,27 @@
       :modal="false"
       custom-class="CreateNFTbox-css"
       top="35vh"
+      @close="closeModal"
     >
-      <el-upload
-        class="avatar-uploader"
-        ref="upload"
-        :action="uploadUrl"
-        :show-file-list="false"
-        :on-change="onChange"
-        :auto-upload="false"
-        :data="addlist"
-        :on-success="handleSuccessFile"
-      >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" alt />
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-      <el-button type="primary" @click="uploaddialogclick">Next</el-button>
-    </el-dialog>
-    <!-- 填写信息弹框 -->
-    <el-dialog
-      title="Fill the NFT info"
-      width="30%"
-      :visible.sync="info_dialog"
-      :modal="false"
-      custom-class="CreateNFT-info-css"
-      top="35vh"
-    >
-      <div class="demo-input-suffix">
-        <span>Name :</span>
-        <el-input placeholder v-model="input1_info"></el-input>
+      <!-- 上传弹框 -->
+      <div v-if="nowStep == 1">
+        <el-upload
+          class="avatar-uploader"
+          ref="upload"
+          :action="uploadUrl"
+          :show-file-list="false"
+          :before-upload="beforeUpload"
+          :on-success="handleSuccessFile"
+          :on-change="onChange"
+          :auto-upload="false"
+          :data="addlist"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" alt />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <el-button type="primary" @click="uploaddialogclick">Next</el-button>
       </div>
+      <!-- 上传文件弹框 -->
       <div  v-if="nowStep == 2">
         <div class="demo-input-suffix">
           <span>Name :</span>
@@ -68,7 +59,8 @@ export default {
       input1_info: "",
       input2_info: "",
       uploadUrl: '',
-      file: {}
+      file: {},
+      nowStep : 1,
     };
   },
   mounted() {
