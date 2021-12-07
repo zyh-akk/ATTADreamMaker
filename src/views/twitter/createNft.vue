@@ -78,6 +78,9 @@ export default {
     onChange(file, fileList) {
       var _this = this;
       var event = event || window.event;
+      if (!event.target.files) {
+        return;
+      }
       var file = event.target.files[0];
       var reader = new FileReader();
       this.file = file
@@ -100,6 +103,10 @@ export default {
     },
     // 上传弹框 下一步
     uploaddialogclick() {
+      if (JSON.stringify(this.file) == '{}') {
+        alert('请先上传图片！');
+        return;
+      }
       this.loading=true
       this.$refs.upload.submit();
     }
