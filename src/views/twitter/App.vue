@@ -129,7 +129,7 @@
         <el-button type="primary">Next</el-button>
       </div>
     </el-dialog>
-    <dream-maker v-if="nftsDom"></dream-maker>
+    <dream-maker v-if="nftsDom" :userInfo="userInfo"></dream-maker>
   </div>
 </template>
 <script>
@@ -165,7 +165,7 @@ export default {
     // let maindom = document.querySelector("body");
     // const modals = document.querySelector(".modalDom");
     // maindom.appendChild(modals);
-
+    let self = this;
 
     // vue中接收的事件
     var event = document.createEvent("Event");
@@ -196,7 +196,8 @@ export default {
 
     // 获取用户信息，顺序不能改
     document.addEventListener("userEventCallback", (e) => {
-      this.userInfo = e.detail;//identity_id：用户id
+      self.userInfo = e.detail;//identity_id：用户id
+      console.log(self.userInfo);
     });
     // 定义全局事件
     let newEvent = new CustomEvent('userInfoEvent', {});

@@ -37,13 +37,20 @@
         <span>Name :</span>
         <el-input placeholder v-model="input1_info"></el-input>
       </div>
-      <div class="demo-input-suffix">
-        <span>Description :</span>
-        <el-input type="textarea" :rows="3" placeholder v-model="input2_info"></el-input>
-      </div>
-      <div class="btns">
-        <el-button type="primary">Previous</el-button>
-        <el-button type="primary" @click="SelectWalletclick">Next</el-button>
+      <div  v-if="nowStep == 2">
+        <div class="demo-input-suffix">
+          <span>Name :</span>
+          <el-input placeholder v-model="input1_info"></el-input>
+        </div>
+        <div class="demo-input-suffix">
+          <span>Description :</span>
+          <el-input type="textarea" :rows="3" placeholder v-model="input2_info"></el-input>
+        </div>
+        <div class="btns">
+          <el-button type="primary">Previous</el-button>
+          <el-button type="primary" @click="SelectWalletclick">Next</el-button>
+        </div>
+
       </div>
     </el-dialog>
   </div>
@@ -99,7 +106,7 @@ export default {
 
     // 调用选择钱包弹框
     SelectWalletclick() {
-      this.info_dialog = false;
+      this.upload_dialog = false;
       this.$emit("SelectWalletfun", true);
     },
     // 上传弹框 下一步
@@ -118,6 +125,7 @@ export default {
       }).catch(err=>{
         console.log(err);
       })
+      this.nowStep = 2;
       // this.info_dialog = true;
       // this.upload_dialog = false;
     }
