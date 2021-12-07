@@ -33,7 +33,7 @@
         <div id="tui-image-editor"></div>
       </div>
       <div class="btns">
-        <el-button type="primary" @click="stepPrevious">Previous</el-button>
+        <el-button v-if="imagesStep > 1" type="primary" @click="stepPrevious">Previous</el-button>
         <el-button type="primary" @click="nextStep">Next</el-button>
       </div>
     </el-dialog>

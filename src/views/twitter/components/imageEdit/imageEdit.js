@@ -64,8 +64,7 @@ export default {
         {
           includeUI: {
             loadImage: {
-              path: _this.imageUrl,
-              name: "image",
+              path: _this.imageUrl
             },
             menuBarPosition: "right",
             menu: [
@@ -84,11 +83,6 @@ export default {
           cssMaxHeight: 200
         }
       );
-
-      // this.instance.loadImageFromFile(this.fileImage).then(result => {
-      //   console.log('old : ' + result.oldWidth + ', ' + result.oldHeight);
-      //   console.log('new : ' + result.newWidth + ', ' + result.newHeight);
-      // });
     }
   }
 };
