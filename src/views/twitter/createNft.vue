@@ -10,7 +10,7 @@
       @close="closeModal"
     >
       <!-- 上传弹框 -->
-      <div v-if="nowStep == 1">
+      <div v-if="nowStep == 1" class="uploadbox">
         <el-upload
           class="avatar-uploader"
           ref="upload"
@@ -43,6 +43,22 @@
         </div>
         <div class="btns">
           <el-button type="primary" @click="nowStep=1">Previous</el-button>
+          <el-button type="primary" @click="nowStep=3">Next</el-button>
+          <!-- <el-button type="primary" @click="SelectWalletclick">Next</el-button> -->
+        </div>
+      </div>
+      <!-- 选择钱包弹框 -->
+      <div v-if="nowStep == 3">
+        <div class="walletbox" @click="checkwallclick(1)">
+          <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
+          <p>MetaMask</p>
+        </div>
+        <div class="walletbox" @click="checkwallclick(2)">
+          <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
+          <p>MetaMask</p>
+        </div>
+        <div class="btns">
+          <el-button type="primary" @click="nowStep=2">Previous</el-button>
           <el-button type="primary" @click="SelectWalletclick">Next</el-button>
         </div>
       </div>
@@ -156,21 +172,41 @@ export default {
     height: 48px;
   }
 }
-.CreateNFT-info-css {
+.CreateNFTbox-css {
   .demo-input-suffix {
     margin: 20px;
   }
-  .btns {
+  .btns,.uploadbox {
     text-align: center;
   }
 }
+.walletbox {
+    text-align: center;
+    height: 151px;
+    width: 165px;
+    padding: 32px 8px;
+    background-color: #f7f9fa;
+    border-radius: 15px;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    .svg-img {
+      width: 45px;
+      height: 45px;
+      margin: 0 auto;
+    }
+    p {
+      font-size: 16px;
+      font-weight: normal;
+      white-space: nowrap;
+      margin-bottom: 8px;
+    }
+  }
 </style>
 <style lang="css">
-.CreateNFTbox-css .el-dialog__header,
-.CreateNFT-info-css .el-dialog__header {
+.CreateNFTbox-css .el-dialog__header {
   border-bottom: 1px solid #919ca3;
-}
-.CreateNFTbox-css .el-dialog__body {
-  text-align: center;
 }
 </style>
