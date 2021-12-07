@@ -2,7 +2,6 @@
   <div v-loading="loading">
     <div class="ATTADreamMaker-dom">
       <div class="MaskNetworkbox">
-      {{showCreateNftModal}}
         <div
           class="MaskNetwork"
           @click="
