@@ -122,6 +122,7 @@ export default {
       if (!event.target.files) {
         return;
       }
+      this.previewImgUrl=''
       var file = event.target.files[0];
       var reader = new FileReader();
       this.file = file
