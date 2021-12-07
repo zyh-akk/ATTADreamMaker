@@ -1,6 +1,5 @@
 <template>
   <div class="create-nft-wrap">
-    <!-- 上传文件弹框 -->
     <el-dialog
       title="Upload your file"
       width="30%"
@@ -8,7 +7,9 @@
       :modal="false"
       custom-class="CreateNFTbox-css"
       top="35vh"
+      @close="closeModal"
     >
+      <!-- 上传弹框 -->
       <div v-if="nowStep == 1">
         <el-upload
           class="avatar-uploader"
@@ -26,6 +27,7 @@
         </el-upload>
         <el-button type="primary" @click="uploaddialogclick">Next</el-button>
       </div>
+      <!-- 上传文件弹框 -->
       <div  v-if="nowStep == 2">
         <div class="demo-input-suffix">
           <span>Name :</span>
@@ -111,8 +113,6 @@ export default {
         console.log(res);
       })
       this.nowStep = 2;
-      // this.info_dialog = true;
-      // this.upload_dialog = false;
     }
   },
 };
