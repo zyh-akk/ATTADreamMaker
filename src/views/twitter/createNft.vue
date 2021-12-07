@@ -22,6 +22,7 @@
           :auto-upload="false"
           :data="addlist"
           v-loading="loading"
+          :on-error='handleErrorFile'
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading"
           element-loading-background="rgba(0, 0, 0, 0.8)"
@@ -94,6 +95,7 @@ export default {
       loading:false,
       ischeckwallet : 0,
       addressinfo : '',
+      previewImgUrl: ''
     };
   },
   mounted() {
@@ -130,8 +132,16 @@ export default {
       }
       reader.readAsDataURL(file);
     },
+    handleErrorFile(res, file, fileList){
+      console.log(res, file, fileList);
+      this.loading=false
+    },
     handleSuccessFile(res, file, fileList) {
       this.loading=false
+      console.log(res);
+      if (res.data) {
+        this.previewImgUrl = res.data.fileUri
+      }
       this.nowStep = 2;
     },
 
@@ -145,6 +155,10 @@ export default {
       if (JSON.stringify(this.file) == '{}') {
         alert('请先上传图片！');
         return;
+      }
+      if (this.previewImgUrl) {
+        this.nowStep = 2;
+        retren
       }
       this.loading=true
       this.$refs.upload.submit();
