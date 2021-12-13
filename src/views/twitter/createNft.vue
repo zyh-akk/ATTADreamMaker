@@ -253,8 +253,8 @@ export default {
   background-color: rgba(70, 171, 238, 0.2);
 }
 .imageurl_show{
-  width: 50%;
-  margin-left: 25%;
+  width: 30%;
+  margin-left: 35%;
 }
 </style>
 <style lang="css">
