@@ -2,7 +2,6 @@
   <div class="create-nft-wrap">
     <el-dialog
       title="Upload your file"
-      width="30%"
       :visible.sync="upload_dialog"
       :modal="false"
       custom-class="CreateNFTbox-css"
