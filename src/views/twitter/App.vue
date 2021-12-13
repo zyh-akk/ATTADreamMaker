@@ -16,7 +16,7 @@
               <el-dropdown-item command="1">Create NFT</el-dropdown-item>
               <el-dropdown-item command="2">Create poster NFT</el-dropdown-item>
               <el-dropdown-item command="3">Create Co-NFT</el-dropdown-item>
-              <el-dropdown-item command="4">NFT Hall</el-dropdown-item>
+              <!-- <el-dropdown-item command="4">NFT Hall</el-dropdown-item> -->
               <el-dropdown-item command="5">My NFTs</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -238,9 +238,9 @@ export default {
         case '3':
           this.isshowCreateCoNFT = true;
           break;
-        case '4':
-          this.showNftModal();
-          break;
+        // case '4':
+        //   this.showNftModal();
+        //   break;
         case '5':
           this.jumppage();
           break;
@@ -286,7 +286,7 @@ export default {
     },
     // my nfts 跳转
     jumppage(){
-      
+
     }
   },
 };
