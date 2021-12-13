@@ -54,10 +54,10 @@
           <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
           <p>MetaMask</p>
         </div>
-        <div :class="ischeckwallet == '2' ? 'checkwalletcss walletbox' : 'walletbox'" @click="checkwallet(2)">
+        <!-- <div :class="ischeckwallet == '2' ? 'checkwalletcss walletbox' : 'walletbox'" @click="checkwallet(2)">
           <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
           <p>MetaMask</p>
-        </div>
+        </div> -->
         <div class="btns">
           <el-button type="primary" @click="nowStep=2">Previous</el-button>
           <el-button type="primary" @click="SelectWalletclick">Next</el-button>
@@ -148,6 +148,10 @@ export default {
 
     // 调用选择钱包弹框
     SelectWalletclick() {
+      if (this.ischeckwallet == 0) {
+        alert('请选择钱包');
+        return;
+      }
       const cEvt = new CustomEvent("switchaddress", { detail: {Callbackname : 'switchaddressCallback2'}  });
       document.dispatchEvent(cEvt);
     },
