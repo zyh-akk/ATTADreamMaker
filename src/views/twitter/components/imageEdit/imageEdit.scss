@@ -1,0 +1,79 @@
+.image-nft{
+  .el-dialog__wrapper{
+    .el-dialog{
+      margin-top: 20vh !important;
+      .avatar-uploader{
+        text-align: center;
+        .el-upload{
+          img{
+            max-width: 100%;
+            max-height: 300px;
+          }
+        }
+      }
+      .btns{
+        text-align: center;
+        margin-top: 30px;
+      }
+    }
+  }
+  .image-edit{
+    height: 420px;
+    #tui-image-editor{
+      border:1px solid #666;
+      // 点击打开icon的样式
+      .tui-image-editor-main{
+        top: 0;
+        .tui-image-editor-submenu-item{
+          li{
+            margin-top: 10px;
+          }
+        }
+        .tui-image-editor-submenu{
+          width: 200px;
+          >div{
+            ul{
+              li{
+                &.tui-image-editor-partition{
+                  margin-top: 5;
+                  >div{
+                    height: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .tui-image-editor-help-menu{
+        display: none;
+      }
+      .tui-image-editor-header-logo,.tui-image-editor-header-buttons{
+        display: none;
+      }
+      .tui-image-editor-header{
+        min-width: 100%;
+      }
+      .tui-image-editor-main-container,.tui-image-editor-controls{
+        background-color: #fff !important;
+      }
+      .tui-image-editor-main-container{
+        right: 40px;
+        width: calc(100% - 40px);
+      }
+      .tui-image-editor-controls{
+        width: 40px;
+        border-left:1px solid #666;
+        .tui-image-editor-menu{
+          background-color: #dcdfe6;
+          li{
+            .svg_ic-menu{
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

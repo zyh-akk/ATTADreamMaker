@@ -2,7 +2,7 @@ module.exports = {
   lintOnSave:false,
   pages: {
     pages: {
-      template: 'public/browser-extension.html',
+      template: 'public/index.html',
       entry: './src/main.js',
       title: 'ATTA-Dream-Maker'
     }
@@ -15,7 +15,9 @@ module.exports = {
         },
         contentScripts: {
           entries: {
-            content1:'src/utils/test.js'
+            testDom:['src/views/twitter/contentScript.js', 'src/views/twitter/init.js', 'src/views/twitter/injectWeb3.js'],
+            // 图片编辑部分
+            imageEdit:['src/views/imagesEdit/domEdit.js', 'src/views/imagesEdit/main.js']
           }
         }
       }
