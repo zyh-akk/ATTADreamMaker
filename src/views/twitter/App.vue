@@ -40,10 +40,10 @@
             <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
             <p>MetaMask</p>
           </div>
-          <div class="walletbox" @click="checkwallclick(2)">
+          <!-- <div class="walletbox" @click="checkwallclick(2)">
             <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
             <p>MetaMask</p>
-          </div>
+          </div> -->
         </el-dialog>
         <el-dialog
           :title="loadingwallettitle"

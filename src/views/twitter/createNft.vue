@@ -6,7 +6,7 @@
       :visible.sync="upload_dialog"
       :modal="false"
       custom-class="CreateNFTbox-css"
-      top="35vh"
+      top="30vh"
       @close="closeModal"
     >
       <!-- 上传弹框 -->
@@ -65,9 +65,9 @@
       </div>
       <!-- Your NFT info 弹框-->
       <div v-if="nowStep == 4">
-        <img src="" alt="">
-        <p>Name:{{123}}</p>
-        <p>Description:{{123}}</p>
+        <img class="imageurl_show" :src="imageUrl" alt="">
+        <p>Name:{{input1_info}}</p>
+        <p>Description:{{input2_info}}</p>
         <p>Wallet:{{addressinfo}}</p>
         <div class="btns">
           <el-button type="primary" @click="nowStep=3">Previous</el-button>
@@ -252,6 +252,10 @@ export default {
 }
 .checkwalletcss{
   background-color: rgba(70, 171, 238, 0.2);
+}
+.imageurl_show{
+  width: 50%;
+  margin-left: 25%;
 }
 </style>
 <style lang="css">
