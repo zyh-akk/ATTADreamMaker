@@ -31,7 +31,6 @@
         <el-dialog
           title="连接钱包"
           :visible.sync="ConnectWalletVisible"
-          width="30%"
           :modal="false"
           custom-class="MaskNetwork-dialogbox"
           top="35vh"
@@ -48,7 +47,6 @@
         <el-dialog
           :title="loadingwallettitle"
           :visible.sync="ConnectWalletloading"
-          width="30%"
           :modal="false"
           top="35vh"
           custom-class="MaskNetwork-dialogbox2"
