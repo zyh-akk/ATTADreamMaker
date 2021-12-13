@@ -18,6 +18,43 @@ document.addEventListener('switchaddress', function(event){
 	    document.dispatchEvent(newEvent);
 	})
 });
+// 钱包支付
+document.addEventListener('paymentaddress', function(event){
+	// window.CHAIN.WALLET.connect('MetaMask')
+	// .then((address)=>{
+	// 	debugger
+	//     var newEvent = new CustomEvent(event.detail.Callbackname, { bubbles:true,cancelable:true,composed:true ,detail : address ? address : []});
+	//     document.dispatchEvent(newEvent);
+	// })
+	// debugger
+	var web3 = new window.Web3(window.CHAIN.WALLET.provider());
+	window.CHAIN.WALLET.chainId()
+		.then(function (res) {
+			let {tokenId,metadataIpfs,returnaddress} = event.detail;
+			metadataIpfs = 'https://ipfs.io/ipfs/' + metadataIpfs
+			let chainId = web3.utils.hexToNumber(res); 
+			let setting_proof = chainSetting["contractSetting"]["dreammaker_minfnft"];
+			let address = setting_proof[chainId].address; // 监听 网络切换 会 让 用户 处于 正确的网络，这里 只负责 配置 当前网络下正确的 合约地址
+			var abiName = contractSetting['dreammaker_minfnft']['abi'];
+			
+			paymentexample = new web3.eth.Contract(abiName, address);  
+			
+			paymentexample.methods.safeMint(tokenId,returnaddress,metadataIpfs).send({ 
+				from: returnaddress
+			})
+			.then(function (res) {
+				debugger
+				// tips(self.chEnTextHtml[self.lang].tipsjs4);
+				// self.getNftLists();
+			});
+			// setTimeout(() => {
+			// 	tips(self.chEnTextHtml[self.lang].tipsjs5);
+			// 	setTimeout(function(){
+			// 		cancelMobile();
+			// 	},1800);
+			// }, 1000);
+		});
+});
 function loginweb3(susses = null,errorcatch = null){
 	// this.chainId = await window.CHAIN.WALLET.chainId();
 	window.CHAIN.WALLET.enable()

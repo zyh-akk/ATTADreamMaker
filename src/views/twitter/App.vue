@@ -88,6 +88,7 @@
       <create-nft
         v-if="showCreateNftModal"
         @closeNftModal="closeNftModal"
+        :userInfo="userInfo"
       ></create-nft>
     </div>
     <!-- Create Co-NFT 弹框 （已完成）-->

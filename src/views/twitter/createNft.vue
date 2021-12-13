@@ -70,7 +70,7 @@
         <p>Wallet:{{addressinfo}}</p>
         <div class="btns">
           <el-button type="primary" @click="nowStep=3">Previous</el-button>
-          <el-button type="primary" >Next</el-button>
+          <el-button type="primary" @click="topay">Next</el-button>
         </div>
       </div>
     </el-dialog>
@@ -80,7 +80,7 @@
 import SvgIcon from "@/components/svgIcon.vue";
 export default {
   components: { SvgIcon },
-  props:['address'],
+  props:['address','userInfo'],
   data() {
     return {
       addlist: null,
@@ -94,7 +94,12 @@ export default {
       loading:false,
       ischeckwallet : 0,
       addressinfo : '',
-      previewImgUrl: ''
+      previewImgUrl: '',
+      picturePath : "",
+      sourceFileIpfs : '',
+      returnaddress : "",
+      metadataIpfs : "",
+      tokenId : "",
     };
   },
   mounted() {
@@ -105,7 +110,7 @@ export default {
     document.addEventListener("switchaddressCallback2", (event) => {
       if (event.detail.length > 0) {
         this.addressinfo = event.detail[0];
-        this.nowStep = 4;
+        this.createnft();
       }
     });
   },
@@ -118,6 +123,10 @@ export default {
     onChange(file, fileList) {
       var _this = this;
       var event = event || window.event;
+      if (fileList.length && fileList[0].response) {
+        this.picturePath = fileList[0].response.data.fileUri;
+        this.sourceFileIpfs = fileList[0].response.data.ipfsUri;
+      }
       if (!event.target.files) {
         return;
       }
@@ -144,7 +153,6 @@ export default {
       }
       this.nowStep = 2;
     },
-
     // 调用选择钱包弹框
     SelectWalletclick() {
       if (this.ischeckwallet == 0) {
@@ -170,6 +178,42 @@ export default {
     // 点击选中钱包
     checkwallet(type){
       this.ischeckwallet = type;
+    },
+    // 支付
+    topay(){
+      if (!this.input1_info || !this.input2_info || !this.imageUrl) {
+        alert('请填写完整信息');
+      }
+      let {tokenId,metadataIpfs,returnaddress} = this;
+      const cEvt = new CustomEvent("paymentaddress", { detail: {tokenId,metadataIpfs,returnaddress}  });
+      document.dispatchEvent(cEvt);
+    },
+    // 创建nft
+    async createnft(){
+      let obj = {
+        address : this.addressinfo,
+        description : this.input2_info,
+        name : this.input1_info,
+        mintUser : this.userInfo.identity_id,
+        receiveUser : this.userInfo.identity_id,
+        picturePath : this.picturePath,
+        sourceFileIpfs : this.sourceFileIpfs,
+        type : 0,
+      };
+      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/create_nft`;
+      const res = await fetch(getNfts, {
+        method: 'POST', 
+        body: JSON.stringify(obj),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      })
+      const listData = await res.json();
+      const artList = listData.data;
+      this.returnaddress = artList[0].address;
+      this.metadataIpfs = artList[0].metadataIpfs;
+      this.tokenId = artList[0].tokenId;
+      this.nowStep = 4;
     }
   },
 };
