@@ -242,7 +242,7 @@ export default {
           this.showNftModal();
           break;
         case '5':
-          this.showNftModal();
+          this.jumppage();
           break;
         default:
           break;
@@ -283,6 +283,10 @@ export default {
           self.nftsDom = false;
         }
       })
+    },
+    // my nfts 跳转
+    jumppage(){
+      
     }
   },
 };
