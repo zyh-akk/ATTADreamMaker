@@ -64,7 +64,8 @@ export default {
         {
           includeUI: {
             loadImage: {
-              path: _this.imageUrl
+              path: _this.imageUrl,
+              name:'attaDreamMaker'
             },
             menuBarPosition: "right",
             menu: [

@@ -14,7 +14,6 @@ export default {
     };
   },
   mounted(){
-    this.search();
     let self = this;
     $(document).ready(function(){
       self.appendDom();
@@ -26,6 +25,7 @@ export default {
           // 关闭当前内容
           $(infoDom.childNodes[2]).attr('style','display:none');
           self.nftsBol = true;
+          self.search();
         }else{
           self.domBorderBottom('blcok');
           $(infoDom.childNodes[2]).attr('style','display:flex');
