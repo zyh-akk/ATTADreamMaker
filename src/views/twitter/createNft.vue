@@ -97,7 +97,6 @@
 </template>
 <script>
 import SvgIcon from "@/components/svgIcon.vue";
-import Web3 from "web3";
 export default {
   components: { SvgIcon },
   props: ["address", "userInfo"],
@@ -124,10 +123,6 @@ export default {
     };
   },
   mounted() {
-    setTimeout(() => {
-      console.log("引入web3");
-      console.log(new Web3());
-    }, 3000);
     this.uploadUrl = process.env.VUE_APP_BASEURL + "v2/twitter/nft/upload";
     // vue中接收的事件
     var event = document.createEvent("Event");
