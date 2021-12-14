@@ -179,6 +179,11 @@ export default {
 
     this.appendDom();
     this.addClick();
+    if (localStorage.getItem("attadreammaker_wallte")) {
+      let str = localStorage.getItem("attadreammaker_wallte");
+      this.address = str;
+      this.shearaddress =str.substring(0, 5) + "***" +str.substr(str.length - 4);
+    }
   },
   methods: {
     closeImageEdit() {
@@ -222,9 +227,11 @@ export default {
           "***" +
           this.address.substr(this.address.length - 4);
         this.ConnectWalletloading = true;
+        localStorage.setItem("attadreammaker_wallte",address[0]);
       } else {
         this.address = "";
         this.ConnectWalletVisible = true;
+        localStorage.setItem("attadreammaker_wallte","");
       }
     },
     // 点击下拉框
