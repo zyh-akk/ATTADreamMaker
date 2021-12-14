@@ -21,17 +21,20 @@
           :auto-upload="false"
           :data="addlist"
           v-loading="loading"
-          :on-error='handleErrorFile'
+          :on-error="handleErrorFile"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading"
           element-loading-background="rgba(0, 0, 0, 0.8)"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" alt />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <img v-if="imageUrl && fileType=='img'" :src="imageUrl" class="avatar" alt />
+          <video v-if="imageUrl && fileType == 'video'" autoplay class="avatar" :src='imageUrl'></video>
+          <i v-if="!imageUrl" class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <el-button type="primary" :disabled='loading' @click="uploaddialogclick">Next</el-button>
+        <el-button type="primary" :disabled="loading" @click="uploaddialogclick"
+          >Next</el-button
+        >
       </div>
-      <!-- 上传文件弹框 -->
+      <!-- 填写信息弹框 -->
       <div v-if="nowStep == 2">
         <div class="demo-input-suffix">
           <span>Name :</span>
@@ -39,18 +42,33 @@
         </div>
         <div class="demo-input-suffix">
           <span>Description :</span>
-          <el-input type="textarea" :rows="3" placeholder v-model="input2_info"></el-input>
+          <el-input
+            type="textarea"
+            :rows="3"
+            placeholder
+            v-model="input2_info"
+          ></el-input>
         </div>
         <div class="btns">
-          <el-button type="primary" @click="nowStep=1">Previous</el-button>
-          <el-button type="primary" @click="nowStep=3">Next</el-button>
+          <el-button type="primary" @click="nowStep = 1">Previous</el-button>
+          <el-button type="primary" @click="nowStep = 3">Next</el-button>
         </div>
       </div>
       <!-- 选择钱包弹框 -->
       <div v-if="nowStep == 3">
-        <div :class="ischeckwallet == '1' ? 'checkwalletcss walletbox' : 'walletbox'" @click="checkwallet(1)">
-        <!-- <div class="walletbox" @click="checkwallclick(1)"> -->
-          <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
+        <div
+          :class="
+            ischeckwallet == '1' ? 'checkwalletcss walletbox' : 'walletbox'
+          "
+          @click="checkwallet(1)"
+        >
+          <!-- <div class="walletbox" @click="checkwallclick(1)"> -->
+          <svg-icon
+            :svgType="'mateMask'"
+            class="svg-img"
+            :svgW="48"
+            :svgH="48"
+          />
           <p>MetaMask</p>
         </div>
         <!-- <div :class="ischeckwallet == '2' ? 'checkwalletcss walletbox' : 'walletbox'" @click="checkwallet(2)">
@@ -58,18 +76,19 @@
           <p>MetaMask</p>
         </div> -->
         <div class="btns">
-          <el-button type="primary" @click="nowStep=2">Previous</el-button>
+          <el-button type="primary" @click="nowStep = 2">Previous</el-button>
           <el-button type="primary" @click="SelectWalletclick">Next</el-button>
         </div>
       </div>
       <!-- Your NFT info 弹框-->
       <div v-if="nowStep == 4">
-        <img class="imageurl_show" :src="imageUrl" alt="">
-        <p>Name:{{input1_info}}</p>
-        <p>Description:{{input2_info}}</p>
-        <p>Wallet:{{addressinfo}}</p>
+        <img class="imageurl_show" v-if="fileType=='img'" :src="imageUrl" alt="" />
+         <video v-if="fileType == 'video'" autoplay class="imageurl_show" :src='imageUrl'></video>
+        <p>Name:{{ input1_info }}</p>
+        <p>Description:{{ input2_info }}</p>
+        <p>Wallet:{{ addressinfo }}</p>
         <div class="btns">
-          <el-button type="primary" @click="nowStep=3">Previous</el-button>
+          <el-button type="primary" @click="nowStep = 3">Previous</el-button>
           <el-button type="primary" @click="topay">Next</el-button>
         </div>
       </div>
@@ -78,10 +97,10 @@
 </template>
 <script>
 import SvgIcon from "@/components/svgIcon.vue";
-import Web3 from 'web3'
+import Web3 from "web3";
 export default {
   components: { SvgIcon },
-  props:['address','userInfo'],
+  props: ["address", "userInfo"],
   data() {
     return {
       addlist: null,
@@ -89,26 +108,27 @@ export default {
       upload_dialog: true,
       input1_info: "",
       input2_info: "",
-      uploadUrl: '',
+      uploadUrl: "",
       file: {},
       nowStep: 1,
-      loading:false,
-      ischeckwallet : 0,
-      addressinfo : '',
-      previewImgUrl: '',
-      picturePath : "",
-      sourceFileIpfs : '',
-      returnaddress : "",
-      metadataIpfs : "",
-      tokenId : "",
+      loading: false,
+      ischeckwallet: 0,
+      addressinfo: "",
+      previewImgUrl: "",
+      picturePath: "",
+      sourceFileIpfs: "",
+      returnaddress: "",
+      metadataIpfs: "",
+      tokenId: "",
+      fileType: ""
     };
   },
   mounted() {
-    setTimeout(()=>{
-      console.log('引入web3');
+    setTimeout(() => {
+      console.log("引入web3");
       console.log(new Web3());
-    },3000)
-    this.uploadUrl = process.env.VUE_APP_BASEURL + 'v2/twitter/nft/upload';
+    }, 3000);
+    this.uploadUrl = process.env.VUE_APP_BASEURL + "v2/twitter/nft/upload";
     // vue中接收的事件
     var event = document.createEvent("Event");
     event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
@@ -125,6 +145,16 @@ export default {
       this.$emit("closeNftModal", true);
     },
 
+    isVideo(path) {
+      return /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/.test(path);
+    },
+
+    isImage(path) {
+      return /\.(xbm|tif|pjp|svgz|jpg|jpeg|ico|tiff|gif|svg|jfif|webp|png|bmp|pjpeg|avif)/.test(
+        path
+      );
+    },
+
     onChange(file, fileList) {
       var _this = this;
       var event = event || window.event;
@@ -135,91 +165,106 @@ export default {
       if (!event.target.files) {
         return;
       }
-      this.previewImgUrl=''
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      this.file = file
       console.log(file);
-      //转base64
-      reader.onload = function (e) {
-        _this.imageUrl = e.target.result //将图片路径赋值给src
+      if (this.isImage(file.name)) {
+        this.fileType = 'img'
+        this.previewImgUrl = "";
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        this.file = file;
+        //转base64
+        reader.onload = function (e) {
+          _this.imageUrl = e.target.result; //将图片路径赋值给src
+        };
+        reader.readAsDataURL(file);
+      } else if (this.isVideo(file.name)) {
+        let videoUrl = URL.createObjectURL(event.target.files[0]);
+        console.log(videoUrl);
+        this.imageUrl=videoUrl;
+        this.fileType = 'video'
+      } else {
+        this.fileType = ''
+        alert('file type is not suport!')
       }
-      reader.readAsDataURL(file);
     },
-    handleErrorFile(res, file, fileList){
+    handleErrorFile(res, file, fileList) {
       console.log(res, file, fileList);
-      this.loading=false
+      this.loading = false;
     },
     handleSuccessFile(res, file, fileList) {
-      this.loading=false
+      this.loading = false;
       console.log(res);
       if (res.data) {
-        this.previewImgUrl = res.data.fileUri
+        this.previewImgUrl = res.data.fileUri;
       }
       this.nowStep = 2;
     },
     // 调用选择钱包弹框
     SelectWalletclick() {
       if (this.ischeckwallet == 0) {
-        alert('请选择钱包');
+        alert("请选择钱包");
         return;
       }
-      const cEvt = new CustomEvent("switchaddress", { detail: {Callbackname : 'switchaddressCallback2'}  });
+      const cEvt = new CustomEvent("switchaddress", {
+        detail: { Callbackname: "switchaddressCallback2" },
+      });
       document.dispatchEvent(cEvt);
     },
     // 上传弹框 下一步
     uploaddialogclick() {
-      if (JSON.stringify(this.file) == '{}') {
-        alert('请先上传图片！');
+      if (JSON.stringify(this.file) == "{}") {
+        alert("请先上传图片！");
         return;
       }
       if (this.previewImgUrl) {
         this.nowStep = 2;
-        return
+        return;
       }
-      this.loading=true
+      this.loading = true;
       this.$refs.upload.submit();
     },
     // 点击选中钱包
-    checkwallet(type){
+    checkwallet(type) {
       this.ischeckwallet = type;
     },
     // 支付
-    topay(){
+    topay() {
       if (!this.input1_info || !this.input2_info || !this.imageUrl) {
-        alert('请填写完整信息');
+        alert("请填写完整信息");
       }
-      let {tokenId,metadataIpfs,returnaddress} = this;
-      const cEvt = new CustomEvent("paymentaddress", { detail: {tokenId,metadataIpfs,returnaddress}  });
+      let { tokenId, metadataIpfs, returnaddress } = this;
+      const cEvt = new CustomEvent("paymentaddress", {
+        detail: { tokenId, metadataIpfs, returnaddress },
+      });
       document.dispatchEvent(cEvt);
     },
     // 创建nft
-    async createnft(){
+    async createnft() {
       let obj = {
-        address : this.addressinfo,
-        description : this.input2_info,
-        name : this.input1_info,
-        mintUser : this.userInfo.identity_id,
-        receiveUser : this.userInfo.identity_id,
-        picturePath : this.picturePath,
-        sourceFileIpfs : this.sourceFileIpfs,
-        type : 0,
+        address: this.addressinfo,
+        description: this.input2_info,
+        name: this.input1_info,
+        mintUser: this.userInfo.identity_id,
+        receiveUser: this.userInfo.identity_id,
+        picturePath: this.picturePath,
+        sourceFileIpfs: this.sourceFileIpfs,
+        type: 0,
       };
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/create_nft`;
       const res = await fetch(getNfts, {
-        method: 'POST', 
+        method: "POST",
         body: JSON.stringify(obj),
         headers: new Headers({
-          'Content-Type': 'application/json'
-        })
-      })
+          "Content-Type": "application/json",
+        }),
+      });
       const listData = await res.json();
       const artList = listData.data;
       this.returnaddress = artList[0].address;
       this.metadataIpfs = artList[0].metadataIpfs;
       this.tokenId = artList[0].tokenId;
       this.nowStep = 4;
-    }
+    },
   },
 };
 </script>
@@ -270,38 +315,39 @@ export default {
   .demo-input-suffix {
     margin: 20px;
   }
-  .btns,.uploadbox {
+  .btns,
+  .uploadbox {
     text-align: center;
   }
 }
 .walletbox {
-    text-align: center;
-    height: 151px;
-    width: 165px;
-    padding: 32px 8px;
-    background-color: #f7f9fa;
-    border-radius: 15px;
-    display: inline-block;
-    box-sizing: border-box;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    .svg-img {
-      width: 45px;
-      height: 45px;
-      margin: 0 auto;
-    }
-    p {
-      font-size: 16px;
-      font-weight: normal;
-      white-space: nowrap;
-      margin-bottom: 8px;
-    }
+  text-align: center;
+  height: 151px;
+  width: 165px;
+  padding: 32px 8px;
+  background-color: #f7f9fa;
+  border-radius: 15px;
+  display: inline-block;
+  box-sizing: border-box;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  .svg-img {
+    width: 45px;
+    height: 45px;
+    margin: 0 auto;
+  }
+  p {
+    font-size: 16px;
+    font-weight: normal;
+    white-space: nowrap;
+    margin-bottom: 8px;
+  }
 }
-.checkwalletcss{
+.checkwalletcss {
   background-color: rgba(70, 171, 238, 0.2);
 }
-.imageurl_show{
+.imageurl_show {
   width: 30%;
   margin-left: 35%;
 }
