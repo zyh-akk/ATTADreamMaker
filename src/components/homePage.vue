@@ -61,11 +61,11 @@ export default {
       console.log('跳转', this.$route);
     },
     topay(){
-      debugger
       console.log(window.Web3);
       var web3 = new window.Web3(window.CHAIN.WALLET.provider());
       window.CHAIN.WALLET.chainId()
       .then(function (res) {
+        console.log(res);
         let {tokenId,metadataIpfs,returnaddress} = event.detail;
         metadataIpfs = 'https://ipfs.io/ipfs/' + metadataIpfs
         let chainId = web3.utils.hexToNumber(res); 
