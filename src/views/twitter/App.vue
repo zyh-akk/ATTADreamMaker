@@ -25,7 +25,7 @@
       <div class="ConnectWalletbox">
         <div class="ConnectWallet flex" @click="ConnectWalletclick()">
           <svg-icon :svgType="'attaLogo'" class="svg-img"/>
-          <p class="wordtitle">Connect Wallet</p>
+          <p class="wordtitle">{{shearaddress ? shearaddress : 'Connect Wallet'}}</p>
         </div>
         <!-- 选择钱包插件 -->
         <el-dialog
@@ -160,7 +160,7 @@ export default {
     document.addEventListener("switchaddressCallback1", (event) => {
       if (event.detail.length > 0) {
         this.address = event.detail[0];
-        this.shearaddress =this.address.substring(0, 7) + "******" +this.address.substr(this.address.length - 7);
+        this.shearaddress =this.address.substring(0, 5) + "***" +this.address.substr(this.address.length - 4);
       }
       this.ConnectWalletVisible = false;
       this.ConnectWalletloading = true;
@@ -210,7 +210,7 @@ export default {
       document.dispatchEvent(cEvt);
     },
     // 点击链接钱包
-    async ConnectWalletclick() {
+    ConnectWalletclick() {
       const cEvt = new CustomEvent("msgEvent", { detail: true });
       document.dispatchEvent(cEvt);
     },
