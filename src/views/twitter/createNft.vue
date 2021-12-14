@@ -165,13 +165,12 @@ export default {
       if (!event.target.files) {
         return;
       }
-      console.log(file);
+      this.file = event.target.files[0];
       if (this.isImage(file.name)) {
         this.fileType = 'img'
         this.previewImgUrl = "";
         var file = event.target.files[0];
         var reader = new FileReader();
-        this.file = file;
         //转base64
         reader.onload = function (e) {
           _this.imageUrl = e.target.result; //将图片路径赋值给src
@@ -179,7 +178,6 @@ export default {
         reader.readAsDataURL(file);
       } else if (this.isVideo(file.name)) {
         let videoUrl = URL.createObjectURL(event.target.files[0]);
-        console.log(videoUrl);
         this.imageUrl=videoUrl;
         this.fileType = 'video'
       } else {
@@ -188,12 +186,10 @@ export default {
       }
     },
     handleErrorFile(res, file, fileList) {
-      console.log(res, file, fileList);
       this.loading = false;
     },
     handleSuccessFile(res, file, fileList) {
       this.loading = false;
-      console.log(res);
       if (res.data) {
         this.previewImgUrl = res.data.fileUri;
       }
@@ -209,6 +205,7 @@ export default {
         detail: { Callbackname: "switchaddressCallback2" },
       });
       document.dispatchEvent(cEvt);
+      this.loading = true;
     },
     // 上传弹框 下一步
     uploaddialogclick() {
@@ -263,6 +260,7 @@ export default {
       this.returnaddress = artList[0].address;
       this.metadataIpfs = artList[0].metadataIpfs;
       this.tokenId = artList[0].tokenId;
+      this.loading = false;
       this.nowStep = 4;
     },
   },
