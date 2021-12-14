@@ -118,6 +118,8 @@ import SvgIcon from "@/components/svgIcon.vue";
 import CreateNft from "./createNft.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 import ImageEdit from "./components/imageEdit/imageEdit.vue";
+import './components/js/chainProvider.js';
+import './components/js/chainSetting.js';
 export default {
   components: { SvgIcon, CreateNft,DreamMaker,ImageEdit },
   data() {
@@ -141,7 +143,7 @@ export default {
     };
   },
   mounted() {
-    console.log(localStorage.getItem("_grecaptcha"), "测试缓存");
+    console.log(window.CHAIN.WALLET.chainId(), "测试缓存");
     let leftdom = document.querySelector('[aria-label][role="navigation"]');
     let crdom = document.querySelector(".ATTADreamMaker-dom");
     leftdom.appendChild(crdom);
