@@ -218,9 +218,9 @@ export default {
       if (address.length > 0) {
         this.address = address[0];
         this.shearaddress =
-          this.address.substring(0, 7) +
-          "******" +
-          this.address.substr(this.address.length - 7);
+          this.address.substring(0, 5) +
+          "***" +
+          this.address.substr(this.address.length - 4);
         this.ConnectWalletloading = true;
       } else {
         this.address = "";
