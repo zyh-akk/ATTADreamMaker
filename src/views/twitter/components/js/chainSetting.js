@@ -1,18 +1,4 @@
-var contractSetting = {
-    'dreammaker_minfnft': {
-        'proxy': '',
-        'interfaceType': '',
-        'abi': dreammaker_minfnft_abi,
-        97:  //  BSC 测试 网络
-            {
-                'address': '0x8804B12A28Cd90dbb78629CAf5eba118Ef022c95'
-            },
-        56:  //  BSC 正式 主网络
-            {
-                'address': '',
-            }
-    }
-}
+
 var dreammaker_minfnft_abi = [
 	{
 		"inputs": [
@@ -724,3 +710,18 @@ var dreammaker_minfnft_abi = [
 		"type": "function"
 	}
 ]
+export const contractSetting = {
+    'dreammaker_minfnft': {
+        'proxy': '',
+        'interfaceType': '',
+        'abi': dreammaker_minfnft_abi,
+        97:  //  BSC 测试 网络
+            {
+                'address': '0x8804B12A28Cd90dbb78629CAf5eba118Ef022c95'
+            },
+        56:  //  BSC 正式 主网络
+            {
+                'address': '',
+            }
+    }
+}
