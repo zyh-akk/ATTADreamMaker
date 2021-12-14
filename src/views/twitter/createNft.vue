@@ -135,6 +135,7 @@ export default {
     document.addEventListener("switchaddressCallback2", (event) => {
       if (event.detail.length > 0) {
         this.addressinfo = event.detail[0];
+        localStorage.attadreammaker_wallte = event.detail[0]
         this.createnft();
       }
     });
