@@ -16,6 +16,7 @@ export default {
       total : 10,
       pageSize : 10,
       current : 1,
+      loading:true
     };
   },
   mounted(){
@@ -95,6 +96,8 @@ export default {
     },
     // 获取nft
     async search(){
+      if(this.loading) return;
+      this.loading = true;
       let mintUser = this.userInfo.id;//用户id
       let {pageSize,current,nftType:type} = this;
       let obj = {mintUser,type,pageSize,current};
@@ -107,6 +110,7 @@ export default {
         }),
       });
       const listData = await res.json();
+      this.loading = false;
       this.total = listData.data.total;
       this.nftlist = listData.data.records;
     },
