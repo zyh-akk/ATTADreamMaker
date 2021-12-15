@@ -8,6 +8,7 @@
       top="30vh"
       @close="closeModal"
       :close-on-click-modal="false"
+      v-loading="loading"
     >
       <!-- 上传弹框 -->
       <div v-if="nowStep == 1" class="uploadbox">
@@ -21,7 +22,6 @@
           :on-change="onChange"
           :auto-upload="false"
           :data="addlist"
-          v-loading="loading"
           :on-error="handleErrorFile"
           element-loading-text="拼命加载中"
           element-loading-spinner="el-icon-loading"
@@ -119,7 +119,7 @@ export default {
       sourceFileIpfs: "",
       returnaddress: "",
       metadataIpfs: "",
-      tokenId: "",
+      orderNo: "",
       fileType: ""
     };
   },
@@ -128,11 +128,21 @@ export default {
     // vue中接收的事件
     var event = document.createEvent("Event");
     event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
+    event.initEvent("paymentaddressCallback", true, true); // detail是事件数据
     document.addEventListener("switchaddressCallback2", (event) => {
       if (event.detail.length > 0) {
         this.addressinfo = event.detail[0];
         localStorage.attadreammaker_wallte = event.detail[0]
         this.createnft();
+      }else{
+        this.loading = false;
+      }
+    });
+    document.addEventListener("paymentaddressCallback", (event) => {
+      if (event.detail) {
+        this.sussescasting(event.detail);
+      }else{
+        this.loading = false;
       }
     });
   },
@@ -226,11 +236,12 @@ export default {
       if (!this.input1_info || !this.input2_info || !this.imageUrl) {
         alert("请填写完整信息");
       }
-      let { tokenId, metadataIpfs, returnaddress } = this;
+      let { orderNo, metadataIpfs, returnaddress } = this;
       const cEvt = new CustomEvent("paymentaddress", {
-        detail: { tokenId, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo},
+        detail: { orderNo, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo},
       });
       document.dispatchEvent(cEvt);
+      this.loading = true;
     },
     // 创建nft
     async createnft() {
@@ -256,10 +267,26 @@ export default {
       const artList = listData.data;
       this.returnaddress = artList[0].address;
       this.metadataIpfs = artList[0].metadataIpfs;
-      this.tokenId = artList[0].tokenId;
+      this.orderNo = artList[0].orderNo;
       this.loading = false;
       this.nowStep = 4;
     },
+    async sussescasting(obj){
+      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/mint`;
+      const res = await fetch(getNfts, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      });
+      const listData = await res.json();
+      this.loading = false;
+      if (listData.code == 0) {
+        alert("铸造nft成功");
+      }
+      this.closeModal();
+    }
   },
 };
 </script>
