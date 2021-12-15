@@ -126,10 +126,7 @@
       </div>
     </el-dialog>
     <dream-maker v-if="nftsDom" :userInfo="userInfo"></dream-maker>
-    <image-edit
-      v-if="showImageEditModal"
-      @closeImageEdit="closeImageEdit"
-    ></image-edit>
+    <image-edit v-if="showImageEditModal" :userInfo="userInfo" @closeImageEdit="closeImageEdit"></image-edit>
   </div>
 </template>
 <script>
