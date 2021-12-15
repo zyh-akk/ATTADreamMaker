@@ -95,7 +95,7 @@ export default {
     },
     // 获取nft
     async search(){
-      let mintUser = this.userInfo.identity_id;//用户id
+      let mintUser = this.userInfo.id;//用户id
       let {pageSize,current,nftType:type} = this;
       let obj = {mintUser,type,pageSize,current};
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;

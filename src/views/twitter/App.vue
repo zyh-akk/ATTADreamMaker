@@ -188,7 +188,7 @@ export default {
 
     // 获取用户信息，顺序不能改
     document.addEventListener("userEventCallback", (e) => {
-      self.userInfo = e.detail; //identity_id：用户id
+      self.userInfo = e.detail; //id：用户id
       console.log(self.userInfo);
     });
     // 定义全局事件
