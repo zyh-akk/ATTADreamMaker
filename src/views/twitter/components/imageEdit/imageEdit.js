@@ -36,10 +36,16 @@ export default {
     document.addEventListener("switchaddressCallback2", (event) => {
       if (event.detail.length > 0) {
         this.addressinfo = event.detail[0];
-        this.imagesStep = 5;
+        localStorage.attadreammaker_wallte = event.detail[0];
         this.loading = true;
-        localStorage.attadreammaker_wallte = event.detail[0]
         this.createnft();
+      }
+    });
+    document.addEventListener("paymentaddressCallback", (event) => {
+      if (event.detail) {
+        this.sussescasting(event.detail);
+      }else{
+        this.loading = false;
       }
     });
   },
@@ -200,16 +206,21 @@ export default {
         }),
       });
       const listData = await res.json();
+      console.log(listData);
       const artList = listData.data;
       this.returnaddress = artList[0].address;
       this.metadataIpfs = artList[0].metadataIpfs;
       this.tokenId = artList[0].tokenId;
       this.loading = false;
+      this.imagesStep = 5;
     },
     // 支付
     topay() {
       if (!this.input1_info || !this.input2_info || !this.imageUrl) {
-        alert("请填写完整信息");
+        this.$message({
+          message: '请填写完整信息!',
+          type: 'warning'
+        });
       }
       let { tokenId, metadataIpfs, returnaddress } = this;
       console.log({ tokenId, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo});
@@ -217,6 +228,26 @@ export default {
         detail: { tokenId, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo},
       });
       document.dispatchEvent(cEvt);
+      this.loading = true;
     },
+    async sussescasting(obj){
+      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/mint`;
+      const res = await fetch(getNfts, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      });
+      const listData = await res.json();
+      this.loading = false;
+      if (listData.code == 0) {
+        this.$message({
+          message: '铸造nft成功!',
+          type: 'success'
+        });
+      }
+      this.closeModal();
+    }
   }
 };

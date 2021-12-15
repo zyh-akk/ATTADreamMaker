@@ -29,7 +29,7 @@
         </div>
       </div>
       <!-- 选择钱包弹框 -->
-      <div v-if="imagesStep == 4">
+      <div v-if="imagesStep == 4" v-loading="loading">
         <div :class="ischeckwallet ? 'checkwalletcss walletbox' : 'walletbox'"
           @click="ischeckwallet = true">
           <svg-icon
@@ -46,7 +46,7 @@
         </div>
       </div>
       <!-- YOUR NFT内容 -->
-      <div v-if="imagesStep == 5">
+      <div v-if="imagesStep == 5" v-loading="loading">
         <img class="imageurl_show" :src="base64String" alt="" />
         <p>Name:{{ input1_info }}</p>
         <p>Description:{{ input2_info }}</p>
