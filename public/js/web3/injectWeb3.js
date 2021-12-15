@@ -20,17 +20,10 @@ document.addEventListener('switchaddress', function(event){
 });
 // 钱包支付
 document.addEventListener('paymentaddress', function(event){
-	// window.CHAIN.WALLET.connect('MetaMask')
-	// .then((address)=>{
-	// 	debugger
-	//     var newEvent = new CustomEvent(event.detail.Callbackname, { bubbles:true,cancelable:true,composed:true ,detail : address ? address : []});
-	//     document.dispatchEvent(newEvent);
-	// })
-	// debugger
 	var web3 = new window.Web3(window.CHAIN.WALLET.provider());
 	window.CHAIN.WALLET.chainId()
 		.then(function (res) {
-			let {tokenId,metadataIpfs,returnaddress} = event.detail;
+			let {tokenId,metadataIpfs,returnaddress,wallteaddress} = event.detail;
 			metadataIpfs = 'https://ipfs.io/ipfs/' + metadataIpfs
 			let chainId = web3.utils.hexToNumber(res); 
 			let setting_proof = contractSetting["dreammaker_minfnft"];
@@ -40,7 +33,7 @@ document.addEventListener('paymentaddress', function(event){
 			paymentexample = new web3.eth.Contract(abiName, address);  
 			
 			paymentexample.methods.safeMint(tokenId,returnaddress,metadataIpfs).send({ 
-				from: returnaddress
+				from: wallteaddress
 			})
 			.then(function (res) {
 				debugger

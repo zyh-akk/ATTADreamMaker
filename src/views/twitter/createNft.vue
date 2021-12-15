@@ -7,6 +7,7 @@
       custom-class="CreateNFTbox-css"
       top="30vh"
       @close="closeModal"
+      :close-on-click-modal="false"
     >
       <!-- 上传弹框 -->
       <div v-if="nowStep == 1" class="uploadbox">
@@ -227,7 +228,7 @@ export default {
       }
       let { tokenId, metadataIpfs, returnaddress } = this;
       const cEvt = new CustomEvent("paymentaddress", {
-        detail: { tokenId, metadataIpfs, returnaddress },
+        detail: { tokenId, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo},
       });
       document.dispatchEvent(cEvt);
     },

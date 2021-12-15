@@ -10,7 +10,9 @@ export default {
       imageUrl: '',
       nftsBol:false,
       appendDomIndex:0,
-      nftType:'',
+      nftType:'0',
+      nftlist : [],
+      base_url : process.env.VUE_APP_BASEURL,
     };
   },
   mounted(){
@@ -38,6 +40,7 @@ export default {
   methods: {
     OperationNft(type){
       this.nftType = type;
+      this.search();
     },
     appendDom(){
       let self = this;
@@ -90,12 +93,14 @@ export default {
     // 获取nft
     search(){
       let mintUser = this.userInfo.identity_id;//用户id
-      let type = this.nftType=='nft'?0:this.nftType=='posterNft'?1:this.nftType=='jointNft'?2:0;//nft类型type类型    0:NFT/1:POSTER/2:Co-NFT
+      let type = this.nftType;//nft类型type类型    0:NFT/1:POSTER/2:Co-NFT
       let getNfts = `${process.env.VUE_APP_BASEURL}/v2/twitter/nft/list?mintUser=${mintUser}&type=${type}`;
       console.log(getNfts);
       fetch(getNfts)
       .then(response => response.json())
       .then(data =>{
+        let res = data.data.records;
+        this.nftlist = res;
         console.log(data,'测试接口')
       });
     }
