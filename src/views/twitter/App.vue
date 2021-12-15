@@ -6,10 +6,12 @@
           class="MaskNetwork"
           @click="
             ATTAMakerVisible = true;
-            test();">
+            test();
+          "
+        >
           <el-dropdown trigger="click" @command="selectclick">
             <div class="flex">
-              <svg-icon :svgType="'attaLogo'" class="svg-img"/>
+              <svg-icon :svgType="'attaLogo'" class="svg-img" />
               <p class="wordtitle">ATTA Dream Maker</p>
             </div>
             <el-dropdown-menu slot="dropdown">
@@ -24,8 +26,10 @@
       </div>
       <div class="ConnectWalletbox">
         <div class="ConnectWallet flex" @click="ConnectWalletclick()">
-          <svg-icon :svgType="'attaLogo'" class="svg-img"/>
-          <p class="wordtitle">{{shearaddress ? shearaddress : 'Connect Wallet'}}</p>
+          <svg-icon :svgType="'attaLogo'" class="svg-img" />
+          <p class="wordtitle">
+            {{ shearaddress ? shearaddress : "Connect Wallet" }}
+          </p>
         </div>
         <!-- 选择钱包插件 -->
         <el-dialog
@@ -36,7 +40,12 @@
           top="35vh"
         >
           <div class="walletbox" @click="checkwallclick(1)">
-            <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
+            <svg-icon
+              :svgType="'mateMask'"
+              class="svg-img"
+              :svgW="48"
+              :svgH="48"
+            />
             <p>MetaMask</p>
           </div>
           <!-- <div class="walletbox" @click="checkwallclick(2)">
@@ -52,7 +61,12 @@
           custom-class="MaskNetwork-dialogbox2"
         >
           <div class="useraddressbox flex">
-            <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
+            <svg-icon
+              :svgType="'mateMask'"
+              class="svg-img"
+              :svgW="48"
+              :svgH="48"
+            />
             <div class="contentbox" v-if="checkwallet <= 0">
               <div class="contentbox-top flex">
                 <p>MetaMask</p>
@@ -67,7 +81,7 @@
             <div class="content-loading" v-else>
               <p class="loading-p">{{ loadingwallettitle }}</p>
               <div class="loading-div">
-                <svg-icon class="svg-class" :svgType="'loading'"/>
+                <svg-icon class="svg-class" :svgType="'loading'" />
               </div>
             </div>
             <el-button
@@ -106,11 +120,16 @@
         <p>3. Click the button "Create a Co-NFT for him/her</p>
         <p>4. Then follow the steps to upload the basic info</p>
         <p>5. Tell him/her to accept the Co-NFT request</p>
-        <p>6. Once your friend finished the minting process, you and your friend</p>
+        <p>
+          6. Once your friend finished the minting process, you and your friend
+        </p>
       </div>
     </el-dialog>
     <dream-maker v-if="nftsDom" :userInfo="userInfo"></dream-maker>
-    <image-edit v-if="showImageEditModal" @closeImageEdit="closeImageEdit"></image-edit>
+    <image-edit
+      v-if="showImageEditModal"
+      @closeImageEdit="closeImageEdit"
+    ></image-edit>
   </div>
 </template>
 <script>
@@ -119,7 +138,7 @@ import CreateNft from "./createNft.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 import ImageEdit from "./components/imageEdit/imageEdit.vue";
 export default {
-  components: { SvgIcon, CreateNft,DreamMaker,ImageEdit },
+  components: { SvgIcon, CreateNft, DreamMaker, ImageEdit },
   data() {
     return {
       ATTAMakerVisible: false, //ATTA Dream Maker弹框控制
@@ -132,12 +151,12 @@ export default {
       showCreateNftModal: false,
       address: "",
       shearaddress: "",
-      isshowCreateCoNFT : false,//Create Co-NFT 弹框 显示隐藏控制
-      nftsDom:false,
-      Returnfromsubassembly:false, //从子组件过来，引用选择钱包弹框
-      infoshow_dialog : false,//你的nft信息展示弹框
-      userInfo:{},//推特保存的用户信息
-      showImageEditModal:false,//图片编辑
+      isshowCreateCoNFT: false, //Create Co-NFT 弹框 显示隐藏控制
+      nftsDom: false,
+      Returnfromsubassembly: false, //从子组件过来，引用选择钱包弹框
+      infoshow_dialog: false, //你的nft信息展示弹框
+      userInfo: {}, //推特保存的用户信息
+      showImageEditModal: false, //图片编辑
     };
   },
   mounted() {
@@ -159,7 +178,10 @@ export default {
     document.addEventListener("switchaddressCallback1", (event) => {
       if (event.detail.length > 0) {
         this.address = event.detail[0];
-        this.shearaddress =this.address.substring(0, 5) + "***" +this.address.substr(this.address.length - 4);
+        this.shearaddress =
+          this.address.substring(0, 5) +
+          "***" +
+          this.address.substr(this.address.length - 4);
       }
       this.ConnectWalletVisible = false;
       this.ConnectWalletloading = true;
@@ -169,19 +191,20 @@ export default {
 
     // 获取用户信息，顺序不能改
     document.addEventListener("userEventCallback", (e) => {
-      self.userInfo = e.detail;//identity_id：用户id
+      self.userInfo = e.detail; //identity_id：用户id
       console.log(self.userInfo);
     });
     // 定义全局事件
-    let newEvent = new CustomEvent('userInfoEvent', {});
-    document.dispatchEvent(newEvent);
+    let newEvent = new CustomEvent("userInfoEvent", {});
+    document.dispatchEvent(newEvent);
 
     this.appendDom();
     this.addClick();
     if (localStorage.getItem("attadreammaker_wallte")) {
       let str = localStorage.getItem("attadreammaker_wallte");
       this.address = str;
-      this.shearaddress =str.substring(0, 5) + "***" +str.substr(str.length - 4);
+      this.shearaddress =
+        str.substring(0, 5) + "***" + str.substr(str.length - 4);
     }
   },
   methods: {
@@ -191,7 +214,7 @@ export default {
     showNftModal() {
       this.showCreateNftModal = true;
     },
-    showImageModal(){
+    showImageModal() {
       this.showImageEditModal = true;
     },
     closeNftModal() {
@@ -210,7 +233,9 @@ export default {
       this.ConnectWalletloading = true;
       this.loadingwallettitle = "Connect to MetaMask";
       this.checkwallet = type;
-      const cEvt = new CustomEvent("switchaddress", { detail: {Callbackname : 'switchaddressCallback1'}  });
+      const cEvt = new CustomEvent("switchaddress", {
+        detail: { Callbackname: "switchaddressCallback1" },
+      });
       document.dispatchEvent(cEvt);
     },
     // 点击链接钱包
@@ -226,29 +251,29 @@ export default {
           "***" +
           this.address.substr(this.address.length - 4);
         this.ConnectWalletloading = true;
-        localStorage.setItem("attadreammaker_wallte",address[0]);
+        localStorage.setItem("attadreammaker_wallte", address[0]);
       } else {
         this.address = "";
         this.ConnectWalletVisible = true;
-        localStorage.setItem("attadreammaker_wallte","");
+        localStorage.setItem("attadreammaker_wallte", "");
       }
     },
     // 点击下拉框
     selectclick(type) {
       switch (type) {
-        case '1':
+        case "1":
           this.showNftModal();
           break;
-        case '2':
+        case "2":
           this.showImageModal();
           break;
-        case '3':
+        case "3":
           this.isshowCreateCoNFT = true;
           break;
         // case '4':
         //   this.showNftModal();
         //   break;
-        case '5':
+        case "5":
           this.jumppage();
           break;
         default:
@@ -257,44 +282,54 @@ export default {
     },
 
     // 添加dom操作节点
-    appendDom(){
+    appendDom() {
       let self = this;
-      let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]');
-      if(infoDom){
+      let infoDom = document.querySelector(
+        'nav.r-qklmqi[aria-label][role="navigation"]'
+      );
+      if (infoDom) {
         this.nftsDom = true;
-        $(document).on('click','nav.r-qklmqi[aria-label][role="navigation"]',function(e){
-          let crdom = document.querySelector(".dream-maker");
-          if(!crdom){
-            self.nftsDom = false;
-            setTimeout(()=>{
-              self.nftsDom = true;
-            },500)
+        $(document).on(
+          "click",
+          'nav.r-qklmqi[aria-label][role="navigation"]',
+          function (e) {
+            let crdom = document.querySelector(".dream-maker");
+            if (!crdom) {
+              self.nftsDom = false;
+              setTimeout(() => {
+                self.nftsDom = true;
+              }, 500);
+            }
           }
-        })
-      }else{
+        );
+      } else {
         this.nftsDom = false;
       }
     },
     // 左侧列表添加点击事件，判断是否需要开启nft列表
-    addClick(){
+    addClick() {
       let self = this;
-      let navdom = document.querySelector('nav.r-1habvwh[aria-label][role="navigation"]').getElementsByTagName('a');
-      $(navdom).on('click',function(event){
-        if(event.currentTarget && (event.currentTarget.ariaLabel == 'Profile' || event.currentTarget.ariaLabel == '个人资料')){
-          $(document).ready(function(){
+      let navdom = document
+        .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
+        .getElementsByTagName("a");
+      $(navdom).on("click", function (event) {
+        if (
+          event.currentTarget &&
+          (event.currentTarget.ariaLabel == "Profile" ||
+            event.currentTarget.ariaLabel == "个人资料")
+        ) {
+          $(document).ready(function () {
             console.log(event.currentTarget.ariaLabel);
             //此时需要加载nft
             self.nftsDom = true;
-          })
-        }else{
+          });
+        } else {
           self.nftsDom = false;
         }
-      })
+      });
     },
     // my nfts 跳转
-    jumppage(){
-
-    }
+    jumppage() {},
   },
 };
 </script>
@@ -410,20 +445,20 @@ export default {
     }
   }
 }
-.infoshow_dialog_css{
-  p{
+.infoshow_dialog_css {
+  p {
     padding-left: 20px;
   }
-  .btns{
+  .btns {
     text-align: center;
   }
 }
 </style>
 <style lang="css">
 .MaskNetwork-dialogbox .el-dialog__header,
-.MaskNetwork-dialogbox2 .el-dialog__header ,
+.MaskNetwork-dialogbox2 .el-dialog__header,
 .CreateCoNFT_css .el-dialog__header,
-.infoshow_dialog_css .el-dialog__header{
+.infoshow_dialog_css .el-dialog__header {
   border-bottom: 1px solid #919ca3;
 }
 </style>
