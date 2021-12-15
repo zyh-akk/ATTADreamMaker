@@ -2,6 +2,19 @@ var dreammaker_minfnft_abi = [
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "manager",
+				"type": "address"
+			}
+		],
+		"name": "addManager",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "string",
 				"name": "name_",
 				"type": "string"
@@ -10,10 +23,28 @@ var dreammaker_minfnft_abi = [
 				"internalType": "string",
 				"name": "symbol_",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "baseUri_",
+				"type": "string"
 			}
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "manager",
+				"type": "address"
+			}
+		],
+		"name": "AddManager",
+		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -133,6 +164,71 @@ var dreammaker_minfnft_abi = [
 		"type": "function"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "_state",
+				"type": "bool"
+			}
+		],
+		"name": "pause",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "manager",
+				"type": "address"
+			}
+		],
+		"name": "removeManager",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "manager",
+				"type": "address"
+			}
+		],
+		"name": "RemoveManager",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -243,6 +339,19 @@ var dreammaker_minfnft_abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "baseURI",
+				"type": "string"
+			}
+		],
+		"name": "setBaseURI",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -291,6 +400,19 @@ var dreammaker_minfnft_abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -308,6 +430,19 @@ var dreammaker_minfnft_abi = [
 		],
 		"name": "URI",
 		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "_baseUri",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -385,6 +520,19 @@ var dreammaker_minfnft_abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -398,6 +546,19 @@ var dreammaker_minfnft_abi = [
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "paused",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -501,7 +662,7 @@ var dreammaker_minfnft_abi = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_id",
+				"name": "tokenId",
 				"type": "uint256"
 			}
 		],
@@ -537,7 +698,7 @@ var contractSetting = {
         'abi': dreammaker_minfnft_abi,
         97:  //  BSC 测试 网络
             {
-                'address': '0x0E3B4cC14D7DfE8f79501d92d598648e4810571d'
+                'address': '0x767Ec2E567431Dd6734fF81EE6463E33BC07BED7'
             },
         56:  //  BSC 正式 主网络
             {

@@ -34,6 +34,13 @@
           <button v-if="item.status == 0 && item.type == 2 && item.creatorTag == 1">Accept</button>
           <button v-if="item.status == 1 && item.type == 2 && item.creatorTag == 1">Mint now</button>
         </div>
+        <div class="paginationbox">
+          <el-pagination
+            layout="prev, pager, next"
+            @current-change="handleCurrentChange"
+            :total="total">
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>

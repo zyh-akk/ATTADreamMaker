@@ -24,7 +24,6 @@ document.addEventListener('paymentaddress', function(event){
 	window.CHAIN.WALLET.chainId()
 		.then(function (res) {
 			let {orderNo,metadataIpfs,returnaddress,wallteaddress} = event.detail;
-			metadataIpfs = 'https://ipfs.io/ipfs/' + metadataIpfs
 			let chainId = web3.utils.hexToNumber(res); 
 			let setting_proof = contractSetting["dreammaker_minfnft"];
 			let address = setting_proof[chainId].address; // 监听 网络切换 会 让 用户 处于 正确的网络，这里 只负责 配置 当前网络下正确的 合约地址

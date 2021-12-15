@@ -13,6 +13,9 @@ export default {
       nftType:'0',
       nftlist : [],
       base_url : process.env.VUE_APP_BASEURL,
+      total : 10,
+      pageSize : 10,
+      current : 1,
     };
   },
   mounted(){
@@ -91,18 +94,25 @@ export default {
       });
     },
     // 获取nft
-    search(){
+    async search(){
       let mintUser = this.userInfo.identity_id;//用户id
-      let type = this.nftType;//nft类型type类型    0:NFT/1:POSTER/2:Co-NFT
-      let getNfts = `${process.env.VUE_APP_BASEURL}/v2/twitter/nft/list?mintUser=${mintUser}&type=${type}`;
-      console.log(getNfts);
-      fetch(getNfts)
-      .then(response => response.json())
-      .then(data =>{
-        let res = data.data.records;
-        this.nftlist = res;
-        console.log(data,'测试接口')
+      let {pageSize,current,nftType:type} = this;
+      let obj = {mintUser,type,pageSize,current};
+      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;
+      const res = await fetch(getNfts, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
       });
+      const listData = await res.json();
+      this.total = listData.data.total;
+      this.nftlist = listData.data.records;
+    },
+    handleCurrentChange(val){
+      this.current = val;
+      this.search();
     }
   }
 };
