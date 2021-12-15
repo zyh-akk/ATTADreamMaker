@@ -34,7 +34,7 @@
           <button v-if="item.status == 0 && item.type == 2 && item.creatorTag == 1">Accept</button>
           <button v-if="item.status == 1 && item.type == 2 && item.creatorTag == 1">Mint now</button>
         </div>
-        <div class="paginationbox">
+        <div class="paginationbox" v-if="nftlist.length > 0">
           <el-pagination
             layout="prev, pager, next"
             @current-change="handleCurrentChange"
