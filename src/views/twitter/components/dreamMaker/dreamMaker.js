@@ -1,5 +1,6 @@
 
 import SvgIcon from '@/components/svgIcon.vue'
+import OAuth from 'oauth';
 export default {
   components: { SvgIcon },
   props: {
@@ -20,6 +21,7 @@ export default {
     };
   },
   mounted(){
+    console.log(OAuth);
     let self = this;
     $(document).ready(function(){
       self.appendDom();
@@ -123,6 +125,15 @@ export default {
     handleCurrentChange(val){
       this.current = val;
       this.search();
+    },
+
+
+
+
+    // 推特api
+    ttApi(){
+      // let consumer_key = process.env.CONSUMER_KEY;
+      // let consumer_secret = process.env.CONSUMER_SECRET;
     }
   }
 };
