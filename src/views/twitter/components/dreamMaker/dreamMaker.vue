@@ -31,8 +31,8 @@
           <p v-if="item.status == 2 && item.type == 2">Status：Accept / Minting</p>
           <p v-if="item.status == 3 && item.type == 2">Status：Accept / Minted</p>
           <p>Wallet：{{item.address ? item.address.substring(0, 5) + "***" +item.address.substr(item.address.length - 4) : ''}}</p>
-          <button v-if="item.status == 0 && item.type == 2 && item.creatorTag == 1" @click="OperationNft('accept',item)">Accept</button>
-          <button v-if="item.status == 1 && item.type == 2 && item.creatorTag == 1" @click="OperationNft('mint',item)">Mint now</button>
+          <el-button type="primary" v-if="item.status == 0 && item.type == 2 && item.creatorTag == 1" @click="OperationNft('accept',item)">Accept</el-button>
+          <el-button type="primary" v-if="item.status == 1 && item.type == 2 && item.creatorTag == 1" @click="OperationNft('mint',item)">Mint now</el-button>
         </div>
         <div class="paginationbox" v-if="nftlist.length > 0">
           <el-pagination

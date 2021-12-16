@@ -20,7 +20,7 @@
         <p>Note: This NFT is a Co-NFT, twitter user XXXXX created for you. You can accept it if you like it.</p>
         <div class="btns">
           <el-button v-if="!modal2status" type="primary" @click="topay2">Accept</el-button>
-          <el-button v-else type="primary" @click="topay">Mint now</el-button>
+          <el-button v-else type="primary" @click="getnftjl">Mint now</el-button>
         </div>
       </div>
     </el-dialog>
@@ -42,8 +42,8 @@ export default {
   mounted() {
     // vue中接收的事件
     var event = document.createEvent("Event");
-    event.initEvent("paymentaddressCallback", true, true); // detail是事件数据
-    document.addEventListener("paymentaddressCallback", (event) => {
+    event.initEvent("paymentsaddressCallback", true, true); // detail是事件数据
+    document.addEventListener("paymentsaddressCallback", (event) => {
       if (event.detail) {
         this.sussescasting(event.detail);
       }else{
@@ -67,10 +67,19 @@ export default {
       );
     },
     // 支付
-    topay() {
-      let { orderNo, metadataIpfs, address : returnaddress } = this.conftdataobject;
-      const cEvt = new CustomEvent("paymentaddress", {
-        detail: { orderNo, metadataIpfs, returnaddress ,wallteaddress : this.address},
+    async getnftjl(){
+      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/mint_record/${this.conftdataobject.orderNo}`;
+      const res = await fetch(getNfts);
+      const listData = await res.json();
+      let arr = listData.data;
+      let str1 = [],str2 = [],orderNo = "";
+      arr.forEach(item => {
+        str1.push(item.address);
+        str2.push(item.metadataIpfs);
+        orderNo = item.orderNo;
+      });
+      const cEvt = new CustomEvent("paymentsaddress", {
+        detail: { orderNo, metadataIpfs : str2.toString(), returnaddress : str1 ,wallteaddress : this.address},
       });
       document.dispatchEvent(cEvt);
       this.loading = true;
