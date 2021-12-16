@@ -12,7 +12,7 @@
         <p :class="nftType=='2'?'check-nft':''" @click="OperationNft('2')">Co-NFT</p>
       </div>
       <div class="nft-btn">
-        <p :class="nftType=='createNft'?'check-nft':''" @click="OperationNft('createNft')">Create a personal NFT</p>
+        <p class="check-nft" >Create a personal NFT</p>
       </div>
 
       <div class="nft-list">
