@@ -180,7 +180,6 @@ export default {
       conftfun: false, // 是否走吊起支付和mint接口
       modal2status: false,
       conftdataobject: {},
-      oauth:null
     };
   },
   mounted() {
@@ -194,7 +193,8 @@ export default {
     getUserInfo(){
       twitterInfo('https://api.twitter.com/2/users/by/username/fanjiaxiaoxiong')
       .then(res=>{
-        console.log(res);
+        this.userInfo = res.data;
+        console.log(res.data);
       })
     },
     getDom() {
@@ -234,15 +234,6 @@ export default {
           this.loadingwallettitle = "账户";
           this.checkwallet = "0";
         });
-
-        // 获取用户信息，顺序不能改
-        document.addEventListener("userEventCallback", (e) => {
-          self.userInfo = e.detail; //id：用户id
-          console.log(self.userInfo);
-        });
-        // 定义全局事件
-        let newEvent = new CustomEvent("userInfoEvent", {});
-        document.dispatchEvent(newEvent);
 
         this.appendDomIndex = 0;
         this.appendDom();
