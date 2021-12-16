@@ -70,12 +70,12 @@
             <div class="contentbox" v-if="checkwallet <= 0">
               <div class="contentbox-top flex">
                 <p>MetaMask</p>
-                <img src alt />
+                <!-- <img src alt /> -->
               </div>
               <div class="contentbox-bottom flex">
                 <p>{{ shearaddress }}</p>
-                <img src alt />
-                <img src alt />
+                <!-- <img src alt />
+                <img src alt /> -->
               </div>
             </div>
             <div class="content-loading" v-else>
