@@ -29,7 +29,7 @@ export function twitterInfo(url) {
 export function getUserInfo() {
     return new Promise((resolve, reject) => { 
         setTimeout(() => {
-            let uesrNameDom = document.querySelector('[data-testid="SideNav_AccountSwitcher_Button"]').childNodes[1].childNodes[0].childNodes[1].childNodes[0].childNodes[0];
+            let uesrNameDom = document.querySelector('[aria-label="Account menu"][data-testid="SideNav_AccountSwitcher_Button"]').childNodes[1].childNodes[0].childNodes[1].childNodes[0].childNodes[0];
             let uesrName = uesrNameDom.textContent;
             console.log(uesrName);
             resolve(uesrName.slice(1))
