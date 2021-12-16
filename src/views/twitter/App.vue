@@ -155,9 +155,7 @@ import CreateNft from "./components/createNft.vue";
 import ConftAccept from "./components/conftaccept.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 import ImageEdit from "./components/imageEdit/imageEdit.vue";
-import OAuth from "oauth";
-import crypto from "crypto";
-
+import { twitterInfo } from "./utils/utils";
 export default {
   components: { SvgIcon, CreateNft, ConftAccept, DreamMaker, ImageEdit },
   data() {
@@ -182,46 +180,22 @@ export default {
       conftfun: false, // 是否走吊起支付和mint接口
       modal2status: false,
       conftdataobject: {},
+      oauth:null
     };
   },
   mounted() {
     this.getDom();
-    const consumer_key = process.env.VUE_APP_CONSUMER_KEY;
-    const consumer_secret = process.env.VUE_APP_CONSUMER_SECRET;
-
-    const oauth = OAuth({
-      consumer: {
-        key: consumer_key,
-        secret: consumer_secret,
-      },
-      signature_method: "HMAC-SHA1",
-      hash_function: (baseString, key) =>
-        crypto.createHmac("sha1", key).update(baseString).digest("base64"),
-    });
-    this.getRequest()
+    this.getUserInfo()
   },
   methods: {
-    
-
      getRequest() {
-
-       var oauth = new OAuth.OAuth(
-      'https://api.twitter.com/oauth/request_token',
-      'https://api.twitter.com/oauth/access_token',
-      'MkGh5S5rTmisQXMiagQt5Mxfs',
-      '8BSJ7BTYt7VJbV9PZpKiutnjxcTQf3xC1SIOboYMWg7T4lKZd1',
-      '1.0A',
-      null,
-      'HMAC-SHA1'
-    );
-    oauth.get(
-      'https://api.twitter.com/1.1/trends/place.json?id=23424977',
-      '1385945756394160128-cTYnKD97k39Ml6WzDNweIPgvR8ik7z', //test user token
-      'GQYmlhQoAdDWS24btiatVxpK1OraluzuwRyucWo6BtvIO', //test user secret            
-      function (e, data, res){
-        console.log(e,data,res);        
-        // console.log(require('util').inspect(data));
-      }); 
+      let data = twitterInfo('https://api.twitter.com/1.1/statuses/user_timeline.json?cursor=-1&screen_name=fanjiaxiaoxiong&skip_status=true&include_user_entities=false');
+    },
+    getUserInfo(){
+      twitterInfo('https://api.twitter.com/2/users/by/username/fanjiaxiaoxiong')
+      .then(res=>{
+        console.log(res);
+      })
     },
     getDom() {
       // 获取10次，页面还没有加载该dom就不在创建了，避免死循环
