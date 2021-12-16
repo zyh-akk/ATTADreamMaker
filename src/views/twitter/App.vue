@@ -125,7 +125,7 @@
         </p>
       </div>
     </el-dialog>
-    <dream-maker v-if="nftsDom" :userInfo="userInfo"></dream-maker>
+    <dream-maker v-if="nftsDom" :userInfo="userInfo" @createNftAccept="createNftAccept"></dream-maker>
     <image-edit v-if="showImageEditModal" :userInfo="userInfo" @closeImageEdit="closeImageEdit"></image-edit>
   </div>
 </template>
@@ -327,6 +327,12 @@ export default {
     },
     // my nfts 跳转
     jumppage() {},
+    createNftAccept(type){//type取值：createNft  accept  mint  分别对应不同的按钮功能
+      console.log(type);
+      if(type == 'createNft'){
+        this.showCreateNftModal = true;
+      }
+    }
   },
 };
 </script>
