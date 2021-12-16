@@ -90,7 +90,7 @@
         <p>Wallet:{{ addressinfo }}</p>
         <div class="btns">
           <el-button type="primary" @click="nowStep = 3">Previous</el-button>
-          <el-button type="primary" @click="topay">Next</el-button>
+          <el-button v-if="!conftfun" type="primary" @click="topay">Next</el-button>
         </div>
       </div>
     </el-dialog>
@@ -100,7 +100,7 @@
 import SvgIcon from "@/components/svgIcon.vue";
 export default {
   components: { SvgIcon },
-  props: ["address", "userInfo"],
+  props: ["address", "userInfo","conftfun"],
   data() {
     return {
       addlist: null,

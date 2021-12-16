@@ -103,6 +103,7 @@
         v-if="showCreateNftModal"
         @closeNftModal="closeNftModal"
         :userInfo="userInfo"
+        :conftfun="conftfun"
       ></create-nft>
     </div>
     <!-- Create Co-NFT 弹框 （已完成）-->
@@ -154,6 +155,7 @@ export default {
       infoshow_dialog: false, //你的nft信息展示弹框
       userInfo: {}, //推特保存的用户信息
       showImageEditModal: false, //图片编辑
+      conftfun : false ,// 是否走吊起支付和mint接口
     };
   },
   mounted() {
@@ -215,6 +217,7 @@ export default {
       this.showImageEditModal = true;
     },
     closeNftModal() {
+      this.conftfun = false;
       this.showCreateNftModal = false;
     },
     test() {
@@ -330,6 +333,7 @@ export default {
     createNftAccept(type){//type取值：createNft  accept  mint  分别对应不同的按钮功能
       console.log(type);
       if(type == 'createNft'){
+        this.conftfun = true;
         this.showCreateNftModal = true;
       }
     }
