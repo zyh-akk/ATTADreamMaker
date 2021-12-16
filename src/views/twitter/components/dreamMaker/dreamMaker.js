@@ -16,7 +16,7 @@ export default {
       total : 10,
       pageSize : 10,
       current : 1,
-      loading:true
+      loading:false
     };
   },
   mounted(){
