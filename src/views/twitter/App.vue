@@ -143,8 +143,8 @@
 </template>
 <script>
 import SvgIcon from "@/components/svgIcon.vue";
-import CreateNft from "./createNft.vue";
-import ConftAccept from "./conftaccept.vue";
+import CreateNft from "./components/createNft.vue";
+import ConftAccept from "./components/conftaccept.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 import ImageEdit from "./components/imageEdit/imageEdit.vue";
 export default {
