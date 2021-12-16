@@ -120,8 +120,7 @@ export default {
       returnaddress: "",
       metadataIpfs: "",
       orderNo: "",
-      fileType: "",
-      nftTitle:'Upload your file'
+      fileType: ""
     };
   },
   computed:{
