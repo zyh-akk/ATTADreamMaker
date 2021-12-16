@@ -28,6 +28,17 @@ export default {
 
     };
   },
+  computed:{
+    nftTitle: function(){
+      let name = 'Upload your file';
+      if(this.imagesStep == 1) name = 'Upload your file';
+      if(this.imagesStep == 2) name = 'Fill the NFT info';
+      if(this.imagesStep == 3) name = 'Editing';
+      if(this.imagesStep == 4) name = 'Choose wallet';
+      if(this.imagesStep == 5) name = 'Your Poster NFT info';
+      return name;
+    }
+  },
   mounted(){
     this.uploadUrl = process.env.VUE_APP_BASEURL + "v2/twitter/nft/upload";
     // vue中接收的事件

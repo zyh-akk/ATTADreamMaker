@@ -1,7 +1,7 @@
 <template>
   <div class="image-nft">
     <!-- 上传文件弹框 -->
-    <el-dialog title="Upload your file" width="50vw" :close-on-click-modal="false" :visible.sync="imagesDialog" :modal="false" custom-class="CreateNFTbox-css" top="35vh" @close="closeModal">
+    <el-dialog :title="nftTitle" width="50vw" :close-on-click-modal="false" :visible.sync="imagesDialog" :modal="false" custom-class="CreateNFTbox-css" top="35vh" @close="closeModal" v-loading="loading">
       <!-- 图片上传部分 -->
       <div v-show="imagesStep == 1">
         <el-upload class="avatar-uploader" accept="image/*" action="" :show-file-list="false" :on-change="onChange" :auto-upload="false">
@@ -21,7 +21,7 @@
         </div>
       </div>
         <!-- 图片编辑部分 -->
-      <div v-show="imagesStep == 3" v-loading="loading" class="image-edit">
+      <div v-show="imagesStep == 3" class="image-edit">
         <div id="tui-image-editor"></div>
         <div class="btns">
           <el-button v-if="imagesStep > 1" type="primary" @click="stepPrevious">Previous</el-button>
@@ -29,7 +29,7 @@
         </div>
       </div>
       <!-- 选择钱包弹框 -->
-      <div v-if="imagesStep == 4" v-loading="loading">
+      <div v-if="imagesStep == 4">
         <div :class="ischeckwallet ? 'checkwalletcss walletbox' : 'walletbox'"
           @click="ischeckwallet = true">
           <svg-icon
@@ -46,7 +46,7 @@
         </div>
       </div>
       <!-- YOUR NFT内容 -->
-      <div v-if="imagesStep == 5" v-loading="loading">
+      <div v-if="imagesStep == 5">
         <img class="imageurl_show" :src="base64String" alt="" />
         <p>Name:{{ input1_info }}</p>
         <p>Description:{{ input2_info }}</p>

@@ -1,7 +1,7 @@
 <template>
   <div class="create-nft-wrap">
     <el-dialog
-      title="Upload your file"
+      :title="nftTitle"
       :visible.sync="upload_dialog"
       :modal="false"
       custom-class="CreateNFTbox-css"
@@ -120,8 +120,19 @@ export default {
       returnaddress: "",
       metadataIpfs: "",
       orderNo: "",
-      fileType: ""
+      fileType: "",
+      nftTitle:'Upload your file'
     };
+  },
+  computed:{
+    nftTitle:()=>{
+      let name = 'Upload your file';
+      if(this.nowStep == 1) name = 'Upload your file';
+      if(this.nowStep == 2) name = 'Fill the NFT info';
+      if(this.nowStep == 3) name = 'Choose wallet';
+      if(this.nowStep == 4) name = 'Your Poster NFT info';
+      return name;
+    }
   },
   mounted() {
     this.uploadUrl = process.env.VUE_APP_BASEURL + "v2/twitter/nft/upload";

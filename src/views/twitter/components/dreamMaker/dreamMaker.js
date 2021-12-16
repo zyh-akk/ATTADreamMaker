@@ -43,8 +43,12 @@ export default {
 
   methods: {
     OperationNft(type){
-      this.nftType = type;
-      this.search();
+      if(type == 'createNft' || type == 'accept' || type == 'mint'){
+        this.$emit("createNftAccept", type);
+      }else{
+        this.nftType = type;
+        this.search();
+      }
     },
     appendDom(){
       let self = this;
