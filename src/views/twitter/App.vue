@@ -106,13 +106,15 @@
         :conftfun="conftfun"
       ></create-nft>
     </div>
-    <!-- Create NFT 弹框 -->
+    <!-- Co-NFT 弹框 -->
     <div class="modalDom">
       <conft-accept
         v-if="showCreateNftModal2"
         @closeNftModal2="closeNftModal2"
         :userInfo="userInfo"
         :modal2status="modal2status"
+        :conftdataobject="conftdataobject"
+        :address="address"
       ></conft-accept>
     </div>
     <!-- Create Co-NFT 弹框 （已完成）-->
@@ -168,6 +170,7 @@ export default {
       showImageEditModal: false, //图片编辑
       conftfun : false ,// 是否走吊起支付和mint接口
       modal2status : false,
+      conftdataobject : {},
     };
   },
   mounted() {
@@ -358,18 +361,19 @@ export default {
     },
     // my nfts 跳转
     jumppage() {},
-    createNftAccept(type){//type取值：createNft  accept  mint  分别对应不同的按钮功能
-      console.log(type);
+    createNftAccept(type,obj){//type取值：createNft  accept  mint  分别对应不同的按钮功能
       if(type == 'createNft'){
         this.conftfun = true;
         this.showCreateNftModal = true;
       }
       if(type == 'accept'){
         this.modal2status = false;
+        this.conftdataobject = obj;
         this.showCreateNftModal2 = true;
       }
       if(type == 'mint'){
         this.modal2status = true;
+        this.conftdataobject = obj;
         this.showCreateNftModal2 = true;
       }
     }

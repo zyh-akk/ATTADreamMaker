@@ -45,7 +45,7 @@ export default {
     OperationNft(type,obj = null){
       console.log(obj);
       if(type == 'createNft' || type == 'accept' || type == 'mint'){
-        this.$emit("createNftAccept", type);
+        this.$emit("createNftAccept", type,obj ? obj : null);
       }else{
         this.nftType = type;
         this.search();

@@ -1,7 +1,7 @@
 <template>
   <div class="create-nft-wrap">
     <el-dialog
-      :title="nftTitle"
+      title="Your NFT info"
       :visible.sync="upload_dialog"
       :modal="false"
       custom-class="CreateNFTbox-css"
@@ -10,81 +10,16 @@
       :close-on-click-modal="false"
       v-loading="loading"
     >
-      <!-- 上传弹框 -->
-      <!-- <div v-if="nowStep == 1" class="uploadbox">
-        <el-upload
-          class="avatar-uploader"
-          ref="upload"
-          accept="image/*, video/*"
-          :action="uploadUrl"
-          :show-file-list="false"
-          :on-success="handleSuccessFile"
-          :on-change="onChange"
-          :auto-upload="false"
-          :data="addlist"
-          :on-error="handleErrorFile"
-          element-loading-text="拼命加载中"
-          element-loading-spinner="el-icon-loading"
-          element-loading-background="rgba(0, 0, 0, 0.8)"
-        >
-          <img v-if="imageUrl && fileType=='img'" :src="imageUrl" class="avatar" alt />
-          <video v-if="imageUrl && fileType == 'video'" autoplay class="avatar" :src='imageUrl'></video>
-          <i v-if="!imageUrl" class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <el-button type="primary" :disabled="loading" @click="uploaddialogclick"
-          >Next</el-button
-        >
-      </div> -->
-      <!-- 填写信息弹框 -->
-      <!-- <div v-if="nowStep == 2">
-        <div class="demo-input-suffix">
-          <span>Name :</span>
-          <el-input placeholder v-model="input1_info"></el-input>
-        </div>
-        <div class="demo-input-suffix">
-          <span>Description :</span>
-          <el-input
-            type="textarea"
-            :rows="3"
-            placeholder
-            v-model="input2_info"
-          ></el-input>
-        </div>
+      <div class="showinfodatabox">
+        <span class="tips">User XXXXX created for you</span>
+        <img class="imageurl_show" :src="base_url + JSON.parse(conftdataobject.nftContent).picturePath " alt="">
+        <video autoplay class="imageurl_show" :src='base_url + JSON.parse(conftdataobject.nftContent).picturePath'></video>
+        <p>Name:{{ JSON.parse(conftdataobject.nftContent).name}}</p>
+        <p>Description:{{ JSON.parse(conftdataobject.nftContent).description }}</p>
+        <p>Creator Wallet:{{conftdataobject.address ? conftdataobject.address.substring(0, 5) + "***" +conftdataobject.address.substr(conftdataobject.address.length - 4) : ""}}</p>
+        <p>Note: This NFT is a Co-NFT, twitter user XXXXX created for you. You can accept it if you like it.</p>
         <div class="btns">
-          <el-button type="primary" @click="nowStep = 1">Previous</el-button>
-          <el-button type="primary" @click="nowStep = 3">Next</el-button>
-        </div>
-      </div> -->
-      <!-- 选择钱包弹框 -->
-      <!-- <div v-if="nowStep == 3">
-        <div
-          :class="
-            ischeckwallet == '1' ? 'checkwalletcss walletbox' : 'walletbox'
-          "
-          @click="checkwallet(1)"
-        >
-          <svg-icon
-            :svgType="'mateMask'"
-            class="svg-img"
-            :svgW="48"
-            :svgH="48"
-          />
-          <p>MetaMask</p>
-        </div>
-        <div class="btns">
-          <el-button type="primary" @click="nowStep = 2">Previous</el-button>
-          <el-button type="primary" @click="SelectWalletclick">Next</el-button>
-        </div>
-      </div> -->
-      <!-- Your NFT info 弹框-->
-      <div>
-        <img class="imageurl_show" v-if="fileType=='img'" :src="imageUrl" alt="" />
-         <video v-if="fileType == 'video'" autoplay class="imageurl_show" :src='imageUrl'></video>
-        <p>Name:{{ input1_info }}</p>
-        <p>Description:{{ input2_info }}</p>
-        <p>Wallet:{{ addressinfo }}</p>
-        <div class="btns">
-          <el-button v-if="!modal2status" type="primary" @click="nowStep = 3">Accept</el-button>
+          <el-button v-if="!modal2status" type="primary" @click="topay2">Accept</el-button>
           <el-button v-else type="primary" @click="topay">Mint now</el-button>
         </div>
       </div>
@@ -95,55 +30,19 @@
 import SvgIcon from "@/components/svgIcon.vue";
 export default {
   components: { SvgIcon },
-  props: ["address", "userInfo","modal2status"],
+  props: ["address", "userInfo","modal2status","conftdataobject"],
   data() {
     return {
-      addlist: null,
-      imageUrl: "",
       upload_dialog: true,
-      input1_info: "",
-      input2_info: "",
-      uploadUrl: "",
       file: {},
-      nowStep: 1,
       loading: false,
-      ischeckwallet: 0,
-      addressinfo: "",
-      previewImgUrl: "",
-      picturePath: "",
-      sourceFileIpfs: "",
-      returnaddress: "",
-      metadataIpfs: "",
-      orderNo: "",
-      fileType: "",
-      nftTitle:'Upload your file'
+      base_url : process.env.VUE_APP_BASEURL,
     };
   },
-  computed:{
-    nftTitle:()=>{
-      let name = 'Upload your file';
-      if(this.nowStep == 1) name = 'Upload your file';
-      if(this.nowStep == 2) name = 'Fill the NFT info';
-      if(this.nowStep == 3) name = 'Choose wallet';
-      if(this.nowStep == 4) name = 'Your Poster NFT info';
-      return name;
-    }
-  },
   mounted() {
-    this.uploadUrl = process.env.VUE_APP_BASEURL + "v2/twitter/nft/upload";
     // vue中接收的事件
     var event = document.createEvent("Event");
-    event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
     event.initEvent("paymentaddressCallback", true, true); // detail是事件数据
-    document.addEventListener("switchaddressCallback2", (event) => {
-      if (event.detail.length > 0) {
-        this.addressinfo = event.detail[0];
-        localStorage.attadreammaker_wallte = event.detail[0]
-        this.createnft();
-      }else{
-        this.loading = false;
-      }
-    });
     document.addEventListener("paymentaddressCallback", (event) => {
       if (event.detail) {
         this.sussescasting(event.detail);
@@ -167,115 +66,14 @@ export default {
         path
       );
     },
-
-    onChange(file, fileList) {
-      var _this = this;
-      var event = event || window.event;
-      if (fileList.length && fileList[0].response) {
-        this.picturePath = fileList[0].response.data.fileUri;
-        this.sourceFileIpfs = fileList[0].response.data.ipfsUri;
-      }
-      if (!event.target.files) {
-        return;
-      }
-      this.file = event.target.files[0];
-      if (this.isImage(file.name)) {
-        this.fileType = 'img'
-        this.previewImgUrl = "";
-        var file = event.target.files[0];
-        var reader = new FileReader();
-        //转base64
-        reader.onload = function (e) {
-          _this.imageUrl = e.target.result; //将图片路径赋值给src
-        };
-        reader.readAsDataURL(file);
-      } else if (this.isVideo(file.name)) {
-        let videoUrl = URL.createObjectURL(event.target.files[0]);
-        this.imageUrl=videoUrl;
-        this.fileType = 'video'
-      } else {
-        this.fileType = ''
-        alert('file type is not suport!')
-      }
-    },
-    handleErrorFile(res, file, fileList) {
-      this.loading = false;
-    },
-    handleSuccessFile(res, file, fileList) {
-      this.loading = false;
-      if (res.data) {
-        this.previewImgUrl = res.data.fileUri;
-      }
-      this.nowStep = 2;
-    },
-    // 调用选择钱包弹框
-    SelectWalletclick() {
-      if (this.ischeckwallet == 0) {
-        alert("请选择钱包");
-        return;
-      }
-      const cEvt = new CustomEvent("switchaddress", {
-        detail: { Callbackname: "switchaddressCallback2" },
-      });
-      document.dispatchEvent(cEvt);
-      this.loading = true;
-    },
-    // 上传弹框 下一步
-    uploaddialogclick() {
-      if (JSON.stringify(this.file) == "{}") {
-        alert("请先上传图片！");
-        return;
-      }
-      if (this.previewImgUrl) {
-        this.nowStep = 2;
-        return;
-      }
-      this.loading = true;
-      this.$refs.upload.submit();
-    },
-    // 点击选中钱包
-    checkwallet(type) {
-      this.ischeckwallet = type;
-    },
     // 支付
     topay() {
-      if (!this.input1_info || !this.input2_info || !this.imageUrl) {
-        alert("请填写完整信息");
-      }
-      let { orderNo, metadataIpfs, returnaddress } = this;
+      let { orderNo, metadataIpfs, address : returnaddress } = this.conftdataobject;
       const cEvt = new CustomEvent("paymentaddress", {
-        detail: { orderNo, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo},
+        detail: { orderNo, metadataIpfs, returnaddress ,wallteaddress : this.address},
       });
       document.dispatchEvent(cEvt);
       this.loading = true;
-    },
-    // 创建nft
-    async createnft() {
-      let obj = {
-        address: this.addressinfo,
-        description: this.input2_info,
-        name: this.input1_info,
-        mintUser: this.userInfo.id,
-        receiveUser: this.userInfo.id,
-        picturePath: this.picturePath,
-        sourceFileIpfs: this.sourceFileIpfs,
-        type: 0,
-      };
-      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/create_nft`;
-      const res = await fetch(getNfts, {
-        method: "POST",
-        body: JSON.stringify(obj),
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-      });
-      const listData = await res.json();
-      const artList = listData.data;
-      this.returnaddress = artList[0].address;
-      this.metadataIpfs = artList[0].metadataIpfs;
-      this.orderNo = artList[0].orderNo;
-      this.loading = false;
-      this.nowStep = 4;
     },
     async sussescasting(obj){
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/mint`;
@@ -292,6 +90,31 @@ export default {
         alert("铸造nft成功");
       }
       this.closeModal();
+    },
+    async topay2(){
+      if (!this.address) {
+        alert("请先连接钱包");
+      }
+      let {id:tokenId,orderNo} = this.conftdataobject;
+      let obj = {
+        address : this.address,
+        status : 1,
+        tokenId,orderNo
+      }
+      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/accept`;
+      const res = await fetch(getNfts, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      });
+      const listData = await res.json();
+      this.loading = false;
+      if (listData.code == 0) {
+        alert("铸造nft成功");
+        this.closeModal();
+      }
     }
   },
 };
@@ -378,6 +201,18 @@ export default {
 .imageurl_show {
   width: 30%;
   margin-left: 35%;
+}
+.showinfodatabox{
+  position: relative;
+  .tips{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #409eff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 0px 5px 5px 0px;
+  }
 }
 </style>
 <style lang="css">

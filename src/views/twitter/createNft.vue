@@ -124,7 +124,7 @@ export default {
     };
   },
   computed:{
-    nftTitle:()=>{
+    nftTitle(){
       let name = 'Upload your file';
       if(this.nowStep == 1) name = 'Upload your file';
       if(this.nowStep == 2) name = 'Fill the NFT info';
