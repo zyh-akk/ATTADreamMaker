@@ -159,54 +159,67 @@ export default {
     };
   },
   mounted() {
-    let leftdom = document.querySelector('[aria-label][role="navigation"]');
-    let crdom = document.querySelector(".ATTADreamMaker-dom");
-    leftdom.appendChild(crdom);
-    // let maindom = document.querySelector("body");
-    // const modals = document.querySelector(".modalDom");
-    // maindom.appendChild(modals);
-    let self = this;
-
-    // vue中接收的事件
-    var event = document.createEvent("Event");
-    event.initEvent("msgEventCallback", true, true);
-    event.initEvent("switchaddressCallback1", true, true); // detail是事件数据
-    document.addEventListener("msgEventCallback", (event) => {
-      this.jsaddress(event.detail);
-    });
-    document.addEventListener("switchaddressCallback1", (event) => {
-      if (event.detail.length > 0) {
-        this.address = event.detail[0];
-        this.shearaddress =
-          this.address.substring(0, 5) +
-          "***" +
-          this.address.substr(this.address.length - 4);
-      }
-      this.ConnectWalletVisible = false;
-      this.ConnectWalletloading = true;
-      this.loadingwallettitle = "账户";
-      this.checkwallet = "0";
-    });
-
-    // 获取用户信息，顺序不能改
-    document.addEventListener("userEventCallback", (e) => {
-      self.userInfo = e.detail; //id：用户id
-      console.log(self.userInfo);
-    });
-    // 定义全局事件
-    let newEvent = new CustomEvent("userInfoEvent", {});
-    document.dispatchEvent(newEvent);
-
-    this.appendDom();
-    this.addClick();
-    if (localStorage.getItem("attadreammaker_wallte")) {
-      let str = localStorage.getItem("attadreammaker_wallte");
-      this.address = str;
-      this.shearaddress =
-        str.substring(0, 5) + "***" + str.substr(str.length - 4);
-    }
+    this.getDom();
   },
   methods: {
+    
+    getDom(){
+      // 获取10次，页面还没有加载该dom就不在创建了，避免死循环
+      if(this.appendDomIndex > 10) return;
+      this.appendDomIndex = this.appendDomIndex + 1;
+      let leftdom = document.querySelector('[aria-label][role="navigation"]');
+      if(!leftdom){
+        setTimeout(()=>{
+          this.getDom();
+        },1000)
+      }else{
+        let crdom = document.querySelector(".ATTADreamMaker-dom");
+        leftdom.appendChild(crdom);
+        // let maindom = document.querySelector("body");
+        // const modals = document.querySelector(".modalDom");
+        // maindom.appendChild(modals);
+        let self = this;
+
+        // vue中接收的事件
+        var event = document.createEvent("Event");
+        event.initEvent("msgEventCallback", true, true);
+        event.initEvent("switchaddressCallback1", true, true); // detail是事件数据
+        document.addEventListener("msgEventCallback", (event) => {
+          this.jsaddress(event.detail);
+        });
+        document.addEventListener("switchaddressCallback1", (event) => {
+          if (event.detail.length > 0) {
+            this.address = event.detail[0];
+            this.shearaddress =
+              this.address.substring(0, 5) +
+              "***" +
+              this.address.substr(this.address.length - 4);
+          }
+          this.ConnectWalletVisible = false;
+          this.ConnectWalletloading = true;
+          this.loadingwallettitle = "账户";
+          this.checkwallet = "0";
+        });
+
+        // 获取用户信息，顺序不能改
+        document.addEventListener("userEventCallback", (e) => {
+          self.userInfo = e.detail; //id：用户id
+          console.log(self.userInfo);
+        });
+        // 定义全局事件
+        let newEvent = new CustomEvent("userInfoEvent", {});
+        document.dispatchEvent(newEvent);
+
+        this.appendDom();
+        this.addClick();
+        if (localStorage.getItem("attadreammaker_wallte")) {
+          let str = localStorage.getItem("attadreammaker_wallte");
+          this.address = str;
+          this.shearaddress =
+            str.substring(0, 5) + "***" + str.substr(str.length - 4);
+        }
+      }
+    },
     closeImageEdit() {
       this.showImageEditModal = false;
     },

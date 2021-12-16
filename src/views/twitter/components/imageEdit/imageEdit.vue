@@ -23,10 +23,6 @@
         <!-- 图片编辑部分 -->
       <div v-show="imagesStep == 3" class="image-edit">
         <div id="tui-image-editor"></div>
-        <div class="btns">
-          <el-button v-if="imagesStep > 1" type="primary" @click="stepPrevious">Previous</el-button>
-          <el-button type="primary" @click="nextStep">Next</el-button>
-        </div>
       </div>
       <!-- 选择钱包弹框 -->
       <div v-if="imagesStep == 4">
@@ -39,10 +35,6 @@
             :svgH="48"
           />
           <p>MetaMask</p>
-        </div>
-        <div class="btns">
-          <el-button v-if="imagesStep > 1" type="primary" @click="stepPrevious">Previous</el-button>
-          <el-button type="primary" @click="nextStep">Next</el-button>
         </div>
       </div>
       <!-- YOUR NFT内容 -->
@@ -57,7 +49,7 @@
         </div>
       </div>
       <!-- 前两步的按钮 -->
-      <div v-if="imagesStep < 3" class="btns">
+      <div v-if="imagesStep < 5" class="btns">
         <el-button v-if="imagesStep > 1" type="primary" @click="stepPrevious">Previous</el-button>
         <el-button type="primary" @click="nextStep">Next</el-button>
       </div>
