@@ -155,7 +155,7 @@ import CreateNft from "./components/createNft.vue";
 import ConftAccept from "./components/conftaccept.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 import ImageEdit from "./components/imageEdit/imageEdit.vue";
-import { twitterInfo } from "./utils/utils";
+import { twitterInfo,getUserInfo } from "./utils/utils";
 export default {
   components: { SvgIcon, CreateNft, ConftAccept, DreamMaker, ImageEdit },
   data() {
@@ -183,15 +183,19 @@ export default {
     };
   },
   mounted() {
+    getUserInfo()
+    .then(res=>{
+      console.log(res);
+      this.getUserInfo(res)
+    })
     this.getDom();
-    this.getUserInfo()
   },
   methods: {
      getRequest() {
       let data = twitterInfo('https://api.twitter.com/1.1/statuses/user_timeline.json?cursor=-1&screen_name=fanjiaxiaoxiong&skip_status=true&include_user_entities=false');
     },
-    getUserInfo(){
-      twitterInfo('https://api.twitter.com/2/users/by/username/fanjiaxiaoxiong')
+    getUserInfo(userName){
+      twitterInfo(`https://api.twitter.com/2/users/by/username/${userName}`)
       .then(res=>{
         this.userInfo = res.data;
         console.log(res.data);
