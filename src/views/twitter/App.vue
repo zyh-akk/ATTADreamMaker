@@ -5,8 +5,8 @@
         <div
           class="MaskNetwork"
           @click="
-  ATTAMakerVisible = true;
-test();
+            ATTAMakerVisible = true;
+            test();
           "
         >
           <el-dropdown trigger="click" @command="selectclick">
@@ -27,7 +27,9 @@ test();
       <div class="ConnectWalletbox">
         <div class="ConnectWallet flex" @click="ConnectWalletclick()">
           <svg-icon :svgType="'attaLogo'" class="svg-img" />
-          <p class="wordtitle">{{ shearaddress ? shearaddress : "Connect Wallet" }}</p>
+          <p class="wordtitle">
+            {{ shearaddress ? shearaddress : "Connect Wallet" }}
+          </p>
         </div>
         <!-- 选择钱包插件 -->
         <el-dialog
@@ -38,7 +40,12 @@ test();
           top="35vh"
         >
           <div class="walletbox" @click="checkwallclick(1)">
-            <svg-icon :svgType="'mateMask'" class="svg-img" :svgW="48" :svgH="48" />
+            <svg-icon
+              :svgType="'mateMask'"
+              class="svg-img"
+              :svgW="48"
+              :svgH="48"
+            />
             <p>MetaMask</p>
           </div>
           <!-- <div class="walletbox" @click="checkwallclick(2)">
@@ -54,7 +61,12 @@ test();
           custom-class="MaskNetwork-dialogbox2"
         >
           <div class="useraddressbox flex">
-            <svg-icon :svgType="'mateMask'" class="svg-img" :svgW="48" :svgH="48" />
+            <svg-icon
+              :svgType="'mateMask'"
+              class="svg-img"
+              :svgW="48"
+              :svgH="48"
+            />
             <div class="contentbox" v-if="checkwallet <= 0">
               <div class="contentbox-top flex">
                 <p>MetaMask</p>
@@ -72,8 +84,15 @@ test();
                 <svg-icon class="svg-class" :svgType="'loading'" />
               </div>
             </div>
-            <el-button v-if="checkwallet == 0" class="editbtn" @click="userwalletdialog()">更改</el-button>
-            <el-button v-else class="editbtn" @click="userwalletdialog()">Retry</el-button>
+            <el-button
+              v-if="checkwallet == 0"
+              class="editbtn"
+              @click="userwalletdialog()"
+              >更改</el-button
+            >
+            <el-button v-else class="editbtn" @click="userwalletdialog()"
+              >Retry</el-button
+            >
           </div>
         </el-dialog>
       </div>
@@ -113,11 +132,21 @@ test();
         <p>3. Click the button "Create a Co-NFT for him/her</p>
         <p>4. Then follow the steps to upload the basic info</p>
         <p>5. Tell him/her to accept the Co-NFT request</p>
-        <p>6. Once your friend finished the minting process, you and your friend</p>
+        <p>
+          6. Once your friend finished the minting process, you and your friend
+        </p>
       </div>
     </el-dialog>
-    <dream-maker v-if="nftsDom" :userInfo="userInfo" @createNftAccept="createNftAccept"></dream-maker>
-    <image-edit v-if="showImageEditModal" :userInfo="userInfo" @closeImageEdit="closeImageEdit"></image-edit>
+    <dream-maker
+      v-if="nftsDom"
+      :userInfo="userInfo"
+      @createNftAccept="createNftAccept"
+    ></dream-maker>
+    <image-edit
+      v-if="showImageEditModal"
+      :userInfo="userInfo"
+      @closeImageEdit="closeImageEdit"
+    ></image-edit>
   </div>
 </template>
 <script>
@@ -126,8 +155,8 @@ import CreateNft from "./components/createNft.vue";
 import ConftAccept from "./components/conftaccept.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 import ImageEdit from "./components/imageEdit/imageEdit.vue";
-import OAuth from 'oauth'
-import crypto from 'crypto'
+import OAuth from "oauth";
+import crypto from "crypto";
 
 export default {
   components: { SvgIcon, CreateNft, ConftAccept, DreamMaker, ImageEdit },
@@ -150,26 +179,27 @@ export default {
       infoshow_dialog: false, //你的nft信息展示弹框
       userInfo: {}, //推特保存的用户信息
       showImageEditModal: false, //图片编辑
-      conftfun: false,// 是否走吊起支付和mint接口
+      conftfun: false, // 是否走吊起支付和mint接口
       modal2status: false,
       conftdataobject: {},
     };
   },
   mounted() {
     this.getDom();
-    const consumer_key = 'MkGh5S5rTmisQXMiagQt5Mxfs';
-    const consumer_secret = '8BSJ7BTYt7VJbV9PZpKiutnjxcTQf3xC1SIOboYMWg7T4lKZd1';
+    const consumer_key = process.env.VUE_APP_CONSUMER_KEY;
+    const consumer_secret = process.env.VUE_APP_CONSUMER_SECRET;
+
     const oauth = OAuth({
       consumer: {
         key: consumer_key,
-        secret: consumer_secret
+        secret: consumer_secret,
       },
-      signature_method: 'HMAC-SHA1',
-      hash_function: (baseString, key) => crypto.createHmac('sha1', key).update(baseString).digest('base64')
+      signature_method: "HMAC-SHA1",
+      hash_function: (baseString, key) =>
+        crypto.createHmac("sha1", key).update(baseString).digest("base64"),
     });
   },
   methods: {
-
     getDom() {
       // 获取10次，页面还没有加载该dom就不在创建了，避免死循环
       if (this.appendDomIndex > 10) return;
@@ -178,7 +208,7 @@ export default {
       if (!leftdom) {
         setTimeout(() => {
           this.getDom();
-        }, 1000)
+        }, 1000);
       } else {
         let crdom = document.querySelector(".ATTADreamMaker-dom");
         leftdom.appendChild(crdom);
@@ -216,7 +246,6 @@ export default {
         // 定义全局事件
         let newEvent = new CustomEvent("userInfoEvent", {});
         document.dispatchEvent(newEvent);
-
 
         this.appendDomIndex = 0;
         this.appendDom();
@@ -334,7 +363,9 @@ export default {
     // 左侧列表添加点击事件，判断是否需要开启nft列表
     addClick() {
       let self = this;
-      let queryDom = document.querySelector('nav.r-1habvwh[aria-label][role="navigation"]');
+      let queryDom = document.querySelector(
+        'nav.r-1habvwh[aria-label][role="navigation"]'
+      );
 
       if (this.appendDomIndex > 10) return;
       this.appendDomIndex = this.appendDomIndex + 1;
@@ -342,7 +373,7 @@ export default {
       if (!queryDom) {
         setTimeout(() => {
           self.addClick();
-        }, 1000)
+        }, 1000);
       } else {
         let navdom = document
           .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
@@ -365,23 +396,24 @@ export default {
       }
     },
     // my nfts 跳转
-    jumppage() { },
-    createNftAccept(type, obj) {//type取值：createNft  accept  mint  分别对应不同的按钮功能
-      if (type == 'createNft') {
+    jumppage() {},
+    createNftAccept(type, obj) {
+      //type取值：createNft  accept  mint  分别对应不同的按钮功能
+      if (type == "createNft") {
         this.conftfun = true;
         this.showCreateNftModal = true;
       }
-      if (type == 'accept') {
+      if (type == "accept") {
         this.modal2status = false;
         this.conftdataobject = obj;
         this.showCreateNftModal2 = true;
       }
-      if (type == 'mint') {
+      if (type == "mint") {
         this.modal2status = true;
         this.conftdataobject = obj;
         this.showCreateNftModal2 = true;
       }
-    }
+    },
   },
 };
 </script>
