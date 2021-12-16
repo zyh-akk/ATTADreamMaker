@@ -106,6 +106,15 @@
         :conftfun="conftfun"
       ></create-nft>
     </div>
+    <!-- Create NFT 弹框 -->
+    <div class="modalDom">
+      <conft-accept
+        v-if="showCreateNftModal2"
+        @closeNftModal2="closeNftModal2"
+        :userInfo="userInfo"
+        :modal2status="modal2status"
+      ></conft-accept>
+    </div>
     <!-- Create Co-NFT 弹框 （已完成）-->
     <el-dialog
       title="Co-NFT instruction"
@@ -133,10 +142,11 @@
 <script>
 import SvgIcon from "@/components/svgIcon.vue";
 import CreateNft from "./createNft.vue";
+import ConftAccept from "./conftaccept.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 import ImageEdit from "./components/imageEdit/imageEdit.vue";
 export default {
-  components: { SvgIcon, CreateNft, DreamMaker, ImageEdit },
+  components: { SvgIcon, CreateNft,ConftAccept, DreamMaker, ImageEdit },
   data() {
     return {
       ATTAMakerVisible: false, //ATTA Dream Maker弹框控制
@@ -147,6 +157,7 @@ export default {
       chainId: 0,
       loading: false,
       showCreateNftModal: false,
+      showCreateNftModal2: false,
       address: "",
       shearaddress: "",
       isshowCreateCoNFT: false, //Create Co-NFT 弹框 显示隐藏控制
@@ -156,6 +167,7 @@ export default {
       userInfo: {}, //推特保存的用户信息
       showImageEditModal: false, //图片编辑
       conftfun : false ,// 是否走吊起支付和mint接口
+      modal2status : false,
     };
   },
   mounted() {
@@ -219,6 +231,9 @@ export default {
     closeNftModal() {
       this.conftfun = false;
       this.showCreateNftModal = false;
+    },
+    closeNftModal2() {
+      this.showCreateNftModal2 = false;
     },
     test() {
       console.log(window.CHAIN, "测试数据");
@@ -335,6 +350,14 @@ export default {
       if(type == 'createNft'){
         this.conftfun = true;
         this.showCreateNftModal = true;
+      }
+      if(type == 'accept'){
+        this.modal2status = false;
+        this.showCreateNftModal2 = true;
+      }
+      if(type == 'mint'){
+        this.modal2status = true;
+        this.showCreateNftModal2 = true;
       }
     }
   },

@@ -42,7 +42,8 @@ export default {
   },
 
   methods: {
-    OperationNft(type){
+    OperationNft(type,obj = null){
+      console.log(obj);
       if(type == 'createNft' || type == 'accept' || type == 'mint'){
         this.$emit("createNftAccept", type);
       }else{
@@ -102,7 +103,8 @@ export default {
     async search(){
       if(this.loading) return;
       this.loading = true;
-      let mintUser = this.userInfo.id;//用户id
+      let mintUser = '989066591370265979';//用户id
+      // let mintUser = this.userInfo.id;//用户id
       let {pageSize,current,nftType:type} = this;
       let obj = {mintUser,type,pageSize,current};
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;
