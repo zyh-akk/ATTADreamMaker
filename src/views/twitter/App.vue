@@ -183,19 +183,33 @@ export default {
     };
   },
   mounted() {
-    getFriendUserInfo()
-    .then((res)=>{
-
-    }).catch((err)=>{
-
-    })
-    getUserInfo()
-    .then(res=>{
-      this.getUserInfo(res)
-    })
-    this.getDom();
+    // 判断页面刷新还是重载
+    if (window.performance.navigation.type) {
+      console.log("页面被刷新或者重载")
+      // 页面刷新重载的时候获取用户名，有用户名就是已登录，没有就是未登录
+      let uesrNameDom = document.querySelector('[aria-label="Account menu"][data-testid="SideNav_AccountSwitcher_Button"]');
+      if(uesrNameDom){
+        this.initializationDom();
+      }else{
+        console.log('不是登录页面');
+      }
+    }
+    
   },
   methods: {
+    initializationDom(){
+      getFriendUserInfo()
+      .then((res)=>{
+
+      }).catch((err)=>{
+
+      })
+      getUserInfo()
+      .then(res=>{
+        this.getUserInfo(res)
+      })
+      this.getDom();
+    },
      getRequest() {
       let data = twitterInfo('https://api.twitter.com/1.1/statuses/user_timeline.json?cursor=-1&screen_name=fanjiaxiaoxiong&skip_status=true&include_user_entities=false');
     },
