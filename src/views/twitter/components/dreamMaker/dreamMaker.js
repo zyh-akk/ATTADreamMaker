@@ -20,32 +20,19 @@ export default {
       loading:false
     };
   },
+  destroyed(){
+    console.log('重载');
+    $('nav.r-qklmqi[aria-label][role="navigation"]').unbind('click');
+  },
   mounted(){
-    console.log(OAuth);
     let self = this;
     $(document).ready(function(){
       self.appendDom();
-      $(document).on('click','nav.r-qklmqi[aria-label][role="navigation"]',function(e){
-        let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
-        // 如果点击到当前标签
-        if(e.target.className == 'dream-maker-title' || e.target.className == 'dream-maker'){
-          self.domBorderBottom('none');
-          // 关闭当前内容
-          $(infoDom.childNodes[2]).attr('style','display:none');
-          self.nftsBol = true;
-          self.search();
-        }else{
-          self.domBorderBottom('blcok');
-          $(infoDom.childNodes[2]).attr('style','display:flex');
-          self.nftsBol = false;
-        }
-      });
     })
   },
 
   methods: {
     OperationNft(type,obj = null){
-      console.log(obj);
       if(type == 'createNft' || type == 'accept' || type == 'mint'){
         this.$emit("createNftAccept", type,obj ? obj : null);
       }else{
@@ -72,11 +59,38 @@ export default {
           let crdomNft = document.querySelector(".dream-maker-model");
           let parentDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
           parentDom.appendChild(crdomNft);
+
+          
+      $('nav.r-qklmqi[aria-label][role="navigation"]').on('click',function(e){
+        let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
+        console.log();
+        // 如果点击到当前标签
+        if(e.target.className.indexOf('dream-maker-title')>-1 || e.target.className.indexOf('dream-maker')>-1){
+          self.domBorderBottom('none');
+          // 关闭当前内容
+          if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
+            $(infoDom.childNodes[3]).attr('style','display:none !important');
+          }else{
+            $(infoDom.childNodes[2]).attr('style','display:none !important');
+          }
+          self.nftsBol = true;
+          self.search();
+        }else{
+          self.domBorderBottom('blcok');
+          if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
+            $(infoDom.childNodes[3]).attr('style','display:flex !important');
+          }else{
+            $(infoDom.childNodes[2]).attr('style','display:flex !important');
+          }
+          self.nftsBol = false;
+        }
+      });
         }
       })
     },
     // 所有标签下标去掉
     domBorderBottom(type){
+      console.log(type);
       // 获取整个tab
       let navdom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').childNodes[0];
       // 获取teitter的tab
@@ -86,7 +100,6 @@ export default {
       // 遍历，并且根据参数判断是否显示或者是隐藏
       twitterDomChild.forEach(element => {
         let childDom = element.childNodes[0].childNodes[0].childNodes[1];
-        console.log(element.childNodes[0]);
         if(type == 'none'){
           // web3，去掉底部选中样式
           if(navdom.childNodes[3]){
@@ -103,24 +116,26 @@ export default {
     },
     // 获取nft
     async search(){
-      if(this.loading) return;
-      this.loading = true;
-      let mintUser = '989066591370265979';//用户id
-      // let mintUser = this.userInfo.id;//用户id
-      let {pageSize,current,nftType:type} = this;
-      let obj = {mintUser,type,pageSize,current};
-      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;
-      const res = await fetch(getNfts, {
-        method: "POST",
-        body: JSON.stringify(obj),
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-      });
-      const listData = await res.json();
-      this.loading = false;
-      this.total = listData.data.total;
-      this.nftlist = listData.data.records;
+      // if(this.loading) return;
+      // this.loading = true;
+      // let mintUser = '989066591370265979';//用户id
+      // // let mintUser = this.userInfo.id;//用户id
+      // let {pageSize,current,nftType:type} = this;
+      // let obj = {mintUser,type,pageSize,current};
+      // let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;
+      // const res = await fetch(getNfts, {
+      //   method: "POST",
+      //   body: JSON.stringify(obj),
+      //   headers: new Headers({
+      //     "Content-Type": "application/json",
+      //   }),
+      // });
+      // const listData = await res.json();
+      // this.loading = false;
+      // if(listData.data.total){
+      //   this.total = listData.data.total;
+      //   this.nftlist = listData.data.records;
+      // }
     },
     handleCurrentChange(val){
       this.current = val;
