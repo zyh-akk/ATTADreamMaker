@@ -155,7 +155,7 @@ import CreateNft from "./components/createNft.vue";
 import ConftAccept from "./components/conftaccept.vue";
 import DreamMaker from "./components/dreamMaker/dreamMaker.vue";
 import ImageEdit from "./components/imageEdit/imageEdit.vue";
-import { twitterInfo,getUserInfo } from "./utils/utils";
+import { twitterInfo,getUserInfo,getFriendUserInfo } from "./utils/utils";
 export default {
   components: { SvgIcon, CreateNft, ConftAccept, DreamMaker, ImageEdit },
   data() {
@@ -183,9 +183,14 @@ export default {
     };
   },
   mounted() {
+    getFriendUserInfo()
+    .then((res)=>{
+
+    }).catch((err)=>{
+
+    })
     getUserInfo()
     .then(res=>{
-      console.log(res);
       this.getUserInfo(res)
     })
     this.getDom();
@@ -198,7 +203,6 @@ export default {
       twitterInfo(`https://api.twitter.com/2/users/by/username/${userName}`)
       .then(res=>{
         this.userInfo = res.data;
-        console.log(res.data);
       })
     },
     getDom() {
