@@ -102,7 +102,7 @@
       <create-nft
         v-if="showCreateNftModal"
         @closeNftModal="closeNftModal"
-        :userInfo="userInfo"
+        :userInfo="userInfoCoNft"
         :conftfun="conftfun"
       ></create-nft>
     </div>
@@ -139,12 +139,10 @@
     </el-dialog>
     <dream-maker
       v-if="nftsDom"
-      :userInfo="userInfo"
       @createNftAccept="createNftAccept"
     ></dream-maker>
     <image-edit
-      v-if="showImageEditModal"
-      :userInfo="userInfo"
+      v-if="showImageEditModal" :userInfo="userInfo"
       @closeImageEdit="closeImageEdit"
     ></image-edit>
   </div>
@@ -180,6 +178,8 @@ export default {
       conftfun: false, // 是否走吊起支付和mint接口
       modal2status: false,
       conftdataobject: {},
+      nftDom:0,
+      userInfoCoNft:{}
     };
   },
   mounted() {
@@ -198,12 +198,6 @@ export default {
   },
   methods: {
     initializationDom(){
-      getFriendUserInfo()
-      .then((res)=>{
-
-      }).catch((err)=>{
-
-      })
       getUserInfo()
       .then(res=>{
         this.getUserInfo(res)
@@ -217,6 +211,7 @@ export default {
       twitterInfo(`https://api.twitter.com/2/users/by/username/${userName}`)
       .then(res=>{
         this.userInfo = res.data;
+        this.userInfoCoNft = res.data;
       })
     },
     getDom() {
@@ -259,7 +254,7 @@ export default {
 
         this.appendDomIndex = 0;
         this.appendDom();
-        this.addClick();
+        // this.addClick();
         if (localStorage.getItem("attadreammaker_wallte")) {
           let str = localStorage.getItem("attadreammaker_wallte");
           this.address = str;
@@ -272,7 +267,14 @@ export default {
       this.showImageEditModal = false;
     },
     showNftModal() {
-      this.showCreateNftModal = true;
+      let self = this;
+      getUserInfo()
+      .then(res=>{
+        self.getUserInfo(res)
+        setTimeout(()=>{
+          self.showCreateNftModal = true;
+        })
+      })
     },
     showImageModal() {
       this.showImageEditModal = true;
@@ -324,6 +326,7 @@ export default {
     },
     // 点击下拉框
     selectclick(type) {
+      console.log(type);
       switch (type) {
         case "1":
           this.showNftModal();
@@ -355,63 +358,76 @@ export default {
         this.nftsDom = true;
         $(document).on(
           "click",
-          'nav.r-qklmqi[aria-label][role="navigation"]',
           function (e) {
             let crdom = document.querySelector(".dream-maker");
             if (!crdom) {
-              self.nftsDom = false;
+            self.nftsDom = false;
               setTimeout(() => {
                 self.nftsDom = true;
-              }, 500);
+              }, 1000);
             }
           }
         );
       } else {
-        this.nftsDom = false;
+        if(this.nftDom < 5){
+          this.nftDom = this.nftDom+1;
+          setTimeout(()=>{
+            self.appendDom();
+          },1000)
+        }else{
+          this.nftsDom = false;
+        }
       }
     },
     // 左侧列表添加点击事件，判断是否需要开启nft列表
-    addClick() {
-      let self = this;
-      let queryDom = document.querySelector(
-        'nav.r-1habvwh[aria-label][role="navigation"]'
-      );
+    // addClick() {
+    //   let self = this;
+    //   let queryDom = document.querySelector(
+    //     'nav.r-1habvwh[aria-label][role="navigation"]'
+    //   );
 
-      if (this.appendDomIndex > 10) return;
-      this.appendDomIndex = this.appendDomIndex + 1;
+    //   if (this.appendDomIndex > 10) return;
+    //   this.appendDomIndex = this.appendDomIndex + 1;
 
-      if (!queryDom) {
-        setTimeout(() => {
-          self.addClick();
-        }, 1000);
-      } else {
-        let navdom = document
-          .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
-          .getElementsByTagName("a");
-        $(navdom).on("click", function (event) {
-          if (
-            event.currentTarget &&
-            (event.currentTarget.ariaLabel == "Profile" ||
-              event.currentTarget.ariaLabel == "个人资料")
-          ) {
-            $(document).ready(function () {
-              console.log(event.currentTarget.ariaLabel);
-              //此时需要加载nft
-              self.nftsDom = true;
-            });
-          } else {
-            self.nftsDom = false;
-          }
-        });
-      }
-    },
+    //   if (!queryDom) {
+    //     setTimeout(() => {
+    //       self.addClick();
+    //     }, 1000);
+    //   } else {
+    //     let navdom = document
+    //       .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
+    //       .getElementsByTagName("a");
+    //     $(navdom).on("click", function (event) {
+    //       if (
+    //         event.currentTarget &&
+    //         (event.currentTarget.ariaLabel == "Profile" ||
+    //           event.currentTarget.ariaLabel == "个人资料")
+    //       ) {
+    //         $(document).ready(function () {
+    //           console.log(event.currentTarget.ariaLabel);
+    //           //此时需要加载nft
+    //           self.nftsDom = true;
+    //         });
+    //       } else {
+    //         self.nftsDom = false;
+    //       }
+    //     });
+    //   }
+    // },
     // my nfts 跳转
     jumppage() {},
     createNftAccept(type, obj) {
       //type取值：createNft  accept  mint  分别对应不同的按钮功能
       if (type == "createNft") {
-        this.conftfun = true;
-        this.showCreateNftModal = true;
+        let self = this;
+        getFriendUserInfo()
+        .then((res)=>{
+          self.userInfoCoNft = res;
+          self.conftfun = true;
+          self.showCreateNftModal = true;
+        }).catch((err)=>{
+
+        })
       }
       if (type == "accept") {
         this.modal2status = false;

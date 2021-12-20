@@ -1,11 +1,8 @@
 
-import SvgIcon from '@/components/svgIcon.vue'
-import OAuth from 'oauth';
+import SvgIcon from '@/components/svgIcon.vue';
+import {getFriendUserInfo } from "../../utils/utils";
 export default {
   components: { SvgIcon },
-  props: {
-    userInfo: Object
-  },
   data() {
     return {
       imageUrl: '',
@@ -17,27 +14,52 @@ export default {
       total : 10,
       pageSize : 10,
       current : 1,
+      userInfo:{},
       loading:false
     };
   },
   destroyed(){
     console.log('重载');
     $('nav.r-qklmqi[aria-label][role="navigation"]').unbind('click');
+    // $(".dream-maker").remove()
+    // $(".dream-maker-model").remove()
   },
   mounted(){
     let self = this;
     $(document).ready(function(){
       self.appendDom();
+      self.search();
+      // 监听页面dom变化
+      var observer = new MutationObserver(function(mutations, observer){
+        console.log(mutations,observer);
+        self.domBorderBottom('block');
+        let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
+        if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
+          $(infoDom.childNodes[3]).attr('style','display:flex !important');
+        }else{
+          $(infoDom.childNodes[2]).attr('style','display:flex !important');
+        }
+        self.nftsBol = false;
+      });
+      // 次数监听用户名，用户名变化，就隐藏nft
+      var el = document.querySelector('div[data-testid="primaryColumn"]').childNodes[0].childNodes[0];
+      var  options = {
+        'childList': true,
+        'subtree':true,
+        'characterData':true
+      } ;
+      observer.observe(el, options);
     })
   },
 
   methods: {
     OperationNft(type,obj = null){
+      let self = this;
       if(type == 'createNft' || type == 'accept' || type == 'mint'){
         this.$emit("createNftAccept", type,obj ? obj : null);
       }else{
-        this.nftType = type;
-        this.search();
+        self.nftType = type;
+        self.search();
       }
     },
     appendDom(){
@@ -63,7 +85,6 @@ export default {
 
       $('nav.r-qklmqi[aria-label][role="navigation"]').on('click',function(e){
         let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
-        console.log();
         // 如果点击到当前标签
         if(e.target.className.indexOf('dream-maker-title')>-1 || e.target.className.indexOf('dream-maker')>-1){
           self.domBorderBottom('none');
@@ -115,9 +136,20 @@ export default {
       });
     },
     // 获取nft
-    async search(){
+    search(){
+      let self = this;
+      getFriendUserInfo()
+      .then((res)=>{
+        self.userInfo = res;
+        self.searchInfo()
+      }).catch((err)=>{
+
+      })
+    },
+    async searchInfo(){
       if(this.loading) return;
       this.loading = true;
+      
       let mintUser = this.userInfo.id;//用户id
       let {pageSize,current,nftType:type} = this;
       let obj = {mintUser,type,pageSize,current};
