@@ -194,7 +194,7 @@ export default {
         console.log('不是登录页面');
       }
     }
-    
+
   },
   methods: {
     initializationDom(){
@@ -429,6 +429,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media only screen and (max-width: 1298px) {
+    .wordtitle {
+    display: none;
+  }
+}
 .flex {
   display: flex;
   align-items: center;
