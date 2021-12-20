@@ -206,7 +206,7 @@ export default {
         receiveUser: this.userInfo.id,
         picturePath: this.picturePath,
         sourceFileIpfs: this.sourceFileIpfs,
-        type: 0,
+        type: 1,
       };
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/create_nft`;
       const res = await fetch(getNfts, {
