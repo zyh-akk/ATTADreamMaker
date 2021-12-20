@@ -60,7 +60,7 @@ export default {
           let parentDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
           parentDom.appendChild(crdomNft);
 
-          
+
       $('nav.r-qklmqi[aria-label][role="navigation"]').on('click',function(e){
         let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
         console.log();
@@ -116,26 +116,25 @@ export default {
     },
     // 获取nft
     async search(){
-      // if(this.loading) return;
-      // this.loading = true;
-      // let mintUser = '989066591370265979';//用户id
-      // // let mintUser = this.userInfo.id;//用户id
-      // let {pageSize,current,nftType:type} = this;
-      // let obj = {mintUser,type,pageSize,current};
-      // let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;
-      // const res = await fetch(getNfts, {
-      //   method: "POST",
-      //   body: JSON.stringify(obj),
-      //   headers: new Headers({
-      //     "Content-Type": "application/json",
-      //   }),
-      // });
-      // const listData = await res.json();
-      // this.loading = false;
-      // if(listData.data.total){
-      //   this.total = listData.data.total;
-      //   this.nftlist = listData.data.records;
-      // }
+      if(this.loading) return;
+      this.loading = true;
+      let mintUser = this.userInfo.id;//用户id
+      let {pageSize,current,nftType:type} = this;
+      let obj = {mintUser,type,pageSize,current};
+      let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;
+      const res = await fetch(getNfts, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      });
+      const listData = await res.json();
+      this.loading = false;
+      if(listData.data.total){
+        this.total = listData.data.total;
+        this.nftlist = listData.data.records;
+      }
     },
     handleCurrentChange(val){
       this.current = val;
