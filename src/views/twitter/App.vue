@@ -187,7 +187,6 @@ export default {
   mounted() {
     // 判断页面刷新还是重载
     if (window.performance.navigation.type) {
-      console.log("页面被刷新或者重载")
       // 页面刷新重载的时候获取用户名，有用户名就是已登录，没有就是未登录
       let uesrNameDom = document.querySelector('[role="link"][data-testid="AppTabBar_Profile_Link"]');
       // let uesrName = uesrNameDom.href.split('https://twitter.com/')[1];
@@ -195,7 +194,7 @@ export default {
       if(uesrNameDom){
         this.initializationDom();
       }else{
-        console.log('不是登录页面');
+        // console.log('不是登录页面');
       }
     }else if(window.performance.navigation.type === 0 && sessionStorage.getItem('myNfts') == 'true'){//当前页面是由按钮跳转到nft页面的
       // 页面跳转
@@ -222,7 +221,6 @@ export default {
       })
     },
     getDom() {
-        console.log('测试dom添加');
       // 获取10次，页面还没有加载该dom就不在创建了，避免死循环
       if (this.appendDomIndex > 10) return;
       this.appendDomIndex = this.appendDomIndex + 1;
@@ -296,7 +294,7 @@ export default {
       this.showCreateNftModal2 = false;
     },
     test() {
-      console.log(window.CHAIN, "测试数据");
+      // console.log(window.CHAIN, "测试数据");
     },
     userwalletdialog() {
       this.ConnectWalletloading = false;
@@ -335,7 +333,6 @@ export default {
     },
     // 点击下拉框
     selectclick(type) {
-      console.log(type);
       switch (type) {
         case "1":
           this.showNftModal();

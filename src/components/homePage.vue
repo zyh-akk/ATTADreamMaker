@@ -22,7 +22,6 @@ export default {
   },
   mounted () {
     localStorage.setItem("lastname01", "扩展的页面");
-    console.log(window.CHAIN,'测试数据');
   },
   methods:{
     againTest (){

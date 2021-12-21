@@ -20,7 +20,6 @@ export function twitterInfo(url) {
         userToken, //test user token
         userSecret, //test user secret
         function (e, data, res){
-            console.log(JSON.parse(data));
             resolve(JSON.parse(data))
         });
     })
@@ -31,7 +30,6 @@ export function getUserInfo() {
         setTimeout(() => {
             let uesrNameDom = document.querySelector('[role="link"][data-testid="AppTabBar_Profile_Link"]');
             let uesrName = uesrNameDom.href.split('https://twitter.com/')[1];
-            console.log(uesrName);
             resolve(uesrName)
         }, 1000);
     })
@@ -45,7 +43,6 @@ export function getFriendUserInfo() {
         }else{
             let userUrl = window.location.pathname;//获取连接后的参数
             let userName = userUrl.split('/');
-            console.log(userName);
             // if(userName.length>2){//大于2说明有多个参数，不属于好友信息
             //     reject();
             // }else{

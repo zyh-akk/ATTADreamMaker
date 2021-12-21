@@ -194,7 +194,6 @@ export default {
       const fd = new FormData();
       fd.append("image", blob);
       // upload fd
-      console.log(blob);
     }
   }
 }

@@ -102,7 +102,6 @@ export default {
             });
             return;
           }else{
-            console.log('测试钱包');
             this.loading = true;
             // 调用钱包部分
             const cEvt = new CustomEvent("switchaddress", {
@@ -127,7 +126,6 @@ export default {
       var file = event.target.files[0];
       var reader = new FileReader();
       this.file = file
-      console.log(file);
       //转base64
       reader.onload = function (e) {
         _this.imageUrl = e.target.result //将图片路径赋值给src
@@ -217,7 +215,6 @@ export default {
         }),
       });
       const listData = await res.json();
-      console.log(listData);
       const artList = listData.data;
       this.returnaddress = artList[0].address;
       this.metadataIpfs = artList[0].metadataIpfs;
@@ -234,7 +231,6 @@ export default {
         });
       }
       let { tokenId, metadataIpfs, returnaddress } = this;
-      console.log({ tokenId, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo});
       const cEvt = new CustomEvent("paymentaddress", {
         detail: { tokenId, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo},
       });

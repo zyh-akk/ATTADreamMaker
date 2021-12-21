@@ -19,12 +19,10 @@ export default {
     };
   },
   destroyed(){
-    console.log(888888888888);
     $(".dream-maker-dom").attr('style','display:none !important');
     $('nav.r-qklmqi[aria-label][role="navigation"]').unbind('click');
   },
   mounted(){
-    console.log(window.location.search.indexOf('attaDreamMaker=true'));
     let self = this;
     $(document).ready(function(){
       $(".dream-maker-dom").attr('style','display:block !important');
@@ -34,7 +32,6 @@ export default {
       var observer = new MutationObserver(function(mutations, observer){
 
         // 添加缓存，判断nft部分是否需要隐藏
-        console.log(mutations,observer);
         self.domBorderBottom('block');
         let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
         if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
@@ -160,7 +157,6 @@ export default {
       let self = this;
       getFriendUserInfo()
       .then((res)=>{
-        console.log(res,'用户信息');
         self.userInfo = res;
         self.searchInfo()
       }).catch((err)=>{
@@ -198,7 +194,6 @@ export default {
       xhr.open("get", the_url, true);
       xhr.responseType = "blob";
       xhr.onload = function(res) {
-        console.log(res);
       };
       xhr.send();
     },
