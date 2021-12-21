@@ -23,7 +23,7 @@
           :auto-upload="false"
           :data="addlist"
           :on-error="handleErrorFile"
-          element-loading-text="拼命加载中"
+          element-loading-text="Loading"
           element-loading-spinner="el-icon-loading"
           element-loading-background="rgba(0, 0, 0, 0.8)"
         >
