@@ -53,6 +53,9 @@ export default {
   },
 
   methods: {
+    isVideo(path) {
+      return /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/.test(path);
+    },
     OperationNft(type,obj = null){
       let self = this;
       if(type == 'createNft' || type == 'accept' || type == 'mint'){
@@ -181,7 +184,20 @@ export default {
       if(listData.data.total){
         this.total = listData.data.total;
         this.nftlist = listData.data.records;
+        this.nftlist = this.nftlist.map(item=>{
+          item.nftContent = JSON.parse(item.nftContent);
+          return item;
+        })
       }
+    },
+    urlToBlob(the_url) {
+      let xhr = new XMLHttpRequest();
+      xhr.open("get", the_url, true);
+      xhr.responseType = "blob";
+      xhr.onload = function(res) {
+        console.log(res);
+      };
+      xhr.send();
     },
     handleCurrentChange(val){
       this.current = val;
