@@ -28,7 +28,7 @@
           element-loading-background="rgba(0, 0, 0, 0.8)"
         >
           <img v-if="imageUrl && fileType=='img'" :src="imageUrl" class="avatar" alt />
-          <video v-if="imageUrl && fileType == 'video'" autoplay class="avatar" :src='imageUrl'></video>
+          <video v-if="imageUrl && fileType == 'video'" autoplay loop class="avatar" :src='imageUrl'></video>
           <i v-if="!imageUrl" class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         <el-button type="primary" :disabled="loading" @click="uploaddialogclick"
