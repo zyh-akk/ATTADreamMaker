@@ -19,12 +19,15 @@ export default {
     };
   },
   destroyed(){
+    console.log(888888888888);
+    $(".dream-maker-dom").attr('style','display:none !important');
     $('nav.r-qklmqi[aria-label][role="navigation"]').unbind('click');
   },
   mounted(){
     console.log(window.location.search.indexOf('attaDreamMaker=true'));
     let self = this;
     $(document).ready(function(){
+      $(".dream-maker-dom").attr('style','display:block !important');
       self.appendDom();
       self.search();
       // 监听页面dom变化

@@ -262,7 +262,7 @@ export default {
 
         this.appendDomIndex = 0;
         this.appendDom();
-        // this.addClick();
+        this.addClick();
         if (localStorage.getItem("attadreammaker_wallte")) {
           let str = localStorage.getItem("attadreammaker_wallte");
           this.address = str;
@@ -389,40 +389,42 @@ export default {
       }
     },
     // 左侧列表添加点击事件，判断是否需要开启nft列表
-    // addClick() {
-    //   let self = this;
-    //   let queryDom = document.querySelector(
-    //     'nav.r-1habvwh[aria-label][role="navigation"]'
-    //   );
+    addClick() {
+      let self = this;
+      let queryDom = document.querySelector(
+        'nav.r-1habvwh[aria-label][role="navigation"]'
+      );
 
-    //   if (this.appendDomIndex > 10) return;
-    //   this.appendDomIndex = this.appendDomIndex + 1;
+      if (this.appendDomIndex > 10) return;
+      this.appendDomIndex = this.appendDomIndex + 1;
 
-    //   if (!queryDom) {
-    //     setTimeout(() => {
-    //       self.addClick();
-    //     }, 1000);
-    //   } else {
-    //     let navdom = document
-    //       .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
-    //       .getElementsByTagName("a");
-    //     $(navdom).on("click", function (event) {
-    //       if (
-    //         event.currentTarget &&
-    //         (event.currentTarget.ariaLabel == "Profile" ||
-    //           event.currentTarget.ariaLabel == "个人资料")
-    //       ) {
-    //         $(document).ready(function () {
-    //           console.log(event.currentTarget.ariaLabel);
-    //           //此时需要加载nft
-    //           self.nftsDom = true;
-    //         });
-    //       } else {
-    //         self.nftsDom = false;
-    //       }
-    //     });
-    //   }
-    // },
+      if (!queryDom) {
+        setTimeout(() => {
+          self.addClick();
+        }, 1000);
+      } else {
+        let navdom = document
+          .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
+          .getElementsByTagName("a");
+        $(navdom).on("click", function (event) {
+          if (
+            event.currentTarget &&
+            (event.currentTarget.ariaLabel == "Profile" ||
+              event.currentTarget.ariaLabel == "个人资料")
+          ) {
+            $(document).ready(function () {
+              //此时需要加载nft
+              self.nftsDom = false;
+              setTimeout(() => {
+                self.nftsDom = true;
+              }, 500);
+            });
+          } else {
+            self.nftsDom = false;
+          }
+        });
+      }
+    },
     // my nfts 跳转
     jumppage() {
       window.location.href = "https://twitter.com/"+this.currentUserName;
