@@ -25,6 +25,7 @@ export default {
     // $(".dream-maker-model").remove()
   },
   mounted(){
+    console.log(window.location.search.indexOf('attaDreamMaker=true'));
     let self = this;
     $(document).ready(function(){
       self.appendDom();
@@ -83,29 +84,43 @@ export default {
           parentDom.appendChild(crdomNft);
 
 
-      $('nav.r-qklmqi[aria-label][role="navigation"]').on('click',function(e){
-        let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
-        // 如果点击到当前标签
-        if(e.target.className.indexOf('dream-maker-title')>-1 || e.target.className.indexOf('dream-maker')>-1){
-          self.domBorderBottom('none');
-          // 关闭当前内容
-          if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
-            $(infoDom.childNodes[3]).attr('style','display:none !important');
-          }else{
-            $(infoDom.childNodes[2]).attr('style','display:none !important');
+          $('nav.r-qklmqi[aria-label][role="navigation"]').on('click',function(e){
+            let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
+            // 如果点击到当前标签
+            if(e.target.className.indexOf('dream-maker-title')>-1 || e.target.className.indexOf('dream-maker')>-1){
+              self.domBorderBottom('none');
+              // 关闭当前内容
+              if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
+                $(infoDom.childNodes[3]).attr('style','display:none !important');
+              }else{
+                $(infoDom.childNodes[2]).attr('style','display:none !important');
+              }
+              self.nftsBol = true;
+              self.search();
+            }else{
+              self.domBorderBottom('blcok');
+              if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
+                $(infoDom.childNodes[3]).attr('style','display:flex !important');
+              }else{
+                $(infoDom.childNodes[2]).attr('style','display:flex !important');
+              }
+              self.nftsBol = false;
+            }
+          });
+
+          // 需要打开nft列表项
+          if(window.location.search.indexOf('attaDreamMaker=true') > -1){
+            let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
+            self.domBorderBottom('none');
+            // 关闭当前内容
+            if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
+              $(infoDom.childNodes[3]).attr('style','display:none !important');
+            }else{
+              $(infoDom.childNodes[2]).attr('style','display:none !important');
+            }
+            self.nftsBol = true;
+            self.search();
           }
-          self.nftsBol = true;
-          self.search();
-        }else{
-          self.domBorderBottom('blcok');
-          if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
-            $(infoDom.childNodes[3]).attr('style','display:flex !important');
-          }else{
-            $(infoDom.childNodes[2]).attr('style','display:flex !important');
-          }
-          self.nftsBol = false;
-        }
-      });
         }
       })
     },
@@ -149,7 +164,7 @@ export default {
     async searchInfo(){
       if(this.loading) return;
       this.loading = true;
-      
+
       let mintUser = this.userInfo.id;//用户id
       let {pageSize,current,nftType:type} = this;
       let obj = {mintUser,type,pageSize,current};

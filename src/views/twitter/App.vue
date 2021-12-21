@@ -179,7 +179,8 @@ export default {
       modal2status: false,
       conftdataobject: {},
       nftDom:0,
-      userInfoCoNft:{}
+      userInfoCoNft:{},
+      currentUserName:''
     };
   },
   mounted() {
@@ -193,13 +194,16 @@ export default {
       }else{
         console.log('不是登录页面');
       }
+    }else if(window.performance.navigation.type === 0 && window.location.search.indexOf('attaDreamMaker=true')>-1){//当前页面是由按钮跳转到nft页面的
+      // 页面跳转
+      this.initializationDom();
     }
-
   },
   methods: {
     initializationDom(){
       getUserInfo()
       .then(res=>{
+        this.currentUserName = res;
         this.getUserInfo(res)
       })
       this.getDom();
@@ -415,7 +419,9 @@ export default {
     //   }
     // },
     // my nfts 跳转
-    jumppage() {},
+    jumppage() {
+      window.location.href = "https://twitter.com/"+this.currentUserName+"?attaDreamMaker=true"
+    },
     createNftAccept(type, obj) {
       //type取值：createNft  accept  mint  分别对应不同的按钮功能
       if (type == "createNft") {
