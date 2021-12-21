@@ -29,10 +29,10 @@ export function twitterInfo(url) {
 export function getUserInfo() {
     return new Promise((resolve, reject) => { 
         setTimeout(() => {
-            let uesrNameDom = document.querySelector('[aria-label="Account menu"][data-testid="SideNav_AccountSwitcher_Button"]').childNodes[1].childNodes[0].childNodes[1].childNodes[0].childNodes[0];
-            let uesrName = uesrNameDom.textContent;
+            let uesrNameDom = document.querySelector('[aria-label="Profile"][role="link"]');
+            let uesrName = uesrNameDom.href.split('https://twitter.com/')[1];
             console.log(uesrName);
-            resolve(uesrName.slice(1))
+            resolve(uesrName)
         }, 1000);
     })
 }
@@ -50,7 +50,7 @@ export function getFriendUserInfo() {
             }else{
                 twitterInfo(`https://api.twitter.com/2/users/by/username/${userName[1]}`)
                 .then(res=>{
-                    if(res.data.errors){
+                    if(res.errors){
                         reject();
                     }else{
                         resolve(res.data);
