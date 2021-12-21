@@ -69,6 +69,7 @@
       position: relative;
       border-radius: 5px;
       overflow: hidden;
+      text-align: center;
       .tips{
         position: absolute;
         top: 0;
@@ -95,6 +96,7 @@
         font-size: 13px;
         color: #333;
         line-height: 20px;
+        text-align: left;
       }
     }
     .paginationbox{

@@ -12,10 +12,10 @@
     >
       <div class="showinfodatabox">
         <span class="tips">User XXXXX created for you</span>
-        <img class="imageurl_show" :src="base_url + JSON.parse(conftdataobject.nftContent).picturePath " alt="">
-        <video autoplay class="imageurl_show" :src='base_url + JSON.parse(conftdataobject.nftContent).picturePath'></video>
-        <p>Name:{{ JSON.parse(conftdataobject.nftContent).name}}</p>
-        <p>Description:{{ JSON.parse(conftdataobject.nftContent).description }}</p>
+        <img class="imageurl_show" :src="base_url + conftdataobject.nftContent.picturePath " alt="">
+        <video autoplay class="imageurl_show" :src='base_url + conftdataobject.nftContent.picturePath'></video>
+        <p>Name:{{ conftdataobject.nftContent.name}}</p>
+        <p>Description:{{ conftdataobject.nftContent.description }}</p>
         <p>Creator Wallet:{{conftdataobject.address ? conftdataobject.address.substring(0, 5) + "***" +conftdataobject.address.substr(conftdataobject.address.length - 4) : ""}}</p>
         <p>Note: This NFT is a Co-NFT, twitter user XXXXX created for you. You can accept it if you like it.</p>
         <div class="btns">
@@ -99,6 +99,8 @@ export default {
         alert("铸造nft成功");
       }
       this.closeModal();
+      sessionStorage.setItem('myNfts','true');
+      location.reload();
     },
     async topay2(){
       if (!this.address) {
@@ -123,6 +125,8 @@ export default {
       if (listData.code == 0) {
         alert("mint nft success");
         this.closeModal();
+        sessionStorage.setItem('myNfts','true');
+        location.reload();
       }
     }
   },

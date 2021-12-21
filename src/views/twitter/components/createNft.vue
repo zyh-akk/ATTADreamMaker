@@ -91,7 +91,7 @@
         <div class="btns">
           <el-button v-if="!conftfun" type="primary" @click="nowStep = 3">Previous</el-button>
           <el-button v-if="!conftfun" type="primary" @click="topay">Next</el-button>
-          <el-button v-if="conftfun" type="primary" @click="closeModal">Next</el-button>
+          <el-button v-if="conftfun" type="primary" @click="reloadclick">Next</el-button>
         </div>
       </div>
     </el-dialog>
@@ -304,7 +304,13 @@ export default {
       if (listData.code == 0) {
         alert("铸造nft成功");
       }
+      sessionStorage.setItem('myNfts','true');
       this.closeModal();
+      location.reload();
+    },
+    reloadclick(){
+      sessionStorage.setItem('myNfts','true');
+      location.reload();
     }
   },
 };
