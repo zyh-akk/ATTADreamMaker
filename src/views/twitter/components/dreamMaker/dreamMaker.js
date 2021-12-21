@@ -19,10 +19,7 @@ export default {
     };
   },
   destroyed(){
-    console.log('重载');
     $('nav.r-qklmqi[aria-label][role="navigation"]').unbind('click');
-    // $(".dream-maker").remove()
-    // $(".dream-maker-model").remove()
   },
   mounted(){
     console.log(window.location.search.indexOf('attaDreamMaker=true'));
@@ -32,6 +29,8 @@ export default {
       self.search();
       // 监听页面dom变化
       var observer = new MutationObserver(function(mutations, observer){
+
+        // 添加缓存，判断nft部分是否需要隐藏
         console.log(mutations,observer);
         self.domBorderBottom('block');
         let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
@@ -43,7 +42,7 @@ export default {
         self.nftsBol = false;
       });
       // 次数监听用户名，用户名变化，就隐藏nft
-      var el = document.querySelector('div[data-testid="primaryColumn"]').childNodes[0].childNodes[0];
+      var el = document.querySelector('div[data-testid="primaryColumn"]').childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0];
       var  options = {
         'childList': true,
         'subtree':true,
@@ -109,7 +108,8 @@ export default {
           });
 
           // 需要打开nft列表项
-          if(window.location.search.indexOf('attaDreamMaker=true') > -1){
+          if(sessionStorage.getItem('myNfts') == 'true'){
+            sessionStorage.setItem('myNfts','false');
             let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
             self.domBorderBottom('none');
             // 关闭当前内容
@@ -126,7 +126,6 @@ export default {
     },
     // 所有标签下标去掉
     domBorderBottom(type){
-      console.log(type);
       // 获取整个tab
       let navdom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').childNodes[0];
       // 获取teitter的tab
@@ -155,6 +154,7 @@ export default {
       let self = this;
       getFriendUserInfo()
       .then((res)=>{
+        console.log(res,'用户信息');
         self.userInfo = res;
         self.searchInfo()
       }).catch((err)=>{
