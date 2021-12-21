@@ -14,8 +14,8 @@ document.addEventListener('msgEvent', function(event){
 document.addEventListener('switchaddress', function(event){
 	window.CHAIN.WALLET.connect('MetaMask')
 	.then((address)=>{
-	    var newEvent = new CustomEvent(event.detail.Callbackname, { bubbles:true,cancelable:true,composed:true ,detail : address ? address : []});
-	    document.dispatchEvent(newEvent);
+	    var newEvent = new CustomEvent(event.detail.Callbackname, { bubbles:true,cancelable:true,composed:true ,detail : {address : address ? address : [],conftfun : event.detail.conftfun ? event.detail.conftfun : null}});
+		document.dispatchEvent(newEvent);
 	})
 });
 // 钱包支付

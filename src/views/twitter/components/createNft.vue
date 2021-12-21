@@ -136,18 +136,18 @@ export default {
   },
   mounted() {
     let self = this;
-    console.log(self.userInfo2);
-    console.log(self.userInfo);
-    console.log(self.conftfun);
     self.uploadUrl = process.env.VUE_APP_BASEURL + "v2/twitter/nft/upload";
     // vue中接收的事件
     var event = document.createEvent("Event");
     event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
     event.initEvent("paymentaddressCallback", true, true); // detail是事件数据
     document.addEventListener("switchaddressCallback2", (event) => {
-      if (event.detail.length > 0) {
-        self.addressinfo = event.detail[0];
-        localStorage.attadreammaker_wallte = event.detail[0]
+      if (event.detail) {
+        if (event.detail.conftfun != self.conftfun) {
+          return;
+        }
+        self.addressinfo = event.detail.address[0];
+        localStorage.attadreammaker_wallte = event.detail.address[0];
         self.createnft();
       }else{
         self.loading = false;
@@ -224,7 +224,7 @@ export default {
         return;
       }
       const cEvt = new CustomEvent("switchaddress", {
-        detail: { Callbackname: "switchaddressCallback2" },
+        detail: { Callbackname: "switchaddressCallback2" ,conftfun : this.conftfun },
       });
       document.dispatchEvent(cEvt);
       this.loading = true;

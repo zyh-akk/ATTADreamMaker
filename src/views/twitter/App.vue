@@ -247,8 +247,8 @@ export default {
           this.jsaddress(event.detail);
         });
         document.addEventListener("switchaddressCallback1", (event) => {
-          if (event.detail.length > 0) {
-            this.address = event.detail[0];
+          if (event.detail) {
+            this.address = event.detail.address[0];
             this.shearaddress =
               this.address.substring(0, 5) +
               "***" +
@@ -278,7 +278,8 @@ export default {
       let self = this;
       getUserInfo()
       .then(res=>{
-        self.getUserInfo(res)
+        self.getUserInfo(res);
+        self.conftfun = false;
         setTimeout(()=>{
           self.showCreateNftModal = true;
         })
@@ -429,15 +430,13 @@ export default {
     },
     createNftAccept(type, obj) {
       //type取值：createNft  accept  mint  分别对应不同的按钮功能
+      let self = this;
       if (type == "createNft") {
-        let self = this;
         getFriendUserInfo()
-        .then((res)=>{
+        .then(function (res){
           self.userInfoCoNft = res;
           self.conftfun = true;
           self.showCreateNftModal = true;
-        }).catch((err)=>{
-
         })
       }
       if (type == "accept") {

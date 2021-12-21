@@ -45,9 +45,9 @@ export default {
     var event = document.createEvent("Event");
     event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
     document.addEventListener("switchaddressCallback2", (event) => {
-      if (event.detail.length > 0) {
-        this.addressinfo = event.detail[0];
-        localStorage.attadreammaker_wallte = event.detail[0];
+      if (event.detail) {
+        this.addressinfo = event.detail.address[0];
+        localStorage.attadreammaker_wallte = event.detail.address[0];
         this.loading = true;
         this.createnft();
       }
