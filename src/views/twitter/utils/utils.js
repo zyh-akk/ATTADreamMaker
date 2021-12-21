@@ -29,7 +29,7 @@ export function twitterInfo(url) {
 export function getUserInfo() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            let uesrNameDom = document.querySelector('[aria-label="Profile"][role="link"]');
+            let uesrNameDom = document.querySelector('[role="link"][data-testid="AppTabBar_Profile_Link"]');
             let uesrName = uesrNameDom.href.split('https://twitter.com/')[1];
             console.log(uesrName);
             resolve(uesrName)
