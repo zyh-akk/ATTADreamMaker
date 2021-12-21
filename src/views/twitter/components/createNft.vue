@@ -89,8 +89,9 @@
         <p>Description:{{ input2_info }}</p>
         <p>Wallet:{{ addressinfo }}</p>
         <div class="btns">
-          <el-button type="primary" @click="nowStep = 3">Previous</el-button>
+          <el-button v-if="!conftfun" type="primary" @click="nowStep = 3">Previous</el-button>
           <el-button v-if="!conftfun" type="primary" @click="topay">Next</el-button>
+          <el-button v-if="conftfun" type="primary" @click="closeModal">Next</el-button>
         </div>
       </div>
     </el-dialog>
@@ -100,7 +101,7 @@
 import SvgIcon from "@/components/svgIcon.vue";
 export default {
   components: { SvgIcon },
-  props: ["address", "userInfo","conftfun"],
+  props: ["address", "userInfo","conftfun","userInfo2"],
   data() {
     return {
       addlist: null,
@@ -134,25 +135,29 @@ export default {
     }
   },
   mounted() {
-    this.uploadUrl = process.env.VUE_APP_BASEURL + "v2/twitter/nft/upload";
+    let self = this;
+    console.log(self.userInfo2);
+    console.log(self.userInfo);
+    console.log(self.conftfun);
+    self.uploadUrl = process.env.VUE_APP_BASEURL + "v2/twitter/nft/upload";
     // vue中接收的事件
     var event = document.createEvent("Event");
     event.initEvent("switchaddressCallback2", true, true); // detail是事件数据
     event.initEvent("paymentaddressCallback", true, true); // detail是事件数据
     document.addEventListener("switchaddressCallback2", (event) => {
       if (event.detail.length > 0) {
-        this.addressinfo = event.detail[0];
+        self.addressinfo = event.detail[0];
         localStorage.attadreammaker_wallte = event.detail[0]
-        this.createnft();
+        self.createnft();
       }else{
-        this.loading = false;
+        self.loading = false;
       }
     });
     document.addEventListener("paymentaddressCallback", (event) => {
       if (event.detail) {
-        this.sussescasting(event.detail);
+        self.sussescasting(event.detail);
       }else{
-        this.loading = false;
+        self.loading = false;
       }
     });
   },
@@ -254,32 +259,36 @@ export default {
       this.loading = true;
     },
     // 创建nft
-    async createnft() {
+    createnft() {
+      let receiveUser = this.conftfun == true ? this.userInfo2.id : this.userInfo.id;
+      let type = this.conftfun == true ? 2 : 0;
       let obj = {
         address: this.addressinfo,
         description: this.input2_info,
         name: this.input1_info,
         mintUser: this.userInfo.id,
-        receiveUser: this.userInfo.id,
+        receiveUser: receiveUser,
         picturePath: this.picturePath,
         sourceFileIpfs: this.sourceFileIpfs,
-        type: 0,
+        type: type
       };
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/create_nft`;
-      const res = await fetch(getNfts, {
+      fetch(getNfts, {
         method: "POST",
         body: JSON.stringify(obj),
         headers: new Headers({
           "Content-Type": "application/json",
         }),
-      });
-      const listData = await res.json();
-      const artList = listData.data;
-      this.returnaddress = artList[0].address;
-      this.metadataIpfs = artList[0].metadataIpfs;
-      this.orderNo = artList[0].orderNo;
-      this.loading = false;
-      this.nowStep = 4;
+      })
+      .then(res=>res.json())
+      .then(listData=>{
+        const artList = listData.data;
+        this.returnaddress = artList[0].address;
+        this.metadataIpfs = artList[0].metadataIpfs;
+        this.orderNo = artList[0].orderNo;
+        this.loading = false;
+        this.nowStep = 4;
+      })
     },
     async sussescasting(obj){
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/mint`;

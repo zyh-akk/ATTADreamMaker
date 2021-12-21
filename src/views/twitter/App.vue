@@ -102,7 +102,8 @@
       <create-nft
         v-if="showCreateNftModal"
         @closeNftModal="closeNftModal"
-        :userInfo="userInfoCoNft"
+        :userInfo="userInfo"
+        :userInfo2="userInfoCoNft"
         :conftfun="conftfun"
       ></create-nft>
     </div>
