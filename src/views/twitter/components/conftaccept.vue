@@ -12,8 +12,8 @@
     >
       <div class="showinfodatabox">
         <span class="tips">User XXXXX created for you</span>
-        <img class="imageurl_show" :src="base_url + conftdataobject.nftContent.picturePath " alt="">
-        <video autoplay class="imageurl_show" :src='base_url + conftdataobject.nftContent.picturePath'></video>
+        <img v-if="isImage(conftdataobject.nftContent.picturePath)" class="imageurl_show" :src="base_url + conftdataobject.nftContent.picturePath " alt="">
+        <video v-if="isVideo(conftdataobject.nftContent.picturePath)" autoplay class="imageurl_show" :src='base_url + conftdataobject.nftContent.picturePath'></video>
         <p>Name:{{ conftdataobject.nftContent.name}}</p>
         <p>Description:{{ conftdataobject.nftContent.description }}</p>
         <p>Creator Wallet:{{conftdataobject.address ? conftdataobject.address.substring(0, 5) + "***" +conftdataobject.address.substr(conftdataobject.address.length - 4) : ""}}</p>
