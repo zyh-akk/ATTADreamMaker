@@ -19,10 +19,13 @@
         <div v-for="(item,index) in nftlist" :key="index" class="dream-maker-nft">
           <!-- xxx为我创建的nft 提示条 item.mintUser 可以获取到用户id，但是不能获取到name -->
           <span class="tips" v-if="item.creatorTag == 1">User xxx created for you</span>
-          <img :src="base_url + JSON.parse(item.nftContent).picturePath " alt="">
-          <p>Name：{{JSON.parse(item.nftContent).name}}</p>
+          <div class="nft-image">
+            <img v-if="!isVideo(item.nftContent.picturePath)" :src="base_url + item.nftContent.picturePath" alt="">
+            <video v-else :src="urlToBlob(base_url + item.nftContent.picturePath)"></video>
+          </div>
+          <p>Name：{{item.nftContent.name}}</p>
           <p>Description：</p>
-          <p>{{JSON.parse(item.nftContent).description}}</p>
+          <p>{{item.nftContent.description}}</p>
           <p v-if="(item.status == 0 || item.status == 1 || item.status == 2) && item.type != 2">Status：Minting </p>
           <p v-if="item.status == 3">Status：Minted</p>
           <p v-if="item.status == 4">Status：{{item.status + '铸造失败'}}</p>

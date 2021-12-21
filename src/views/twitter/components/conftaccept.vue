@@ -121,7 +121,7 @@ export default {
       const listData = await res.json();
       this.loading = false;
       if (listData.code == 0) {
-        alert("铸造nft成功");
+        alert("mint nft success");
         this.closeModal();
       }
     }

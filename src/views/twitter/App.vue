@@ -189,13 +189,15 @@ export default {
     if (window.performance.navigation.type) {
       console.log("页面被刷新或者重载")
       // 页面刷新重载的时候获取用户名，有用户名就是已登录，没有就是未登录
-      let uesrNameDom = document.querySelector('[aria-label="Account menu"][data-testid="SideNav_AccountSwitcher_Button"]');
+      let uesrNameDom = document.querySelector('[role="link"][data-testid="AppTabBar_Profile_Link"]');
+      // let uesrName = uesrNameDom.href.split('https://twitter.com/')[1];
+      // let uesrNameDom = document.querySelector('[aria-label="Account menu"][data-testid="SideNav_AccountSwitcher_Button"]');
       if(uesrNameDom){
         this.initializationDom();
       }else{
         console.log('不是登录页面');
       }
-    }else if(window.performance.navigation.type === 0 && window.location.search.indexOf('attaDreamMaker=true')>-1){//当前页面是由按钮跳转到nft页面的
+    }else if(window.performance.navigation.type === 0 && sessionStorage.getItem('myNfts') == 'true'){//当前页面是由按钮跳转到nft页面的
       // 页面跳转
       this.initializationDom();
     }
@@ -220,6 +222,7 @@ export default {
       })
     },
     getDom() {
+        console.log('测试dom添加');
       // 获取10次，页面还没有加载该dom就不在创建了，避免死循环
       if (this.appendDomIndex > 10) return;
       this.appendDomIndex = this.appendDomIndex + 1;
@@ -369,7 +372,7 @@ export default {
             self.nftsDom = false;
               setTimeout(() => {
                 self.nftsDom = true;
-              }, 1000);
+              }, 500);
             }
           }
         );
@@ -421,7 +424,8 @@ export default {
     // },
     // my nfts 跳转
     jumppage() {
-      window.location.href = "https://twitter.com/"+this.currentUserName+"?attaDreamMaker=true"
+      window.location.href = "https://twitter.com/"+this.currentUserName;
+      sessionStorage.setItem('myNfts','true');
     },
     createNftAccept(type, obj) {
       //type取值：createNft  accept  mint  分别对应不同的按钮功能
