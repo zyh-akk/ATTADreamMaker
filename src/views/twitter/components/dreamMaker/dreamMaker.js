@@ -166,7 +166,7 @@ export default {
         self.userInfofriend = res;
         self.searchInfo()
       }).catch((err)=>{
-
+        console.log(err);
       })
     },
 
