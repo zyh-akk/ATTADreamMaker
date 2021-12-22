@@ -23,7 +23,7 @@
           <span class="tips" v-if="item.creatorTag == 1">User xxx created for you</span>
           <div class="nft-image">
             <img v-if="!isVideo(item.nftContent.picturePath)" :src="base_url + item.nftContent.picturePath" alt="">
-            <video v-else :src="base_url + item.nftContent.picturePath"></video>
+            <a v-else :href="base_url + item.nftContent.picturePath" target="_blank" rel="noopener noreferrer"><img :src="base_url + item.nftContent.picturePath" alt=""></a>
           </div>
           <p>Name：{{item.nftContent.name}}</p>
           <p>Description：</p>
