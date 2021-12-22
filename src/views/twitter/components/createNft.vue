@@ -101,7 +101,7 @@
 import SvgIcon from "@/components/svgIcon.vue";
 export default {
   components: { SvgIcon },
-  props: ["address", "userInfo","conftfun","userInfo2"],
+  props: ["address", "userInfo","conftfun","userInfo2","btntype"],
   data() {
     return {
       addlist: null,
@@ -261,7 +261,7 @@ export default {
     // 创建nft
     createnft() {
       let receiveUser = this.conftfun == true ? this.userInfo2.id : this.userInfo.id;
-      let type = this.conftfun == true ? 2 : 0;
+      let type = this.conftfun == true ? this.btntype : 0;
       let obj = {
         address: this.addressinfo,
         description: this.input2_info,
@@ -304,12 +304,12 @@ export default {
       if (listData.code == 0) {
         alert("铸造nft成功");
       }
-      sessionStorage.setItem('myNfts','true');
+      sessionStorage.setItem('myNfts',this.btntype);
       this.closeModal();
       location.reload();
     },
     reloadclick(){
-      sessionStorage.setItem('myNfts','true');
+      sessionStorage.setItem('myNfts',this.btntype);
       location.reload();
     }
   },

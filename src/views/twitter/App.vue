@@ -105,6 +105,7 @@
         :userInfo="userInfo"
         :userInfo2="userInfoCoNft"
         :conftfun="conftfun"
+        :btntype="btntype"
       ></create-nft>
     </div>
     <!-- Co-NFT 弹框 -->
@@ -113,6 +114,7 @@
         v-if="showCreateNftModal2"
         @closeNftModal2="closeNftModal2"
         :userInfo="userInfo"
+        :userInfo2="userInfoCoNft"
         :modal2status="modal2status"
         :conftdataobject="conftdataobject"
         :address="address"
@@ -141,6 +143,7 @@
     <dream-maker
       v-if="nftsDom"
       @createNftAccept="createNftAccept"
+      :userInfo="userInfo"
     ></dream-maker>
     <image-edit
       v-if="showImageEditModal" :userInfo="userInfo"
@@ -181,7 +184,8 @@ export default {
       conftdataobject: {},
       nftDom:0,
       userInfoCoNft:{},
-      currentUserName:''
+      currentUserName:'',
+      btntype:''
     };
   },
   mounted() {
@@ -289,6 +293,7 @@ export default {
       this.showImageEditModal = true;
     },
     closeNftModal() {
+      this.btntype = "";
       this.conftfun = false;
       this.showCreateNftModal = false;
     },
@@ -431,11 +436,12 @@ export default {
     createNftAccept(type, obj) {
       //type取值：createNft  accept  mint  分别对应不同的按钮功能
       let self = this;
-      if (type == "createNft") {
+      if (type == "0"|| type == "1" || type == "2") {
         getFriendUserInfo()
         .then(function (res){
           self.userInfoCoNft = res;
           self.conftfun = true;
+          self.btntype = type;
           self.showCreateNftModal = true;
         })
       }

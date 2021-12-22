@@ -12,7 +12,9 @@
         <p :class="nftType=='2'?'check-nft':''" @click="OperationNft('2')">Co-NFT</p>
       </div>
       <div class="nft-btn">
-        <p class="check-nft" @click="OperationNft('createNft')">Create a personal NFT</p>
+        <p class="check-nft" v-if="userInfofriend.id == userInfo.id && nftType == 0" @click="OperationNftclick(0)">Create a personal NFT</p>
+        <p class="check-nft" v-if="userInfofriend.id == userInfo.id && nftType == 1" @click="OperationNftclick(1)">Create a Poster NFT</p>
+        <p class="check-nft" v-if="userInfofriend.id != userInfo.id && nftType == 2" @click="OperationNftclick(2)">Create a Co-NFT for him/her</p>
       </div>
 
       <div class="nft-list">
@@ -34,8 +36,8 @@
           <p v-if="item.status == 2 && item.type == 2">Status：Accept / Minting</p>
           <p v-if="item.status == 3 && item.type == 2">Status：Accept / Minted</p>
           <p>Wallet：{{item.address ? item.address.substring(0, 5) + "***" +item.address.substr(item.address.length - 4) : ''}}</p>
-          <el-button type="primary" v-if="item.status == 0 && item.type == 2 && item.creatorTag == 1" @click="OperationNft('accept',item)">Accept</el-button>
-          <el-button type="primary" v-if="item.status == 1 && item.type == 2 && item.creatorTag == 1" @click="OperationNft('mint',item)">Mint now</el-button>
+          <el-button type="primary" v-if="item.status == 0 && item.type == 2 && item.creatorTag == 1 && userInfofriend.id == userInfo.id" @click="OperationNft('accept',item)">Accept</el-button>
+          <el-button type="primary" v-if="item.status == 1 && item.type == 2 && item.creatorTag == 1 && userInfofriend.id == userInfo.id" @click="OperationNft('mint',item)">Mint now</el-button>
         </div>
       </div>
       <div class="paginationbox" v-if="nftlist.length > 0">

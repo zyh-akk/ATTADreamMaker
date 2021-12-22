@@ -59,7 +59,7 @@ document.addEventListener('paymentsaddress', function(event){
 				from: wallteaddress
 			})
 			.then(function (res) {
-				var newEvent = new CustomEvent('paymentsaddressCallback', { bubbles:true,cancelable:true,composed:true ,detail : {orderNo,transactionHash : res.transactionHash,status : 2}});
+				var newEvent = new CustomEvent('paymentsaddressCallback', { bubbles:true,cancelable:true,composed:true ,detail : {orderNo,transactionHash : res.transactionHash,status : 3}});
 			    document.dispatchEvent(newEvent);
 			})
 			.catch(function (error) {

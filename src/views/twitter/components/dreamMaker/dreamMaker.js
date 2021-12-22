@@ -3,6 +3,7 @@ import SvgIcon from '@/components/svgIcon.vue';
 import {getFriendUserInfo } from "../../utils/utils";
 export default {
   components: { SvgIcon },
+  props:['userInfo'],
   data() {
     return {
       imageUrl: '',
@@ -14,8 +15,8 @@ export default {
       total : 10,
       pageSize : 10,
       current : 1,
-      userInfo:{},
-      loading:false
+      loading:false,
+      userInfofriend : {},
     };
   },
   destroyed(){
@@ -65,6 +66,9 @@ export default {
         self.search();
       }
     },
+    OperationNftclick(type){
+      this.$emit("createNftAccept", type);
+    },
     appendDom(){
       let self = this;
       // 获取10次，页面还没有加载该dom就不在创建了，避免死循环
@@ -111,8 +115,7 @@ export default {
           });
 
           // 需要打开nft列表项
-          if(sessionStorage.getItem('myNfts') == 'true'){
-            sessionStorage.setItem('myNfts','false');
+          if(sessionStorage.getItem('myNfts') == 'true'||sessionStorage.getItem('myNfts') == '0'||sessionStorage.getItem('myNfts') == '1'||sessionStorage.getItem('myNfts') == '2'){
             let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
             self.domBorderBottom('none');
             // 关闭当前内容
@@ -121,8 +124,10 @@ export default {
             }else{
               $(infoDom.childNodes[2]).attr('style','display:none !important');
             }
+            self.nftType = sessionStorage.getItem('myNfts') >= 0 ? sessionStorage.getItem('myNfts') : 0;
             self.nftsBol = true;
             self.search();
+            sessionStorage.setItem('myNfts','false');
           }
         }
       })
@@ -158,7 +163,7 @@ export default {
       getFriendUserInfo()
       .then((res)=>{
         console.log(res,'用户信息');
-        self.userInfo = res;
+        self.userInfofriend = res;
         self.searchInfo()
       }).catch((err)=>{
 
@@ -167,10 +172,10 @@ export default {
     async searchInfo(){
       if(this.loading) return;
       this.loading = true;
-
+      let receiveUser = this.userInfofriend.id;
       let mintUser = this.userInfo.id;//用户id
       let {pageSize,current,nftType:type} = this;
-      let obj = {mintUser,type,pageSize,current};
+      let obj = {mintUser,type,pageSize,current,receiveUser};
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;
       const res = await fetch(getNfts, {
         method: "POST",
@@ -181,9 +186,12 @@ export default {
       });
       const listData = await res.json();
       this.loading = false;
+      if (!listData.data) {
+        return;
+      }
+      this.nftlist = listData.data.records;
+      this.total = listData.data.total;
       if(listData.data.total){
-        this.total = listData.data.total;
-        this.nftlist = listData.data.records;
         this.nftlist = this.nftlist.map(item=>{
           item.nftContent = JSON.parse(item.nftContent);
           return item;
