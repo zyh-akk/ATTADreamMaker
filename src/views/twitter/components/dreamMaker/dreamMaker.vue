@@ -20,7 +20,7 @@
       <div class="nft-list">
         <div v-for="(item,index) in nftlist" :key="index" class="dream-maker-nft">
           <!-- xxx为我创建的nft 提示条 item.mintUser 可以获取到用户id，但是不能获取到name -->
-          <span class="tips" v-if="item.creatorTag == 1">User xxx created for you</span>
+          <span class="tips" v-if="item.creatorTag == 1">User {{item.mintUsername}} created for you</span>
           <div class="nft-image">
             <img v-if="!isVideo(item.nftContent.picturePath)" :src="base_url + item.nftContent.picturePath" alt="">
             <video v-else :src="base_url + item.nftContent.picturePath"></video>

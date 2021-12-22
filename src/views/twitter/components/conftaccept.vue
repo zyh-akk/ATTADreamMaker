@@ -11,13 +11,13 @@
       v-loading="loading"
     >
       <div class="showinfodatabox">
-        <span class="tips">User XXXXX created for you</span>
+        <span class="tips">User {{conftdataobject.mintUsername}} created for you</span>
         <img v-if="isImage(conftdataobject.nftContent.picturePath)" class="imageurl_show" :src="base_url + conftdataobject.nftContent.picturePath " alt="">
         <video v-if="isVideo(conftdataobject.nftContent.picturePath)" autoplay class="imageurl_show" :src='base_url + conftdataobject.nftContent.picturePath'></video>
         <p>Name:{{ conftdataobject.nftContent.name}}</p>
         <p>Description:{{ conftdataobject.nftContent.description }}</p>
         <p>Creator Wallet:{{conftdataobject.address ? conftdataobject.address.substring(0, 5) + "***" +conftdataobject.address.substr(conftdataobject.address.length - 4) : ""}}</p>
-        <p>Note: This NFT is a Co-NFT, twitter user XXXXX created for you. You can accept it if you like it.</p>
+        <p>Note: This NFT is a Co-NFT, twitter user {{conftdataobject.mintUsername}} created for you. You can accept it if you like it.</p>
         <div class="btns">
           <el-button v-if="!modal2status" type="primary" @click="topay2">Accept</el-button>
           <el-button v-else type="primary" @click="getnftjl">Mint now</el-button>

@@ -58,3 +58,16 @@ export function getFriendUserInfo() {
         }
     })
 }
+// 根据id获取当前人信息
+export function getUserInfoid(id) {
+    return new Promise((resolve, reject) => {
+        twitterInfo(`https://api.twitter.com/2/users/${id}`)
+        .then(res=>{
+            if(res.errors){
+                reject();
+            }else{
+                resolve(res.data);
+            }
+        })
+    })
+}

@@ -1,6 +1,6 @@
 
 import SvgIcon from '@/components/svgIcon.vue';
-import {getFriendUserInfo } from "../../utils/utils";
+import {getFriendUserInfo ,getUserInfoid} from "../../utils/utils";
 export default {
   components: { SvgIcon },
   props:['userInfo'],
@@ -228,6 +228,9 @@ export default {
       this.total = listData.data.total;
       if(listData.data.total){
         this.nftlist = this.nftlist.map(item=>{
+          if (obj.type == 2) {
+            this.getname(item.ohterUser);
+          }
           item.nftContent = JSON.parse(item.nftContent);
           return item;
         })
@@ -253,6 +256,21 @@ export default {
     ttApi(){
       // let consumer_key = process.env.CONSUMER_KEY;
       // let consumer_secret = process.env.CONSUMER_SECRET;
+    },
+    getname(id){
+      getUserInfoid(id)
+      .then(res=>{
+        if (res.name) {
+          this.nftlist = this.nftlist.map(item=>{
+            if (item.ohterUser == id) {
+              item.mintUsername = res.name;
+              return item;
+            }
+          })
+          console.log("name-------------"+res.name);
+          return res.name;
+        }
+      })
     }
   }
 };
