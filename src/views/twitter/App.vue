@@ -440,8 +440,11 @@ export default {
         getFriendUserInfo()
         .then(function (res){
           self.userInfoCoNft = res;
-          self.conftfun = true;
           self.btntype = type;
+          self.conftfun = false;
+          if (type == "2") {
+            self.conftfun = true;
+          }
           self.showCreateNftModal = true;
         })
       }

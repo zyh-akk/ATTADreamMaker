@@ -143,9 +143,10 @@ export default {
     event.initEvent("paymentaddressCallback", true, true); // detail是事件数据
     document.addEventListener("switchaddressCallback2", (event) => {
       if (event.detail) {
-        if (event.detail.conftfun != self.conftfun) {
-          return;
-        }
+        // debugger
+        // if (event.detail.conftfun != self.conftfun) {
+        //   return;
+        // }
         self.addressinfo = event.detail.address[0];
         localStorage.attadreammaker_wallte = event.detail.address[0];
         self.createnft();
@@ -261,7 +262,7 @@ export default {
     // 创建nft
     createnft() {
       let receiveUser = this.conftfun == true ? this.userInfo2.id : this.userInfo.id;
-      let type = this.conftfun == true ? this.btntype : 0;
+      let type = this.btntype;
       let obj = {
         address: this.addressinfo,
         description: this.input2_info,
