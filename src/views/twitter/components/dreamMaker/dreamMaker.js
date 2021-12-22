@@ -210,7 +210,7 @@ export default {
       let receiveUser = this.userInfofriend.id;
       let mintUser = this.userInfo.id;//用户id
       let {pageSize,current,nftType:type} = this;
-      let obj = {mintUser,type,pageSize,current,receiveUser};
+      let obj = {mintUser,type,pageSize,current,receiveUser,orders : [{column:"create_time",asc:false}]};
       let getNfts = `${process.env.VUE_APP_BASEURL}v2/twitter/nft/list`;
       const res = await fetch(getNfts, {
         method: "POST",
@@ -228,7 +228,7 @@ export default {
       this.total = listData.data.total;
       if(listData.data.total){
         this.nftlist = this.nftlist.map(item=>{
-          if (obj.type == 2) {
+          if (obj.type == 2 && item.item.ohterUser) {
             this.getname(item.ohterUser);
           }
           item.nftContent = JSON.parse(item.nftContent);
