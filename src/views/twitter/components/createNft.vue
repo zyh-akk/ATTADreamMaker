@@ -113,7 +113,7 @@ export default {
       file: {},
       nowStep: 1,
       loading: false,
-      ischeckwallet: 0,
+      ischeckwallet: 1,
       addressinfo: "",
       previewImgUrl: "",
       picturePath: "",
