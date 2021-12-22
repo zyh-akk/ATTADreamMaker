@@ -200,6 +200,7 @@ export default {
       // 页面跳转
       this.initializationDom();
     }
+    document.querySelector('meta[http-equiv="origin-trial"]').setAttribute('content',"default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content: https://ssl.gstatic.com; media-src * blob: 'self' http://* 'unsafe-inline' 'unsafe-eval'; style-src * 'self' 'unsafe-inline'; img-src * 'self' data: content:; connect-src * blob:;")
   },
   methods: {
     initializationDom(){

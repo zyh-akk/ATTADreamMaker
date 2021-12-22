@@ -163,10 +163,44 @@ export default {
 
       })
     },
+    async getVideoBase64(url) {
+      if (!this.isVideo(url)) {
+        return url
+      } else {
+        return await this.getPoster(url)
+      }
+    },
+    getPoster(url){
+      return new Promise((resolve, reject) => {
+        let dataURL = '';
+        let video = document.createElement("video");
+
+        // 处理跨域
+        video.setAttribute('crossOrigin', 'anonymous');
+        video.setAttribute('src', url);
+        video.setAttribute('width', 400);
+        video.setAttribute('height', 240);
+        video.addEventListener('canplay', () => {
+            // 视频时长video.duration;
+            let canvas = document.createElement("canvas"),
+                //canvas的尺寸和图片一样
+                width = video.width,
+                height = video.height;
+
+            canvas.width = width;
+            canvas.height = height;
+             // 绘制canvas
+            canvas.getContext("2d").drawImage(video, 0, 0, width, height);
+            // 转换为base64
+            dataURL = canvas.toDataURL('image/jpeg');
+            console.log(dataURL,'======');
+            resolve(dataURL);
+        })
+    })
+    },
     async searchInfo(){
       if(this.loading) return;
       this.loading = true;
-
       let mintUser = this.userInfo.id;//用户id
       let {pageSize,current,nftType:type} = this;
       let obj = {mintUser,type,pageSize,current};
