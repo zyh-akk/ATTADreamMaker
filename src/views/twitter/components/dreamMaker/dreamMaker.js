@@ -194,7 +194,7 @@ export default {
       this.total = listData.data.total;
       if(listData.data.total){
         this.nftlist = this.nftlist.map(item=>{
-          if (obj.type == 2 && item.item.ohterUser) {
+          if (obj.type == 2 && item.ohterUser) {
             this.getname(item.ohterUser);
           }
           item.nftContent = JSON.parse(item.nftContent);
