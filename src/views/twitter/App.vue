@@ -191,7 +191,6 @@ export default {
   mounted() {
     // 判断页面刷新还是重载
     if (window.performance.navigation.type) {
-      console.log("页面被刷新或者重载")
       // 页面刷新重载的时候获取用户名，有用户名就是已登录，没有就是未登录
       let uesrNameDom = document.querySelector('[role="link"][data-testid="AppTabBar_Profile_Link"]');
       // let uesrName = uesrNameDom.href.split('https://twitter.com/')[1];
@@ -199,12 +198,13 @@ export default {
       if(uesrNameDom){
         this.initializationDom();
       }else{
-        console.log('不是登录页面');
+        // console.log('不是登录页面');
       }
     }else if(window.performance.navigation.type === 0 && sessionStorage.getItem('myNfts') == 'true'){//当前页面是由按钮跳转到nft页面的
       // 页面跳转
       this.initializationDom();
     }
+    document.querySelector('meta[http-equiv="origin-trial"]').setAttribute('content',"default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content: https://ssl.gstatic.com; media-src * blob: 'self' http://* 'unsafe-inline' 'unsafe-eval'; style-src * 'self' 'unsafe-inline'; img-src * 'self' data: content:; connect-src * blob:;")
   },
   methods: {
     initializationDom(){
@@ -226,7 +226,6 @@ export default {
       })
     },
     getDom() {
-        console.log('测试dom添加');
       // 获取10次，页面还没有加载该dom就不在创建了，避免死循环
       if (this.appendDomIndex > 10) return;
       this.appendDomIndex = this.appendDomIndex + 1;
@@ -266,7 +265,7 @@ export default {
 
         this.appendDomIndex = 0;
         this.appendDom();
-        // this.addClick();
+        this.addClick();
         if (localStorage.getItem("attadreammaker_wallte")) {
           let str = localStorage.getItem("attadreammaker_wallte");
           this.address = str;
@@ -301,7 +300,7 @@ export default {
       this.showCreateNftModal2 = false;
     },
     test() {
-      console.log(window.CHAIN, "测试数据");
+      // console.log(window.CHAIN, "测试数据");
     },
     userwalletdialog() {
       this.ConnectWalletloading = false;
@@ -340,7 +339,6 @@ export default {
     },
     // 点击下拉框
     selectclick(type) {
-      console.log(type);
       switch (type) {
         case "1":
           this.showNftModal();
@@ -394,40 +392,42 @@ export default {
       }
     },
     // 左侧列表添加点击事件，判断是否需要开启nft列表
-    // addClick() {
-    //   let self = this;
-    //   let queryDom = document.querySelector(
-    //     'nav.r-1habvwh[aria-label][role="navigation"]'
-    //   );
+    addClick() {
+      let self = this;
+      let queryDom = document.querySelector(
+        'nav.r-1habvwh[aria-label][role="navigation"]'
+      );
 
-    //   if (this.appendDomIndex > 10) return;
-    //   this.appendDomIndex = this.appendDomIndex + 1;
+      if (this.appendDomIndex > 10) return;
+      this.appendDomIndex = this.appendDomIndex + 1;
 
-    //   if (!queryDom) {
-    //     setTimeout(() => {
-    //       self.addClick();
-    //     }, 1000);
-    //   } else {
-    //     let navdom = document
-    //       .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
-    //       .getElementsByTagName("a");
-    //     $(navdom).on("click", function (event) {
-    //       if (
-    //         event.currentTarget &&
-    //         (event.currentTarget.ariaLabel == "Profile" ||
-    //           event.currentTarget.ariaLabel == "个人资料")
-    //       ) {
-    //         $(document).ready(function () {
-    //           console.log(event.currentTarget.ariaLabel);
-    //           //此时需要加载nft
-    //           self.nftsDom = true;
-    //         });
-    //       } else {
-    //         self.nftsDom = false;
-    //       }
-    //     });
-    //   }
-    // },
+      if (!queryDom) {
+        setTimeout(() => {
+          self.addClick();
+        }, 1000);
+      } else {
+        let navdom = document
+          .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
+          .getElementsByTagName("a");
+        $(navdom).on("click", function (event) {
+          if (
+            event.currentTarget &&
+            (event.currentTarget.ariaLabel == "Profile" ||
+              event.currentTarget.ariaLabel == "个人资料")
+          ) {
+            $(document).ready(function () {
+              //此时需要加载nft
+              self.nftsDom = false;
+              setTimeout(() => {
+                self.nftsDom = true;
+              }, 500);
+            });
+          } else {
+            self.nftsDom = false;
+          }
+        });
+      }
+    },
     // my nfts 跳转
     jumppage() {
       window.location.href = "https://twitter.com/"+this.currentUserName;

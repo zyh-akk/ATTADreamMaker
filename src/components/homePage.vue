@@ -22,16 +22,6 @@ export default {
   },
   mounted () {
     localStorage.setItem("lastname01", "扩展的页面");
-    console.log(window.CHAIN,'测试数据');
-    axios.get(
-      // eslint-disable-next-line quote-props
-      // eslint-disable-next-line quotes
-      "https://icanhazdadjoke.com/", { headers: { Accept: 'application/json' } }
-    )
-      .then(res => {
-        this.joke = res.data.joke
-        this.loading = false;
-      });
   },
   methods:{
     againTest (){
@@ -49,15 +39,6 @@ export default {
           { code: 'document.body.style.backgroundColor = "' + color + '";' });
       });
 
-      axios.get(
-        'https://icanhazdadjoke.com/',
-        { headers: { Accept: 'application/json' } }
-      )
-        .then(res => {
-          this.joke = res.data.joke
-          this.loading = false;
-        });
-
       console.log('跳转', this.$route);
     },
     topay(){
@@ -68,14 +49,14 @@ export default {
         console.log(res);
         let {tokenId,metadataIpfs,returnaddress} = event.detail;
         metadataIpfs = 'https://ipfs.io/ipfs/' + metadataIpfs
-        let chainId = web3.utils.hexToNumber(res); 
+        let chainId = web3.utils.hexToNumber(res);
         let setting_proof = chainSetting["contractSetting"]["dreammaker_minfnft"];
         let address = setting_proof[chainId].address; // 监听 网络切换 会 让 用户 处于 正确的网络，这里 只负责 配置 当前网络下正确的 合约地址
         var abiName = contractSetting['dreammaker_minfnft']['abi'];
-        
-        paymentexample = new web3.eth.Contract(abiName, address);  
-        
-        paymentexample.methods.safeMint(tokenId,returnaddress,metadataIpfs).send({ 
+
+        paymentexample = new web3.eth.Contract(abiName, address);
+
+        paymentexample.methods.safeMint(tokenId,returnaddress,metadataIpfs).send({
           from: returnaddress
         })
         .then(function (res) {

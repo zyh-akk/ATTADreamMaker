@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div v-loading="loading" class="dream-maker-dom">
     <div class="dream-maker">
       <p class="dream-maker-title" :class="nftsBol?'check-dream-maker-title':''">NFT
         <i class="check-dream" v-show="nftsBol"></i>

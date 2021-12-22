@@ -20,19 +20,19 @@ export default {
     };
   },
   destroyed(){
+    $(".dream-maker-dom").attr('style','display:none !important');
     $('nav.r-qklmqi[aria-label][role="navigation"]').unbind('click');
   },
   mounted(){
-    console.log(window.location.search.indexOf('attaDreamMaker=true'));
     let self = this;
     $(document).ready(function(){
+      $(".dream-maker-dom").attr('style','display:block !important');
       self.appendDom();
       self.search();
       // 监听页面dom变化
       var observer = new MutationObserver(function(mutations, observer){
 
         // 添加缓存，判断nft部分是否需要隐藏
-        console.log(mutations,observer);
         self.domBorderBottom('block');
         let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
         if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
@@ -169,6 +169,41 @@ export default {
 
       })
     },
+    async getVideoBase64(url) {
+      if (!this.isVideo(url)) {
+        return url
+      } else {
+        return await this.getPoster(url)
+      }
+    },
+    getPoster(url){
+      return new Promise((resolve, reject) => {
+        let dataURL = '';
+        let video = document.createElement("video");
+
+        // 处理跨域
+        video.setAttribute('crossOrigin', 'anonymous');
+        video.setAttribute('src', url);
+        video.setAttribute('width', 400);
+        video.setAttribute('height', 240);
+        video.addEventListener('canplay', () => {
+            // 视频时长video.duration;
+            let canvas = document.createElement("canvas"),
+                //canvas的尺寸和图片一样
+                width = video.width,
+                height = video.height;
+
+            canvas.width = width;
+            canvas.height = height;
+             // 绘制canvas
+            canvas.getContext("2d").drawImage(video, 0, 0, width, height);
+            // 转换为base64
+            dataURL = canvas.toDataURL('image/jpeg');
+            console.log(dataURL,'======');
+            resolve(dataURL);
+        })
+    })
+    },
     async searchInfo(){
       if(this.loading) return;
       this.loading = true;
@@ -203,7 +238,6 @@ export default {
       xhr.open("get", the_url, true);
       xhr.responseType = "blob";
       xhr.onload = function(res) {
-        console.log(res);
       };
       xhr.send();
     },
