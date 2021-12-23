@@ -210,23 +210,21 @@ export default {
       // let consumer_key = process.env.CONSUMER_KEY;
       // let consumer_secret = process.env.CONSUMER_SECRET;
     },
-    getname(){
+    async getname(){
       let arr = [];
-      this.nftlist.forEach((item,index)=>{
-        if (this.nftType == 2 && item.ohterUser) {
-          getUserInfoid(item.ohterUser)
+      for (let i = 0; i < this.nftlist.length; i++) {
+        if (this.nftType == 2 && this.nftlist[i].ohterUser) {
+          await getUserInfoid(this.nftlist[i].ohterUser)
           .then(res=>{
             if (res.name) {
-              item.index = index;
-              item.mintUsername = res.name;
-              arr.push(item);
+              this.nftlist[i].mintUsername = res.name;
+              arr.push(this.nftlist[i]);
             }
           })
         }else{
-          item.index = index;
-          arr.push(item);
+          arr.push(this.nftlist[i]);
         }
-      })
+      }
       arr = arr.sort((a, b) => a.index - b.index);
       this.nftlist = arr;
     }
