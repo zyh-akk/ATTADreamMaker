@@ -194,12 +194,10 @@ export default {
       this.total = listData.data.total;
       if(listData.data.total){
         this.nftlist = this.nftlist.map(item=>{
-          if (obj.type == 2 && item.ohterUser) {
-            this.getname(item.ohterUser);
-          }
           item.nftContent = JSON.parse(item.nftContent);
           return item;
         })
+        this.getname();
       }
     },
     handleCurrentChange(val){
@@ -212,20 +210,25 @@ export default {
       // let consumer_key = process.env.CONSUMER_KEY;
       // let consumer_secret = process.env.CONSUMER_SECRET;
     },
-    getname(id){
-      getUserInfoid(id)
-      .then(res=>{
-        if (res.name) {
-          this.nftlist = this.nftlist.map(item=>{
-            if (item.ohterUser == id) {
+    getname(){
+      let arr = [];
+      this.nftlist.forEach((item,index)=>{
+        if (this.nftType == 2 && item.ohterUser) {
+          getUserInfoid(item.ohterUser)
+          .then(res=>{
+            if (res.name) {
+              item.index = index;
               item.mintUsername = res.name;
-              return item;
+              arr.push(item);
             }
           })
-          console.log("name-------------"+res.name);
-          return res.name;
+        }else{
+          item.index = index;
+          arr.push(item);
         }
       })
+      arr = arr.sort((a, b) => a.index - b.index);
+      this.nftlist = arr;
     }
   }
 };
