@@ -20,7 +20,10 @@ export default {
     };
   },
   destroyed(){
-    $(".dream-maker-dom").attr('style','display:none !important');
+    this.nftType = '0';
+    if($(".dream-maker-dom") && $(".dream-maker-dom")[0]){
+      $(".dream-maker-dom")[0].remove();
+    }
     $('nav.r-qklmqi[aria-label][role="navigation"]').unbind('click');
   },
   mounted(){
@@ -31,7 +34,6 @@ export default {
       self.search();
       // 监听页面dom变化
       var observer = new MutationObserver(function(mutations, observer){
-
         // 添加缓存，判断nft部分是否需要隐藏
         self.domBorderBottom('block');
         let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
@@ -41,6 +43,7 @@ export default {
           $(infoDom.childNodes[2]).attr('style','display:flex !important');
         }
         self.nftsBol = false;
+        self.nftType = '0';
       });
       // 次数监听用户名，用户名变化，就隐藏nft
       var el = document.querySelector('div[data-testid="primaryColumn"]').childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0];
@@ -98,8 +101,10 @@ export default {
               // 关闭当前内容
               if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
                 $(infoDom.childNodes[3]).attr('style','display:none !important');
+                $(infoDom.childNodes[2]).attr('style','display:block !important');
               }else{
                 $(infoDom.childNodes[2]).attr('style','display:none !important');
+                $(infoDom.childNodes[3]).attr('style','display:block !important');
               }
               self.nftsBol = true;
               self.search();
@@ -119,11 +124,13 @@ export default {
             let infoDom = document.querySelector('nav.r-qklmqi[aria-label][role="navigation"]').parentElement;
             self.domBorderBottom('none');
             // 关闭当前内容
-            if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
-              $(infoDom.childNodes[3]).attr('style','display:none !important');
-            }else{
-              $(infoDom.childNodes[2]).attr('style','display:none !important');
-            }
+              if($(infoDom.childNodes[2]).prop('class').indexOf('dream-maker-model') > -1){
+                $(infoDom.childNodes[3]).attr('style','display:none !important');
+                $(infoDom.childNodes[2]).attr('style','display:block !important');
+              }else{
+                $(infoDom.childNodes[2]).attr('style','display:none !important');
+                $(infoDom.childNodes[3]).attr('style','display:block !important');
+              }
             self.nftType = sessionStorage.getItem('myNfts') >= 0 ? sessionStorage.getItem('myNfts') : 0;
             self.nftsBol = true;
             self.search();
@@ -162,11 +169,9 @@ export default {
       let self = this;
       getFriendUserInfo()
       .then((res)=>{
-        console.log(res,'用户信息');
         self.userInfofriend = res;
         self.searchInfo()
       }).catch((err)=>{
-        console.log(err);
       })
     },
 

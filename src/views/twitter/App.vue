@@ -189,7 +189,6 @@ export default {
     };
   },
   mounted() {
-    console.log(window.performance);
     // 判断页面刷新还是重载
     if (window.performance.navigation.type) {
       // 页面刷新重载的时候获取用户名，有用户名就是已登录，没有就是未登录
@@ -198,8 +197,7 @@ export default {
       // let uesrNameDom = document.querySelector('[aria-label="Account menu"][data-testid="SideNav_AccountSwitcher_Button"]');
       if(uesrNameDom){
         this.initializationDom();
-      }else{
-        // console.log('不是登录页面');
+      }else{//未登录
       }
     }else if(window.performance.navigation.type === 0){//当前页面是由按钮跳转到nft页面的
       // 页面跳转
@@ -301,7 +299,6 @@ export default {
       this.showCreateNftModal2 = false;
     },
     test() {
-      // console.log(window.CHAIN, "测试数据");
     },
     userwalletdialog() {
       this.ConnectWalletloading = false;
@@ -396,7 +393,7 @@ export default {
     addClick() {
       let self = this;
       let queryDom = document.querySelector(
-        'nav.r-1habvwh[aria-label][role="navigation"]'
+        'nav.r-qklmqi[aria-label][role="navigation"]'
       );
 
       if (this.appendDomIndex > 10) return;
@@ -408,7 +405,7 @@ export default {
         }, 1000);
       } else {
         let navdom = document
-          .querySelector('nav.r-1habvwh[aria-label][role="navigation"]')
+          .querySelector('nav.r-qklmqi[aria-label][role="navigation"]')
           .getElementsByTagName("a");
         $(navdom).on("click", function (event) {
           if (
@@ -421,7 +418,7 @@ export default {
               self.nftsDom = false;
               setTimeout(() => {
                 self.nftsDom = true;
-              }, 500);
+              }, 1000);
             });
           } else {
             self.nftsDom = false;
