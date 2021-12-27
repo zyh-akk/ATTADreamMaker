@@ -169,11 +169,11 @@ export default {
     },
 
     isVideo(path) {
-      return /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/.test(path);
+      return /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/i.test(path);
     },
 
     isImage(path) {
-      return /\.(xbm|tif|pjp|svgz|jpg|jpeg|ico|tiff|gif|svg|jfif|webp|png|bmp|pjpeg|avif)/.test(
+      return /\.(xbm|tif|JPG|pjp|svgz|jpg|jpeg|ico|tiff|gif|svg|jfif|webp|png|bmp|pjpeg|avif)/i.test(
         path
       );
     },
