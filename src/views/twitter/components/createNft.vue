@@ -179,6 +179,10 @@ export default {
     },
 
     onChange(file, fileList) {
+      if (file.size > 1024 * 10 * 1024) {
+        alert('File exceeds 10M!')
+        return false
+      }
       var _this = this;
       var event = event || window.event;
       if (fileList.length && fileList[0].response) {
