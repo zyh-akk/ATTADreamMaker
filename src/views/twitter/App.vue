@@ -189,6 +189,7 @@ export default {
     };
   },
   mounted() {
+    console.log(window.performance);
     // 判断页面刷新还是重载
     if (window.performance.navigation.type) {
       // 页面刷新重载的时候获取用户名，有用户名就是已登录，没有就是未登录
@@ -457,6 +458,9 @@ export default {
         this.modal2status = true;
         this.conftdataobject = obj;
         this.showCreateNftModal2 = true;
+      }
+      if (type == "posterNft") {
+        this.showImageEditModal = true;
       }
     },
   },

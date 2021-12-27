@@ -13,11 +13,11 @@
       </div>
       <div class="nft-btn">
         <p class="check-nft" v-if="userInfofriend.id == userInfo.id && nftType == 0" @click="OperationNftclick(0)">Create a personal NFT</p>
-        <p class="check-nft" v-if="userInfofriend.id == userInfo.id && nftType == 1" @click="OperationNftclick(1)">Create a Poster NFT</p>
+        <p class="check-nft" v-if="userInfofriend.id == userInfo.id && nftType == 1" @click="OperationNftclick('posterNft')">Create a Poster NFT</p>
         <p class="check-nft" v-if="userInfofriend.id != userInfo.id && nftType == 2" @click="OperationNftclick(2)">Create a Co-NFT for him/her</p>
       </div>
 
-      <div class="nft-list">
+      <div class="nft-list"  v-loading="loading">
         <div v-for="(item,index) in nftlist" :key="index" class="dream-maker-nft">
           <!-- xxx为我创建的nft 提示条 item.mintUser 可以获取到用户id，但是不能获取到name -->
           <span class="tips" v-if="item.creatorTag == 1">User {{item.mintUsername}} created for you</span>

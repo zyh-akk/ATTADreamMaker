@@ -172,6 +172,7 @@ export default {
 
     async searchInfo(){
       if(this.loading) return;
+      this.nftlist = [];
       this.loading = true;
       let receiveUser = this.userInfofriend.id;
       let mintUser = this.userInfo.id;//用户id
