@@ -200,7 +200,7 @@ export default {
       }else{
         // console.log('不是登录页面');
       }
-    }else if(window.performance.navigation.type === 0 && sessionStorage.getItem('myNfts') == 'true'){//当前页面是由按钮跳转到nft页面的
+    }else if(window.performance.navigation.type === 0){//当前页面是由按钮跳转到nft页面的
       // 页面跳转
       this.initializationDom();
     }
