@@ -55,7 +55,7 @@ export default {
 
   methods: {
     isVideo(path) {
-      return /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/.test(path);
+      return /\.(mp4|avi|wmv|mpg|mpeg|mov|rm|ram|swf|flv)/i.test(path);
     },
     OperationNft(type,obj = null){
       let self = this;
