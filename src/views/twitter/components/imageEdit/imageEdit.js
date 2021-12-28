@@ -218,7 +218,7 @@ export default {
       const artList = listData.data;
       this.returnaddress = artList[0].address;
       this.metadataIpfs = artList[0].metadataIpfs;
-      this.tokenId = artList[0].tokenId;
+      this.orderNo = artList[0].orderNo;
       this.loading = false;
       this.imagesStep = 5;
     },
@@ -230,9 +230,9 @@ export default {
           type: 'warning'
         });
       }
-      let { tokenId, metadataIpfs, returnaddress } = this;
+      let { orderNo, metadataIpfs, returnaddress } = this;
       const cEvt = new CustomEvent("paymentaddress", {
-        detail: { tokenId, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo},
+        detail: { orderNo, metadataIpfs, returnaddress ,wallteaddress : this.addressinfo},
       });
       document.dispatchEvent(cEvt);
       this.loading = true;
