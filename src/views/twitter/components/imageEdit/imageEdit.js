@@ -255,6 +255,10 @@ export default {
         });
       }
       this.closeModal();
+      this.getlistnft();
+    },
+    getlistnft(){
+      this.$emit("getlistnft");
     }
   }
 };

@@ -144,10 +144,12 @@
       v-if="nftsDom"
       @createNftAccept="createNftAccept"
       :userInfo="userInfo"
+      ref="mydreammaker"
     ></dream-maker>
     <image-edit
       v-if="showImageEditModal" :userInfo="userInfo"
       @closeImageEdit="closeImageEdit"
+      @getlistnft="getlistnft"
     ></image-edit>
   </div>
 </template>
@@ -460,6 +462,9 @@ export default {
         this.showImageEditModal = true;
       }
     },
+    getlistnft(){
+      this.$refs.mydreammaker.search();
+    }
   },
 };
 </script>
