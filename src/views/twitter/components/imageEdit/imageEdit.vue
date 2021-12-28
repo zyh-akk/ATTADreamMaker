@@ -38,7 +38,7 @@
         </div>
       </div>
       <!-- YOUR NFT内容 -->
-      <div v-if="imagesStep == 5">
+      <div v-if="imagesStep == 5" class="showinfocontent">
         <img class="imageurl_show" :src="base64String" alt="" />
         <p>Name:{{ input1_info }}</p>
         <p>Description:{{ input2_info }}</p>

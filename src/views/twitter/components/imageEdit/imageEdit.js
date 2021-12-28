@@ -16,7 +16,7 @@ export default {
       imageUrl:'',
       input1_info:'',
       input2_info:'',
-      ischeckwallet:false,
+      ischeckwallet:true,
       loading:false,
       base64String:'',//编辑后的图片
       addressinfo: "",
@@ -175,7 +175,7 @@ export default {
         this.loading = false;
         this.imagesStep = 4;
         if (res.data) {
-          this.previewImgUrl = res.data.fileUri;
+          this.picturePath = res.data.fileUri;
           this.sourceFileIpfs = res.data.ipfsUri;
         }
       }).catch(()=>{
