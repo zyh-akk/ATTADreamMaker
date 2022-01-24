@@ -48,10 +48,6 @@
             />
             <p>MetaMask</p>
           </div>
-          <!-- <div class="walletbox" @click="checkwallclick(2)">
-            <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
-            <p>MetaMask</p>
-          </div>-->
         </el-dialog>
         <el-dialog
           :title="loadingwallettitle"
@@ -70,12 +66,9 @@
             <div class="contentbox" v-if="checkwallet <= 0">
               <div class="contentbox-top flex">
                 <p>MetaMask</p>
-                <!-- <img src alt /> -->
               </div>
               <div class="contentbox-bottom flex">
                 <p>{{ shearaddress }}</p>
-                <!-- <img src alt />
-                <img src alt />-->
               </div>
             </div>
             <div class="content-loading" v-else>
@@ -135,9 +128,7 @@
         <p>3. Click the button "Create a Co-NFT for him/her</p>
         <p>4. Then follow the steps to upload the basic info</p>
         <p>5. Tell him/her to accept the Co-NFT request</p>
-        <p>
-          6. Once your friend finished the minting process, you and your friend
-        </p>
+        <p>6. Once your friend finished the minting process, you and your friend</p>
       </div>
     </el-dialog>
     <dream-maker
@@ -195,8 +186,6 @@ export default {
     if (window.performance.navigation.type) {
       // 页面刷新重载的时候获取用户名，有用户名就是已登录，没有就是未登录
       let uesrNameDom = document.querySelector('[role="link"][data-testid="AppTabBar_Profile_Link"]');
-      // let uesrName = uesrNameDom.href.split('https://twitter.com/')[1];
-      // let uesrNameDom = document.querySelector('[aria-label="Account menu"][data-testid="SideNav_AccountSwitcher_Button"]');
       if(uesrNameDom){
         this.initializationDom();
       }else{//未登录
@@ -484,7 +473,6 @@ export default {
   padding: 6px 14px;
   position: relative;
   transition-property: background-color, box-shadow;
-  // transition-duration: 0.2s;
   .MaskNetwork,
   .ConnectWallet {
     font-weight: 400;
