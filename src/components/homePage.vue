@@ -60,7 +60,6 @@ export default {
           from: returnaddress
         })
         .then(function (res) {
-          debugger
           // tips(self.chEnTextHtml[self.lang].tipsjs4);
           // self.getNftLists();
         });

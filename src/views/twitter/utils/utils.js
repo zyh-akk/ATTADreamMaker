@@ -43,18 +43,14 @@ export function getFriendUserInfo() {
         }else{
             let userUrl = window.location.pathname;//获取连接后的参数
             let userName = userUrl.split('/');
-            // if(userName.length>2){//大于2说明有多个参数，不属于好友信息
-            //     reject();
-            // }else{
-                twitterInfo(`https://api.twitter.com/2/users/by/username/${userName[1]}`)
-                .then(res=>{
-                    if(res.errors){
-                        reject();
-                    }else{
-                        resolve(res.data);
-                    }
-                })
-            // }
+            twitterInfo(`https://api.twitter.com/2/users/by/username/${userName[1]}`)
+            .then(res=>{
+                if(res.errors){
+                    reject();
+                }else{
+                    resolve(res.data);
+                }
+            })
         }
     })
 }

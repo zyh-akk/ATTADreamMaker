@@ -63,7 +63,6 @@
           "
           @click="checkwallet(1)"
         >
-          <!-- <div class="walletbox" @click="checkwallclick(1)"> -->
           <svg-icon
             :svgType="'mateMask'"
             class="svg-img"
@@ -72,10 +71,6 @@
           />
           <p>MetaMask</p>
         </div>
-        <!-- <div :class="ischeckwallet == '2' ? 'checkwalletcss walletbox' : 'walletbox'" @click="checkwallet(2)">
-          <svg-icon :svgType="'mateMask'" class="svg-img" :svgW='48' :svgH='48'/>
-          <p>MetaMask</p>
-        </div> -->
         <div class="btns">
           <el-button type="primary" @click="nowStep = 2">Previous</el-button>
           <el-button type="primary" @click="SelectWalletclick">Next</el-button>
@@ -143,10 +138,6 @@ export default {
     event.initEvent("paymentaddressCallback", true, true); // detail是事件数据
     document.addEventListener("switchaddressCallback2", (event) => {
       if (event.detail) {
-        // debugger
-        // if (event.detail.conftfun != self.conftfun) {
-        //   return;
-        // }
         self.addressinfo = event.detail.address[0];
         localStorage.attadreammaker_wallte = event.detail.address[0];
         self.createnft();
